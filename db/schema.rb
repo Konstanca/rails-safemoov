@@ -10,9 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_15_084415) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_15_093721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alerts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_alerts_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.bigint "incident_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["incident_id"], name: "index_comments_on_incident_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "incidents", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "address"
+    t.boolean "status"
+    t.string "category"
+    t.bigint "user_id", null: false
+    t.string "photo_url"
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "vote_count_plus"
+    t.integer "vote_count_minus"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_incidents_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "alert_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alert_id"], name: "index_notifications_on_alert_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +72,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_15_084415) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.boolean "vote"
+    t.bigint "user_id", null: false
+    t.bigint "incident_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["incident_id"], name: "index_votes_on_incident_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  add_foreign_key "alerts", "users"
+  add_foreign_key "comments", "incidents"
+  add_foreign_key "comments", "users"
+  add_foreign_key "incidents", "users"
+  add_foreign_key "notifications", "alerts"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "votes", "incidents"
+  add_foreign_key "votes", "users"
 end
