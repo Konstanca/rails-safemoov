@@ -38,7 +38,7 @@ export default class extends Controller {
     const stats = JSON.parse(this.element.dataset.statisticsStats);
     const trends = JSON.parse(this.element.dataset.statisticsTrends);
 
-    // Graphique des catégories (inchangé)
+    // Graphique des catégories
     if (this.categoryChartInstance) this.categoryChartInstance.destroy();
     this.categoryChartInstance = new Chart(this.categoryChartTarget, {
       type: "bar",
