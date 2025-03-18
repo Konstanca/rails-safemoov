@@ -1,0 +1,13 @@
+<h1>Mes incidents signalés</h1>
+
+<% @incidents.each do |incident| %>
+  <div>
+    <p><strong>Titre :</strong> <%= incident.title %></p>
+    <h3><%= incident.category %> - <%= incident.address %></h3>
+    <p><%= incident.description %></p>
+    <p><%= incident.date.strftime("%d/%m/%Y %H:%M") %></p>
+
+    <%= link_to "Supprimer", incident_path(incident), method: :delete, data: { turbo_method: :delete, confirm: "Es-tu sûr de vouloir supprimer cet incident ?" } %>
+  </div>
+  <hr>
+<% end %>
