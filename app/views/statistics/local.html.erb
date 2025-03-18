@@ -1,0 +1,32 @@
+<div data-controller="statistics"
+     data-statistics-incident-id="<%= @incident.id %>"
+     data-statistics-radius="<%= @radius %>"
+     data-statistics-months="<%= @months %>"
+     data-statistics-stats="<%= @stats.to_json %>"
+     data-statistics-trends="<%= @trends.to_json %>">
+  <h1>Statistiques locales autour de "<%= @incident.title %>"</h1>
+
+  <div>
+    <label for="radius">Rayon (km) :</label>
+    <input type="number" id="radius" step="0.1" min="0.1"
+           data-statistics-target="radius"
+           data-action="input->statistics#updateCharts"
+           value="<%= @radius %>">
+  </div>
+  <div>
+    <label for="months">Période (mois) :</label>
+    <select id="months"
+            data-statistics-target="months"
+            data-action="change->statistics#updateCharts">
+      <option value="1" <%= "selected" if @months == 1 %>>1 mois</option>
+      <option value="3" <%= "selected" if @months == 3 %>>3 mois</option>
+      <option value="6" <%= "selected" if @months == 6 %>>6 mois</option>
+    </select>
+  </div>
+
+  <h2>Répartition par catégorie</h2>
+  <canvas id="categoryChart" width="400" height="200" data-statistics-target="categoryChart"></canvas>
+
+  <h2>Tendances</h2>
+  <canvas id="trendsChart" width="400" height="200" data-statistics-target="trendsChart"></canvas>
+</div>
