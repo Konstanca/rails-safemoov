@@ -1,17 +1,18 @@
+// app/javascript/controllers/statistics_controller.js
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["radius", "months", "categoryChart", "trendsChart"];
+  static targets = ["radius", "months", "categoryChart", "trendsContainer", "trendChart"];
 
   connect() {
     this.categoryChartInstance = null;
-    this.trendsChartInstance = null;
+    this.trendChartInstances = {};
     this.renderCharts();
   }
 
   disconnect() {
     if (this.categoryChartInstance) this.categoryChartInstance.destroy();
-    if (this.trendsChartInstance) this.trendsChartInstance.destroy();
+    Object.values(this.trendChartInstances).forEach(instance => instance.destroy());
   }
 
   updateCharts() {
@@ -19,14 +20,14 @@ export default class extends Controller {
     const radius = this.radiusTarget.value || 5;
     const months = this.monthsTarget.value;
 
+    console.log(`Fetching data with radius: ${radius}, months: ${months}`);
+
     fetch(`/statistics/local/${incidentId}?radius=${radius}&months=${months}`, {
       headers: { "Accept": "application/json" }
     })
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
+        console.log("Data received:", data);
         this.element.dataset.statisticsStats = JSON.stringify(data.stats);
         this.element.dataset.statisticsTrends = JSON.stringify(data.trends);
         this.renderCharts();
@@ -37,6 +38,7 @@ export default class extends Controller {
   renderCharts() {
     const stats = JSON.parse(this.element.dataset.statisticsStats);
     const trends = JSON.parse(this.element.dataset.statisticsTrends);
+    const months = this.monthsTarget.value;
 
     // Graphique des catégories
     if (this.categoryChartInstance) this.categoryChartInstance.destroy();
@@ -52,44 +54,90 @@ export default class extends Controller {
           borderWidth: 1
         }]
       },
-      options: { scales: { y: { beginAtZero: true } } }
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1, precision: 0 }
+          }
+        },
+        maintainAspectRatio: false,
+        responsive: true
+      }
     });
 
-    // Graphique des tendances
-    if (this.trendsChartInstance) this.trendsChartInstance.destroy();
-    const trendsData = Object.entries(trends.by_category).reduce((acc, [key, count]) => {
-      const [cat, month] = key.split("|"); // Diviser la clé en catégorie et mois
-      acc[cat] = acc[cat] || {};
-      acc[cat][month] = count;
-      return acc;
-    }, {});
-    const months = [...new Set(Object.keys(trends.totals))]; // Tous les mois uniques
-    const categories = Object.keys(trendsData);
+    // Graphiques des tendances
+    if (this.hasTrendsContainerTarget) {
+      this.trendsContainerTarget.innerHTML = "";
+      Object.values(this.trendChartInstances).forEach(instance => instance.destroy());
+      this.trendChartInstances = {};
 
-    const categoryDatasets = categories.map(cat => ({
-      label: cat,
-      data: months.map(m => trendsData[cat][m] || 0),
-      fill: false,
-      borderColor: `hsl(${Math.random() * 360}, 70%, 50%)`,
-      borderWidth: 1,
-      tension: 0.5
-    }));
+      const trendsData = Object.entries(trends.top_categories).reduce((acc, [key, count]) => {
+        const [cat, month] = key.split("|");
+        acc[cat] = acc[cat] || {};
+        acc[cat][month] = count;
+        return acc;
+      }, {});
+      const monthsList = [...new Set(Object.keys(trends.totals))].sort((a, b) => {
+        const [monthA, yearA] = a.split("/").map(Number);
+        const [monthB, yearB] = b.split("/").map(Number);
+        const dateA = new Date(yearA, monthA - 1);
+        const dateB = new Date(yearB, monthB - 1);
+        return dateA - dateB;
+      });
+      const categories = Object.keys(trendsData);
 
-    const cumulativeDataset = {
-      label: "Cumul",
-      data: months.map(m => trends.totals[m] || 0),
-      fill: true,
-      borderColor: "#000000",
-      borderWidth: 1,
-      tension: 0.5
-    };
+      console.log("Trends data:", trendsData);
+      console.log("Months list (sorted):", monthsList);
+      console.log("Categories:", categories);
 
-    const datasets = [...categoryDatasets, cumulativeDataset];
+      if (categories.length === 0) {
+        this.trendsContainerTarget.innerHTML = "<p>Aucune donnée de tendance disponible pour ce rayon.</p>";
+        return;
+      }
 
-    this.trendsChartInstance = new Chart(this.trendsChartTarget, {
-      type: "line",
-      data: { labels: months, datasets },
-      options: { scales: { y: { beginAtZero: true } } }
-    });
+      categories.forEach((category, index) => {
+        const canvasId = `trendChart${index}`;
+        const html = `
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="card-title">${category}</h3>
+              <div class="chart-container">
+                <canvas id="${canvasId}" data-statistics-target="trendChart" data-category="${category}"></canvas>
+              </div>
+            </div>
+          </div>
+        `;
+        this.trendsContainerTarget.insertAdjacentHTML("beforeend", html);
+
+        const canvas = this.trendsContainerTarget.querySelector(`#${canvasId}`);
+        const dataset = {
+          label: category,
+          data: monthsList.map(m => trendsData[category][m] || 0),
+          fill: false,
+          borderColor: `hsl(${(index * 60) % 360}, 70%, 50%)`,
+          tension: 0.1
+        };
+
+        this.trendChartInstances[category] = new Chart(canvas, {
+          type: "line",
+          data: {
+            labels: monthsList,
+            datasets: [dataset]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1, precision: 0 }
+              }
+            },
+            plugins: { legend: { display: false } },
+            maintainAspectRatio: false,
+            responsive: true
+          }
+        });
+      });
+    }
   }
 }
