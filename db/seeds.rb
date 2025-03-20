@@ -40,8 +40,8 @@ end
 category_weights = {
   "Attaque à main armée" => 5,
   "Assassinat" => 3,
-  "Enlèvement" => 2,
-  "Prise d’otages" => 1,
+  "Enlèvement" => 3,
+  "Prise d’otages" => 2,
   "Éboulement" => 2,
   "Inondation" => 5,
   "Tremblement de terre" => 1,
