@@ -2,11 +2,14 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["radius", "months", "categoryChart", "trendsContainer", "trendChart"];
+  static targets = ["radius", "months", "categoryChart", "categoryTitle", "trendsContainer", "trendChart", "trendsTitle", "totalIncidents"];
 
   connect() {
     this.categoryChartInstance = null;
     this.trendChartInstances = {};
+    console.log("Controller connected, categoryTitleTarget:", this.hasCategoryTitleTarget);
+    console.log("Controller connected, totalIncidentsTarget:", this.hasTotalIncidentsTarget);
+    console.log("Controller connected, trendsTitleTarget:", this.hasTrendsTitleTarget);
     this.renderCharts();
   }
 
@@ -38,7 +41,43 @@ export default class extends Controller {
   renderCharts() {
     const stats = JSON.parse(this.element.dataset.statisticsStats);
     const trends = JSON.parse(this.element.dataset.statisticsTrends);
-    const months = this.monthsTarget.value;
+    const months = parseInt(this.monthsTarget.value); // Convertir en nombre
+
+    console.log("Rendering charts, months:", months);
+
+
+    // Mettre à jour le titre de la répartition avec gestion du pluriel
+    if (this.hasCategoryTitleTarget) {
+      if (months === 1) {
+        this.categoryTitleTarget.textContent = "Répartition par catégorie (dernier mois)";
+      } else {
+      const newTitle = `Répartition par catégorie (derniers ${months} mois)`;
+      this.categoryTitleTarget.textContent = newTitle;
+    } }
+    else {
+      console.error("categoryTitleTarget not found!");
+    }
+
+    // Mettre à jour le titre des tendances
+    if (this.hasTrendsTitleTarget) {
+      if (months === 1) {
+        this.trendsTitleTarget.textContent = "Tendances des 5 principales catégories (dernier mois)";
+      } else {
+        const newTrendsTitle = `Tendances des 5 principales catégories (derniers ${months} mois)`;
+        this.trendsTitleTarget.textContent = newTrendsTitle;
+      } }
+    else {
+      console.error("trendsTitleTarget not found!");
+    }
+
+    // Mettre à jour le total des incidents
+    if (this.hasTotalIncidentsTarget) {
+      const total = stats.total || 0;
+      console.log("Updating total incidents to:", total);
+      this.totalIncidentsTarget.textContent = `Total des incidents : ${total}`;
+    } else {
+      console.error("totalIncidentsTarget not found!");
+    }
 
     // Graphique des catégories
     if (this.categoryChartInstance) this.categoryChartInstance.destroy();
