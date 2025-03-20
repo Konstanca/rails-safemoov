@@ -1,6 +1,22 @@
 require 'faker'
 require 'geocoder'
 
+# Mesurer le temps de début
+start_time = Time.now
+puts "Début du seedage à #{start_time}"
+
+# Définir la locale de Faker en espagnol
+Faker::Config.locale = 'es'
+
+# Définir les provinces comme une constante
+PROVINCES = [
+  "Azuay", "Bolívar", "Cañar", "Carchi", "Chimborazo", "Cotopaxi", "El Oro",
+  "Esmeraldas", "Galápagos", "Guayas", "Imbabura", "Loja", "Los Ríos",
+  "Manabí", "Morona Santiago", "Napo", "Orellana", "Pastaza", "Pichincha",
+  "Santa Elena", "Santo Domingo de los Tsáchilas", "Sucumbíos", "Tungurahua",
+  "Zamora Chinchipe"
+].freeze
+
 # Réinitialiser les tables dans l’ordre inverse des dépendances
 puts "Réinitialisation des tables..."
 Vote.destroy_all
@@ -11,33 +27,39 @@ Alert.destroy_all
 User.destroy_all
 
 # Créer des utilisateurs
-puts "Création de 50 utilisateurs..."
-50.times do
+puts "Création de 200 utilisateurs..."
+200.times do
   User.create!(
     email: Faker::Internet.unique.email,
     password: "password123",
-    created_at: Faker::Time.between(from: 6.months.ago, to: Time.now)
+    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
   )
 end
 
-# Liste des catégories d'incidents
-categories = [
-  "Attaque à main armée",
-  "Assassinat",
-  "Enlèvement",
-  "Prise d’otages",
-  "Éboulement",
-  "Inondation",
-  "Tremblement de terre",
-  "Vol à l’étalage",
-  "Agression",
-  "Trafic de drogue",
-  "Émeute",
-  "Incendie",
-  "Accident de la route",
-  "Fraude électorale",
-  "Manifestation violente"
-]
+# Liste des catégories d'incidents avec leurs poids
+category_weights = {
+  "Attaque à main armée" => 5,
+  "Assassinat" => 3,
+  "Enlèvement" => 2,
+  "Prise d’otages" => 1,
+  "Éboulement" => 2,
+  "Inondation" => 5,
+  "Tremblement de terre" => 1,
+  "Vol à l’étalage" => 12,
+  "Agression" => 10,
+  "Trafic de drogue" => 4,
+  "Émeute" => 3,
+  "Incendie" => 6,
+  "Accident de la route" => 15,
+  "Fraude électorale" => 1,
+  "Manifestation violente" => 3
+}
+
+# Méthode pour sélectionner une catégorie pondérée
+def weighted_category(category_weights)
+  weighted_array = category_weights.flat_map { |category, weight| [category] * weight }
+  weighted_array.sample
+end
 
 # Principales villes d’Équateur avec coordonnées (latitude, longitude)
 cities = {
@@ -69,29 +91,111 @@ def rural_coordinates
   }
 end
 
+# Générer une adresse urbaine (ex. : "Av. Amazonas y Av. Naciones Unidas, Quito")
+def generate_urban_address(city_name)
+  street_types = ["Av.", "Calle", "Pasaje"]
+  street_names = [
+    "Amazonas", "Naciones Unidas", "10 de Agosto", "Shyris", "Colón",
+    "6 de Diciembre", "Eloy Alfaro", "República", "Mariana de Jesús",
+    "La Prensa", "Los Álamos", "De los Pinos", "La Rábida", "San Ignacio",
+    "González Suárez", "De las Palmeras", "De los Cipreses", "La Coruña",
+    "De los Laureles", "Simón Bolívar"
+  ]
+  street1 = "#{street_types.sample} #{street_names.sample}"
+  street2 = "#{street_types.sample} #{street_names.sample}"
+  "#{street1} y #{street2}, #{city_name}"
+end
+
+# Générer une adresse rurale (ex. : "Sector La Esperanza, Provincia de Imbabura")
+def generate_rural_address
+  sectors = [
+    "La Esperanza", "San Rafael", "El Progreso", "La Libertad", "Santa Rosa",
+    "El Porvenir", "San Antonio", "La Victoria", "El Carmen", "San José",
+    "La Merced", "El Triunfo", "San Miguel", "La Paz", "San Pedro",
+    "Santa Ana", "San Francisco", "La Unión", "El Rosario", "San Isidro"
+  ]
+  "Sector #{sectors.sample}, Provincia de #{PROVINCES.sample}"
+end
+
+# Générer une description d'incident réaliste
+def generate_incident_description(category)
+  case category
+  when "Attaque à main armée"
+    "Un groupe armé a attaqué #{Faker::Company.name} près de #{Faker::Address.street_name}. Les assaillants ont pris la fuite avec #{Faker::Number.between(from: 1000, to: 10000)} dollars."
+  when "Assassinat"
+    "Un assassinat a eu lieu dans un quartier résidentiel. La victime, #{Faker::Name.name}, a été retrouvée près de #{Faker::Address.street_name}."
+  when "Enlèvement"
+    "Un enlèvement a été signalé : #{Faker::Name.name} a été vu pour la dernière fois près de #{Faker::Address.street_name}."
+  when "Prise d’otages"
+    "Une prise d’otages est en cours dans un bâtiment de #{Faker::Company.name}. Les forces de l’ordre sont sur place."
+  when "Éboulement"
+    "Un éboulement a bloqué la route principale près de #{Faker::Address.street_name}, causant des dégâts matériels."
+  when "Inondation"
+    "Une inondation a submergé plusieurs maisons dans la région de #{Faker::Address.street_name}. Les secours sont en route."
+  when "Tremblement de terre"
+    "Un tremblement de terre de magnitude #{Faker::Number.between(from: 3, to: 7)}.#{Faker::Number.between(from: 0, to: 9)} a frappé la région, causant des dégâts."
+  when "Vol à l’étalage"
+    "Un vol à l’étalage a été signalé dans un magasin de #{Faker::Company.name}. Le suspect a pris des biens d’une valeur de #{Faker::Number.between(from: 50, to: 500)} dollars."
+  when "Agression"
+    "Une agression violente a eu lieu près de #{Faker::Address.street_name}. La victime a été transportée à l’hôpital."
+  when "Trafic de drogue"
+    "Les autorités ont démantelé un réseau de trafic de drogue opérant près de #{Faker::Address.street_name}."
+  when "Émeute"
+    "Une émeute a éclaté lors d’une manifestation, causant des affrontements près de #{Faker::Address.street_name}."
+  when "Incendie"
+    "Un incendie s’est déclaré dans un immeuble près de #{Faker::Address.street_name}. Les pompiers sont sur place."
+  when "Accident de la route"
+    "Un accident de la route impliquant #{Faker::Number.between(from: 2, to: 5)} véhicules a eu lieu sur #{Faker::Address.street_name}."
+  when "Fraude électorale"
+    "Des soupçons de fraude électorale ont été signalés lors des élections locales dans la région de #{Faker::Address.street_name}."
+  when "Manifestation violente"
+    "Une manifestation violente a dégénéré près de #{Faker::Address.street_name}, causant plusieurs blessés."
+  else
+    "Un incident de type #{category} a été signalé près de #{Faker::Address.street_name}."
+  end
+end
+
+# Générer un commentaire réaliste
+def generate_comment(category)
+  reactions = [
+    "C’est vraiment inquiétant, il faut plus de sécurité dans ce quartier !",
+    "J’ai vu ça de mes propres yeux, c’était terrifiant.",
+    "Les autorités doivent agir rapidement pour éviter que ça se reproduise.",
+    "Quelqu’un a des nouvelles des victimes ?",
+    "C’est la troisième fois ce mois-ci, c’est inacceptable !",
+    "J’espère que les coupables seront arrêtés bientôt.",
+    "Il faut organiser une réunion communautaire pour discuter de ça.",
+    "Je passe par là tous les jours, ça aurait pu être moi…",
+    "Les secours ont mis trop de temps à arriver, c’est scandaleux !",
+    "Quelqu’un sait si la route est encore bloquée ?"
+  ]
+  reactions.sample
+end
+
 # Liste des utilisateurs pour éviter les nil
 user_ids = User.pluck(:id)
 
-# Créer des incidents (300 au total, 80% en ville, 20% à la campagne, 80% terminés)
-puts "Création de 300 incidents (240 en ville, 60 en campagne, 80% terminés)..."
-240.times do # Incidents en ville (80%)
+# Créer des incidents (4 000 au total, 80% en ville, 20% à la campagne, 80% terminés)
+puts "Création de 4 000 incidents (3 200 en ville, 800 en campagne, 80% terminés)..."
+3200.times do # Incidents en ville (80%)
   city_name, city_coords = cities.to_a.sample
   coords = city_coordinates(city_coords)
   status = rand < 0.8 ? false : true # 80% terminés
+  category = weighted_category(category_weights)
   incident = Incident.create!(
-    title: "#{categories.sample} à #{city_name}",
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    address: "#{Faker::Address.street_address}, #{city_name}",
+    title: "#{category} à #{city_name}",
+    description: generate_incident_description(category),
+    address: generate_urban_address(city_name),
     status: status,
-    category: categories.sample,
+    category: category,
     user_id: user_ids.sample,
-    photo_url: Faker::LoremFlickr.image(size: "300x300", search_terms: ['crime', 'disaster']),
+    photo_url: Faker::Placeholdit.image(size: "300x300", format: "jpg", background_color: :random, text: "Incident"),
     latitude: coords[:latitude],
     longitude: coords[:longitude],
     vote_count_plus: Faker::Number.between(from: 0, to: 20),
     vote_count_minus: Faker::Number.between(from: 0, to: 10),
-    created_at: Faker::Time.between(from: 6.months.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 6.months.ago, to: Time.now)
+    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
+    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
   )
 
   # Ajouter des votes (max 30 utilisateurs différents par incident)
@@ -122,7 +226,7 @@ puts "Création de 300 incidents (240 en ville, 60 en campagne, 80% terminés)..
   # Ajouter des commentaires (1 à 5 par incident)
   rand(1..5).times do
     Comment.create!(
-      content: Faker::Lorem.sentence(word_count: 10),
+      content: generate_comment(category),
       incident_id: incident.id,
       user_id: user_ids.sample,
       created_at: Faker::Time.between(from: incident.created_at, to: Time.now),
@@ -131,23 +235,24 @@ puts "Création de 300 incidents (240 en ville, 60 en campagne, 80% terminés)..
   end
 end
 
-60.times do # Incidents à la campagne (20%)
+800.times do # Incidents à la campagne (20%)
   coords = rural_coordinates
   status = rand < 0.8 ? false : true # 80% terminés
+  category = weighted_category(category_weights)
   incident = Incident.create!(
-    title: "#{categories.sample} en zone rurale",
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    address: Faker::Address.full_address,
+    title: "#{category} en zone rurale",
+    description: generate_incident_description(category),
+    address: generate_rural_address,
     status: status,
-    category: categories.sample,
+    category: category,
     user_id: user_ids.sample,
-    photo_url: Faker::LoremFlickr.image(size: "300x300", search_terms: ['crime', 'disaster']),
+    photo_url: Faker::Placeholdit.image(size: "300x300", format: "jpg", background_color: :random, text: "Incident"),
     latitude: coords[:latitude],
     longitude: coords[:longitude],
     vote_count_plus: Faker::Number.between(from: 0, to: 10),
     vote_count_minus: Faker::Number.between(from: 0, to: 5),
-    created_at: Faker::Time.between(from: 6.months.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 6.months.ago, to: Time.now)
+    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
+    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
   )
 
   # Ajouter des votes (max 20 utilisateurs différents par incident)
@@ -178,7 +283,7 @@ end
   # Ajouter des commentaires (1 à 3 en campagne)
   rand(1..3).times do
     Comment.create!(
-      content: Faker::Lorem.sentence(word_count: 10),
+      content: generate_comment(category),
       incident_id: incident.id,
       user_id: user_ids.sample,
       created_at: Faker::Time.between(from: incident.created_at, to: Time.now),
@@ -188,29 +293,29 @@ end
 end
 
 # Créer des alertes (80% en ville, 20% en campagne)
-puts "Création de 100 alertes..."
-80.times do # Alertes en ville
+puts "Création de 200 alertes..."
+160.times do # Alertes en ville
   city_name, city_coords = cities.to_a.sample
   coords = city_coordinates(city_coords)
   Alert.create!(
     user_id: user_ids.sample,
-    address: "#{Faker::Address.street_address}, #{city_name}",
+    address: generate_urban_address(city_name),
     latitude: coords[:latitude],
     longitude: coords[:longitude],
-    created_at: Faker::Time.between(from: 6.months.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 6.months.ago, to: Time.now)
+    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
+    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
   )
 end
 
-20.times do # Alertes en campagne
+40.times do # Alertes en campagne
   coords = rural_coordinates
   Alert.create!(
     user_id: user_ids.sample,
-    address: Faker::Address.full_address,
+    address: generate_rural_address,
     latitude: coords[:latitude],
     longitude: coords[:longitude],
-    created_at: Faker::Time.between(from: 6.months.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 6.months.ago, to: Time.now)
+    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
+    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
   )
 end
 
@@ -243,3 +348,14 @@ puts "Votes: #{Vote.count}"
 puts "Commentaires: #{Comment.count}"
 puts "Alertes: #{Alert.count}"
 puts "Notifications: #{Notification.count}"
+
+# Vérifier la répartition des catégories
+puts "Répartition des incidents par catégorie :"
+Incident.group(:category).count.each do |category, count|
+  puts "#{category}: #{count} (#{((count.to_f / Incident.count) * 100).round(2)}%)"
+end
+
+# Mesurer le temps de fin et calculer la durée
+end_time = Time.now
+execution_time = end_time - start_time
+puts "Seedage terminé en #{execution_time.round(2)} secondes (#{execution_time.round(2) / 60} minutes)."
