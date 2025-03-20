@@ -10,3 +10,7 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+html {
+  font-size: 100%; // Utilise la taille par défaut du navigateur (souvent 16px)
+}
