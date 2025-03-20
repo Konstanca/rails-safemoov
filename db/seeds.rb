@@ -52,7 +52,9 @@ category_weights = {
   "Incendie" => 6,
   "Accident de la route" => 15,
   "Fraude électorale" => 1,
-  "Manifestation violente" => 3
+  "Manifestation violente" => 3,
+  "Disparition" => 2,
+  "Braquage de voiture" => 3
 }
 
 # Méthode pour sélectionner une catégorie pondérée
