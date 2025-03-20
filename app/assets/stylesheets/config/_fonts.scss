@@ -1,16 +1,41 @@
 // Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
 
 // Define fonts for body and headers
-$body-font: "Work Sans", "Helvetica", "sans-serif";
-$headers-font: "Nunito", "Helvetica", "sans-serif";
+$body-font: "Montserrat", "Helvetica", "Arial", "sans-serif";
+$headers-font: "Montserrat", "Helvetica", "Arial", "sans-serif";
+// $body-font: "Work Sans", "Helvetica", "sans-serif";
+// $headers-font: "Nunito", "Helvetica", "sans-serif";
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
-//   font-family: "Font Name";
-//   src: font-url('FontFile.eot');
-//   src: font-url('FontFile.eot?#iefix') format('embedded-opentype'),
-//        font-url('FontFile.woff') format('woff'),
+//   font-family: "Montserrat";
+//   src: font-url('MontserrMontserrat-Regularat-Regular.eot');
+//   src: font-url('Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+//        font-url('Montserrat-Regular.woff') format('woff'),
 //        font-url('FontFile.ttf') format('truetype')
 // }
 // $my-font: "Font Name";
+
+// Définition des tailles de police
+$font-size-base: 1rem; // 16 px
+$font-size-small: 0.875rem; // 16 px
+$font-size-large: 1.125rem; // 16 px
+$font-size-xl: 1.5rem; // 16 px
+
+// Application des polices globales
+body {
+  font-family: $body-font;
+  font-size: $font-size-base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $headers-font;
+  font-weight: 700;
+}
+
+p, span, li {
+  font-family: $body-font;
+  font-weight: 400;
+}
