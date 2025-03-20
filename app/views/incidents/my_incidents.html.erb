@@ -7,6 +7,7 @@
     <p><%= incident.description %></p>
     <p><%= incident.date.strftime("%d/%m/%Y %H:%M") %></p>
 
+    <%= link_to "Modifier", edit_incident_path(incident) %> |
     <%= link_to "Supprimer", incident_path(incident), method: :delete, data: { turbo_method: :delete, confirm: "Es-tu sûr de vouloir supprimer cet incident ?" } %>
   </div>
   <hr>

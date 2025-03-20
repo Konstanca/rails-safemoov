@@ -1,6 +1,6 @@
 class IncidentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_incident, only: [:destroy]
+  before_action :set_incident, only: [:destroy, :edit, :update]
 
   def new
     @incident = Incident.new
@@ -35,7 +35,16 @@ class IncidentsController < ApplicationController
   def show
   end
 
+  def edit
+    @incident
+  end
+
   def update
+    if @incident.update(incident_params)
+      redirect_to incidents_my_incidents_path, notice: "Incident mis à jour avec succès."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

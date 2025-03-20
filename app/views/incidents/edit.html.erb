@@ -1,0 +1,32 @@
+<h1>Modifier l'incident</h1>
+
+<%= form_with(model: @incident, local: true) do |form| %>
+  <div>
+    <%= form.label :title, "Titre" %>
+    <%= form.text_field :title, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :address, "Adresse" %>
+    <%= form.text_field :address, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :date, "Date et heure" %>
+    <%= form.datetime_select :date, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :category, "Catégorie" %>
+    <%= form.text_field :category, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description" %>
+    <%= form.text_area :description, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Mettre à jour l'incident" %>
+  </div>
+<% end %>
