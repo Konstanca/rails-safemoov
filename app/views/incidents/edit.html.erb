@@ -18,7 +18,7 @@
 
   <div>
     <%= form.label :category, "Catégorie" %>
-    <%= form.text_field :category, required: true %>
+    <%= form.select :category, @categories, { prompt: "Sélectionner une catégorie" } %>
   </div>
 
   <div>

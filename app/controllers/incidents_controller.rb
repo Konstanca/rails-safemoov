@@ -4,6 +4,7 @@ class IncidentsController < ApplicationController
 
   def new
     @incident = Incident.new
+    @categories = category_options
   end
 
   def create
@@ -17,7 +18,7 @@ class IncidentsController < ApplicationController
   end
 
   def my_incidents
-    @incidents = current_user.incidents
+    @incidents = current_user.incidents.includes(:comments)
   end
 
   def destroy
@@ -36,7 +37,7 @@ class IncidentsController < ApplicationController
   end
 
   def edit
-    @incident
+    @categories = category_options
   end
 
   def update
@@ -55,5 +56,27 @@ class IncidentsController < ApplicationController
 
   def incident_params
     params.require(:incident).permit(:title, :address, :date, :category, :description, :photo_url, :latitude, :longitude)
+  end
+
+  def category_options
+    {
+      "Attaque à main armée" => "Attaque à main armée",
+      "Assassinat" => "Assassinat",
+      "Enlèvement" => "Enlèvement",
+      "Prise d’otages" => "Prise d’otages",
+      "Éboulement" => "Éboulement",
+      "Inondation" => "Inondation",
+      "Tremblement de terre" => "Tremblement de terre",
+      "Vol à l’étalage" => "Vol à l’étalage",
+      "Agression" => "Agression",
+      "Trafic de drogue" => "Trafic de drogue",
+      "Émeute" => "Émeute",
+      "Incendie" => "Incendie",
+      "Accident de la route" => "Accident de la route",
+      "Fraude électorale" => "Fraude électorale",
+      "Manifestation violente" => "Manifestation violente",
+      "Disparition" => "Disparition",
+      "Braquage de voiture" => "Braquage de voiture"
+    }
   end
 end
