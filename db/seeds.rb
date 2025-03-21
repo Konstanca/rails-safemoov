@@ -178,8 +178,8 @@ end
 user_ids = User.pluck(:id)
 
 # Créer des incidents (4 000 au total, 80% en ville, 20% à la campagne, 80% terminés)
-puts "Création de 4 000 incidents (3 200 en ville, 800 en campagne, 80% terminés)..."
-3200.times do # Incidents en ville (80%)
+puts "Création de 1800 incidents (1500 en ville, 300 en campagne, 80% terminés)..."
+1500.times do # Incidents en ville (80%)
   city_name, city_coords = cities.to_a.sample
   coords = city_coordinates(city_coords)
   status = rand < 0.8 ? false : true # 80% terminés
@@ -191,7 +191,7 @@ puts "Création de 4 000 incidents (3 200 en ville, 800 en campagne, 80% termin�
     status: status,
     category: category,
     user_id: user_ids.sample,
-    photo_url: Faker::Placeholdit.image(size: "300x300", format: "jpg", background_color: :random, text: "Incident"),
+
     latitude: coords[:latitude],
     longitude: coords[:longitude],
     vote_count_plus: Faker::Number.between(from: 0, to: 20),
@@ -225,8 +225,8 @@ puts "Création de 4 000 incidents (3 200 en ville, 800 en campagne, 80% termin�
     )
   end
 
-  # Ajouter des commentaires (1 à 5 par incident)
-  rand(1..5).times do
+  # Ajouter des commentaires (1 à 3 par incident)
+  rand(1..3).times do
     Comment.create!(
       content: generate_comment(category),
       incident_id: incident.id,
@@ -237,7 +237,7 @@ puts "Création de 4 000 incidents (3 200 en ville, 800 en campagne, 80% termin�
   end
 end
 
-800.times do # Incidents à la campagne (20%)
+300.times do # Incidents à la campagne (20%)
   coords = rural_coordinates
   status = rand < 0.8 ? false : true # 80% terminés
   category = weighted_category(category_weights)
@@ -248,7 +248,7 @@ end
     status: status,
     category: category,
     user_id: user_ids.sample,
-    photo_url: Faker::Placeholdit.image(size: "300x300", format: "jpg", background_color: :random, text: "Incident"),
+
     latitude: coords[:latitude],
     longitude: coords[:longitude],
     vote_count_plus: Faker::Number.between(from: 0, to: 10),
@@ -294,61 +294,11 @@ end
   end
 end
 
-# Créer des alertes (80% en ville, 20% en campagne)
-puts "Création de 200 alertes..."
-160.times do # Alertes en ville
-  city_name, city_coords = cities.to_a.sample
-  coords = city_coordinates(city_coords)
-  Alert.create!(
-    user_id: user_ids.sample,
-    address: generate_urban_address(city_name),
-    latitude: coords[:latitude],
-    longitude: coords[:longitude],
-    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
-  )
-end
-
-40.times do # Alertes en campagne
-  coords = rural_coordinates
-  Alert.create!(
-    user_id: user_ids.sample,
-    address: generate_rural_address,
-    latitude: coords[:latitude],
-    longitude: coords[:longitude],
-    created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
-    updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
-  )
-end
-
-# Créer des notifications avec Geocoder
-puts "Création de notifications avec Geocoder..."
-Alert.all.each do |alert|
-  incidents_nearby = Incident.where(status: false).select do |incident|
-    distance = Geocoder::Calculations.distance_between(
-      [alert.latitude, alert.longitude],
-      [incident.latitude, incident.longitude],
-      units: :km
-    )
-    distance <= 5 # 5 km de rayon
-  end
-
-  incidents_nearby.each do |incident|
-    Notification.create!(
-      user_id: alert.user_id,
-      alert_id: alert.id,
-      created_at: Faker::Time.between(from: incident.created_at, to: Time.now),
-      updated_at: Faker::Time.between(from: incident.created_at, to: Time.now)
-    )
-  end
-end
-
 puts "Seed terminée !"
 puts "Utilisateurs: #{User.count}"
 puts "Incidents: #{Incident.count} (terminés: #{Incident.where(status: false).count})"
 puts "Votes: #{Vote.count}"
 puts "Commentaires: #{Comment.count}"
-puts "Alertes: #{Alert.count}"
 puts "Notifications: #{Notification.count}"
 
 # Vérifier la répartition des catégories
