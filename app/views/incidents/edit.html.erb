@@ -1,14 +1,13 @@
-<h1>Signaler un incident</h1>
+<h1>Modifier l'incident</h1>
 
 <%= form_with(model: @incident, local: true) do |form| %>
-
   <div>
-    <%= form.label :title, "Titre de l'incident" %>
+    <%= form.label :title, "Titre" %>
     <%= form.text_field :title, required: true %>
   </div>
 
   <div>
-    <%= form.label :address, "Addresse de l'incident" %>
+    <%= form.label :address, "Adresse" %>
     <%= form.text_field :address, required: true %>
   </div>
 
@@ -28,6 +27,6 @@
   </div>
 
   <div>
-    <%= form.submit "Créer l'incident" %>
+    <%= form.submit "Mettre à jour l'incident" %>
   </div>
 <% end %>

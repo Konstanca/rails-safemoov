@@ -1,0 +1,27 @@
+<h1>Mes incidents signalés</h1>
+
+<% @incidents.each do |incident| %>
+  <div>
+    <p><strong>Titre :</strong> <%= incident.title %></p>
+    <h3><%= incident.category %> - <%= incident.address %></h3>
+    <p><%= incident.description %></p>
+    <p><%= incident.date.strftime("%d/%m/%Y %H:%M") %></p>
+
+    <% if incident.comments.any? %>
+      <h4>Commentaires :</h4>
+      <ul>
+        <% incident.comments.each do |comment| %>
+          <li>
+            <strong><%= comment.user.email %> :</strong> <%= comment.content %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Aucun commentaire pour cet incident.</p>
+    <% end %>
+
+    <%= link_to "Modifier", edit_incident_path(incident) %> |
+    <%= link_to "Supprimer", incident_path(incident), method: :delete, data: { turbo_method: :delete, confirm: "Es-tu sûr de vouloir supprimer cet incident ?" } %>
+  </div>
+  <hr>
+<% end %>

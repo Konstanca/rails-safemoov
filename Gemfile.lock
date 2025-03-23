@@ -131,6 +131,8 @@ GEM
     drb (2.2.1)
     erubi (1.13.1)
     execjs (2.10.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.1-aarch64-linux-gnu)
     ffi (1.17.1-aarch64-linux-musl)
     ffi (1.17.1-arm-linux-gnu)
@@ -146,6 +148,8 @@ GEM
       csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.5.1)
+      activesupport (>= 7)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.3)
@@ -331,9 +335,11 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  faker
   font-awesome-sass (~> 6.1)
   geocoder
   importmap-rails (~> 1.2.3)
+  groupdate
   jbuilder
   pg (~> 1.1)
   puma (>= 5.0)

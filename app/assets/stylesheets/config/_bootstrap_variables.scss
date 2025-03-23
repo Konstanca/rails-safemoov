@@ -7,22 +7,53 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
-$font-size-base:         1rem;
+// $body-bg:                $light-gray;
+// $font-size-base:         1rem;
+
+// Fond général & couleurs globales
+$body-bg: $secondary-color;  // Utilisation du beige clair défini dans _colors.scss
+$body-color: $text-color; // Couleur principale du texte (gris foncé)
+
+// Couleurs Bootstrap personnalisées
+$primary: $primary-color;  // Bleu foncé SafeMoov
+$secondary: $secondary-color;  // Beige clair
+$danger: $danger-color;  // Rouge principal SafeMoov
+$warning: $moderate-gravity;  // Orange pour les alertes et incidents modérés
+$info: $low-gravity;  // Jaune pour gravité faible
+$success: $cta-blue;  // Bleu foncé utilisé pour les actions secondaires
+
+// Boutons & Formulaires
+$input-bg: $gray-light;  // Fond des champs de formulaire
+$input-border-color: $gray-light;  // Bordure des inputs
+$input-focus-border-color: $primary-color;  // Bordure au focus
 
 // Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+// $body-color: $gray;
+// $primary:    $blue;
+// $success:    $green;
+// $info:       $yellow;
+// $danger:     $red;
+// $warning:    $orange;
 
-// Buttons & inputs' radius
+// Bordures et arrondis - Buttons & inputs' radius
 $border-radius-sm:            .0625rem;
 $border-radius:               .125rem;
 $border-radius-lg:            .25rem;
 $border-radius-xl:            .5rem;
 $border-radius-xxl:           1rem;
 
+
+// Liens et interactions
+$link-color: $primary-color;  // Liens et hover en bleu foncé SafeMoov
+$link-hover-color: darken($link-color, 10%)
+
+// Ombres et effets visuels
+// $box-shadow-semi-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
+// $box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.01);
+// $box-shadow-lg: 0px 4px 6px rgba(0, 0, 0, 0.02);
+
 // Override other variables below!
+
+//:root {
+//  --box-shadow-semi-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
+//}

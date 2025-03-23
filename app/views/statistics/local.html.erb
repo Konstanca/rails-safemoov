@@ -1,0 +1,52 @@
+<div data-controller="statistics"
+     data-statistics-incident-id="<%= @incident.id %>"
+     data-statistics-radius="<%= @radius %>"
+     data-statistics-months="<%= @months %>"
+     data-statistics-stats="<%= @stats.to_json %>"
+     data-statistics-trends="<%= @trends.to_json %>">
+  <h1>Statistiques locales autour de "<%= @incident.title %>"</h1>
+
+  <div class="form-group mb-3">
+    <label for="radius" class="form-label">Rayon (km) :</label>
+    <input class="form-control"
+           type="number"
+           id="radius"
+           step="0.1"
+           min="0.1"
+           data-statistics-target="radius"
+           data-action="input->statistics#updateCharts"
+           value="<%= @radius %>">
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="months" class="form-label">Période (mois) :</label>
+    <select class="form-control"
+            id="months"
+            data-statistics-target="months"
+            data-action="change->statistics#updateCharts">
+      <option value="1" <%= "selected" if @months == 1 %>>1 mois</option>
+      <option value="3" <%= "selected" if @months == 3 %>>3 mois</option>
+      <option value="6" <%= "selected" if @months == 6 %>>6 mois</option>
+      <option value="12" <%= "selected" if @months == 12 %>>12 mois</option>
+    </select>
+  </div>
+
+  <h2 data-statistics-target="categoryTitle">
+    Répartition par catégorie (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
+  </h2>
+  <p data-statistics-target="totalIncidents">
+    Total des incidents : <%= @stats[:total] %>
+  </p>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="chart-container">
+        <canvas id="categoryChart" data-statistics-target="categoryChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <h2 data-statistics-target="trendsTitle">
+    Tendances des 5 principales catégories (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
+  </h2>
+  <div data-statistics-target="trendsContainer"></div>
+</div>
