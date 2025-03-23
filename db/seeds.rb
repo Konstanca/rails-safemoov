@@ -46,16 +46,15 @@ incidents = [
   { title: "Vol", description: "pickpocket", address: "Printemps, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873887, longitude: 2.3290507, vote_count_plus: 1, vote_count_minus: 10 },
 
   # Incidents cxréés par Jane Smith
-  { title: "Aggression", description: "aggression", address: "Parc Vincennes, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 12, vote_count_minus: 32 },
-  { title: "Aggression", description: "aggression", address: "Les quais de la Seine", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 5, vote_count_minus: 1 },
-  { title: "Aggression", description: "aggression", address: "Champs de Mars", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.374377, vote_count_plus: 10, vote_count_minus: 2 },
-  { title: "Insulte", description: "aggression", address: "Tour Eiffel, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 1, vote_count_minus: 10 },
+  { title: "Violence", description: "aggression", address: "Parc Vincennes, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 12, vote_count_minus: 32 },
+  { title: "Bagarre", description: "aggression", address: "Les quais de la Seine", status: true, category: "Vol", user_id: users[0].id, latitude: 48.860305, longitude: 2.331692, vote_count_plus: 5, vote_count_minus: 1 },
+  { title: "Insulte", description: "aggression", address: "Tour Eiffel, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.858092, longitude: 2.295361, vote_count_plus: 1, vote_count_minus: 10 },
 
   # Incidents créés par Mike Wilson
-  { title: "Vol", description: "pickpocket", address: "Metro tour Eiffel, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 12, vote_count_minus: 32 },
-  { title: "Vol", description: "pickpocket", address: "Metro gare de Lyon, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.844304, longitude: 2.374377 , vote_count_plus: 5, vote_count_minus: 1 },
-  { title: "Vol", description: "pickpocket", address: "Metro Champs Elysées, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.374377, vote_count_plus: 10, vote_count_minus: 2 },
-  { title: "Vol", description: "pickpocket", address: "Metro Chatelet, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.873145, longitude: 2.328431, vote_count_plus: 1, vote_count_minus: 10 },
+  { title: "Vol", description: "pickpocket", address: "Metro Ecole Militaire, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.854961, longitude: 2.306447, vote_count_plus: 12, vote_count_minus: 32 },
+  { title: "Vol", description: "braquage", address: "Metro gare de Lyon, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.844304, longitude: 2.374377 , vote_count_plus: 5, vote_count_minus: 1 },
+  { title: "Vol", description: "braquage", address: "Louvre, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.868822 , longitude:  2.309805, vote_count_plus: 10, vote_count_minus: 2 },
+  { title: "Vol", description: "pickpocket", address: "Metro Chatelet, Paris", status: true, category: "Vol", user_id: users[0].id, latitude: 48.8681267, longitude: 2.3652302, vote_count_plus: 1, vote_count_minus: 10 },
 
 ]
 

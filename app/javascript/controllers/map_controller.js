@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 import mapboxgl from 'mapbox-gl' // Don't forget this!
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder" // search in map
 
 // Connects to data-controller="map"
 export default class extends Controller {
@@ -21,6 +22,10 @@ export default class extends Controller {
     // private methods in javascript are prepend with #
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
+
+    // search in map
+    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl }))
   }
 
   #addMarkersToMap() {
@@ -37,12 +42,16 @@ export default class extends Controller {
         .setPopup(popup)
         .addTo(this.map)
     })
-
   }
 
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
     this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+  }
+
+  #addClustersToMap() {
+    // todo
+
   }
 }
