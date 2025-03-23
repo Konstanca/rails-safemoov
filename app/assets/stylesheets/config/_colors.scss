@@ -1,9 +1,9 @@
 // Define variables for your color scheme
 
 // Couleurs principales SafeMoov
-$primary-color: #29647C;  // Bleu foncé (utilisé pour les CTA secondaires et les textes)
+$primary-color: #29647C;  // Bleu foncé (CTA secondaires, titres, textes)
 $secondary-color: #F9F3E3;  // Beige clair (background général)
-$danger-color: #E73F4A;  // Rouge CTA principal (CTA, alertes critiques)
+$danger-color: #E73F4A;  // Rouge CTA principal pour remonter un incident (CTA, alertes critiques)
 
 // Couleurs des incidents par gravité
 $very-high-gravity: #A50021; // Très haute gravité (rouge foncé)
@@ -11,22 +11,31 @@ $high-gravity: #FF5733; // Haute gravité (rouge standard)
 $moderate-gravity: #F39C12; // Gravité modérée (orange)
 $low-gravity: #F4D03F; // Gravité faible (jaune)
 
-// Couleurs des éléments UI
+// Couleurs des éléments UI (pictos, fond inputs, etc.)
 $gray-dark: #505050;  // Gris foncé (icônes navbar, textes secondaires)
 $gray-light: #E0E0E0; // Gris clair (fonds des inputs, backgrounds secondaires)
-$cta-blue: #29647C;  // Bleu foncé (couleur des boutons CTA secondaires, liens, hover)
+$cta-blue: $primary-color;  // Bleu foncé (couleur des boutons CTA secondaires, liens, hover)
+$white: #ffffff;  // Pour le texte des boutons actifs
+$black: #000000;  // Pour certaines ombres éventuelles
 
 // Couleurs globales de la web app
 $body-bg: $secondary-color;  // Fond général de la webapp
-$text-color: $gray-dark;  // Couleur principale des textes
+$text-color: $gray-dark;  // Couleur principale des textes courants
 $link-color: $primary-color;  // Bleu foncé Safemoov - Couleur des liens et hover
-$input-bg: $gray-light;  // fond des inputs
+$input-bg: $gray-light;  // Fond des inputs des formulaires
 $icon-default: $gray-dark;  // Couleur des pictos et des icônes par défaut
 
 // Couleurs spécifiques aux boutons
-$btn-primary-bg: $danger-color;  // Fond des boutons d'action principaux
-$btn-secondary-bg: $cta-blue;  // Fond des boutons secondaires
+$btn-primary-bg: $danger-color;  // Bouton principal rouge pour remonter un incident
+$btn-secondary-bg: $primary-color;  // Bouton secondaire bleu
+$btn-text-color: $white;  // Couleur texte sur bouton actif
 $btn-hover-bg: darken($btn-secondary-bg, 10%); // Assombrir légèrement au hover
+
+// Ombes SCSS customisées (facultatif, à déclarer dans des variables si besoin)
+$box-shadow: 0 .5rem 1rem rgba($black, .15);
+$box-shadow-sm: 0 .125rem .25rem rgba($black, .075);
+$box-shadow-lg: 0 1rem 3rem rgba($black, .175);
+
 
 // For example:
 // $red: #FD1015;

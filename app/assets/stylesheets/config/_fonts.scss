@@ -1,5 +1,6 @@
 // Import Google fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import "colors";
 // @import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
 
 // Define fonts for body and headers
@@ -20,22 +21,38 @@ $headers-font: "Montserrat", "Helvetica", "Arial", "sans-serif";
 
 // Définition des tailles de police
 $font-size-base: 1rem; // 16 px
-$font-size-small: 0.875rem; // 16 px
-$font-size-large: 1.125rem; // 16 px
-$font-size-xl: 1.5rem; // 16 px
+$font-size-small: 0.875rem; // 14 px
+$font-size-large: 1.125rem; // 18 px
+$font-size-xl: 1.5rem; // 24 px
+$font-size-xxl: 1.75rem; // 28 px (pour le H1)
+
 
 // Application des polices globales
 body {
   font-family: $body-font;
   font-size: $font-size-base;
+  color: $text-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-family: $headers-font;
+  font-weight: 700; // Bold
+  font-size: $font-size-xxl;  // 28px
+  color: $primary-color;  // Bleu foncé
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+h2, h3, h4, h5, h6 {
   font-family: $headers-font;
   font-weight: 700;
+  font-size: $font-size-xl;  // 24px
+  color: $primary-color;
 }
 
 p, span, li {
   font-family: $body-font;
   font-weight: 400;
+  font-size: $font-size-base;
+  color: $text-color;
 }
