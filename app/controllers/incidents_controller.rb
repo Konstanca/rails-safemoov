@@ -1,6 +1,6 @@
 class IncidentsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_incident, only: [:destroy, :edit, :update]
+  before_action :authenticate_user!, except: [:show]
+  before_action :set_incident, only: [:show, :destroy, :edit, :update]
 
   def new
     @incident = Incident.new
@@ -33,6 +33,11 @@ class IncidentsController < ApplicationController
   end
 
   def show
+    @incident = Incident.find(params[:id])
+
+  #  if current_user && current_user.latitude && current_user.longitude
+  #    @distance = @incident.distance_to([current_user.latitude, current_user.longitude], :km).roun(1)
+  #  end
   end
 
   def edit

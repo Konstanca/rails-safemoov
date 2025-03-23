@@ -45,12 +45,13 @@ $border-radius-xxl:           1rem;
 
 // Liens et interactions
 $link-color: $primary-color;  // Liens et hover en bleu foncé SafeMoov
-$link-hover-color: darken($link-color, 10%)
+$link-hover-color: darken($link-color, 10%);
 
 // Ombres et effets visuels
-// $box-shadow-semi-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
-// $box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.01);
-// $box-shadow-lg: 0px 4px 6px rgba(0, 0, 0, 0.02);
+$box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+$box-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075);
+$box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175);
+$box-shadow-inset: inset 0 .125rem .25rem rgba(0, 0, 0, .075);
 
 // Override other variables below!
 

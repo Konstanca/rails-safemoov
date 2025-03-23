@@ -1,12 +1,71 @@
 .navbar-lewagon {
+  background-color: white;
+  padding: 0.75rem 1rem;
+  box-shadow: $box-shadow-sm;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  background: white;
-}
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+  .navbar-logo {
+    width: 70px;
+    height: auto;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .notifications {
+      position: relative;
+
+      i {
+        font-size: 1.25rem;
+        color: $gray-dark;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+
+      .badge {
+        position: absolute;
+        top: -0.4rem;
+        right: -0.5rem;
+        background-color: $danger-color;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.4rem;
+        font-weight: bold;
+      }
+    }
+
+    .profile-menu {
+      .avatar {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid $primary-color;
+
+        &:hover {
+          border-color: darken($primary-color, 10%);
+        }
+      }
+    }
+
+    .connexion-link {
+      a {
+        color: $primary-color;
+        font-weight: bold;
+        font-size: 1rem;
+
+        &:hover {
+        text-decoration: underline;
+        }
+      }
+    }
+  }
 }
