@@ -174,6 +174,7 @@ def generate_comment(category)
   reactions.sample
 end
 
+
 # Liste des utilisateurs pour éviter les nil
 user_ids = User.pluck(:id)
 
