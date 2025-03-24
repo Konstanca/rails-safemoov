@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-gem 'geocoder'
 
 ruby "3.3.5"
 
