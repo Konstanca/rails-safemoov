@@ -1,4 +1,6 @@
 class StatisticsController < ApplicationController
+  before_action :authenticate_user!, except: [:local]
+
   def local
     @incident = Incident.find(params[:incident_id])
     @radius = params[:radius]&.to_i || 5.0
