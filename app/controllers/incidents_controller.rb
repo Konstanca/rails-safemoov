@@ -1,6 +1,6 @@
 class IncidentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :set_incident, only: [:show, :destroy, :edit, :update]
+  before_action :set_incident, only: [:destroy, :edit, :update]
 
   def new
     @incident = Incident.new
@@ -9,6 +9,7 @@ class IncidentsController < ApplicationController
 
   def create
     @incident = current_user.incidents.build(incident_params)
+    @categories = category_options
 
     if @incident.save
       redirect_to incidents_my_incidents_path, notice: "Incident créé avec succès."
@@ -45,14 +46,6 @@ class IncidentsController < ApplicationController
   end
 
   # POST /incidents or /incidents.json
-  def create
-    @incident = Incident.new(incident_params)
-
-    if @incident.save
-      redirect_to @incident, notice: "Incident créé avec succès"
-    else
-      render :new, status: :unprocessable_entity
-    end
     # respond_to do |format|
     #   if @incident.save
     #     format.html { redirect_to @incident, notice: "Incident was successfully created." }
@@ -62,7 +55,6 @@ class IncidentsController < ApplicationController
     #     format.json { render json: @incident.errors, status: :unprocessable_entity }
     #   end
     # end
-  end
 
   def show
     @incident = Incident.find(params[:id])
@@ -126,7 +118,7 @@ class IncidentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def incident_params
-    params.require(:incident).permit(:title, :description, :address, :status, :category)
+    params.require(:incident).permit(:title, :date, :description, :address, :status, :category)
   end
 
 end

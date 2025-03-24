@@ -5,7 +5,13 @@
     <p><strong>Titre :</strong> <%= incident.title %></p>
     <h3><%= incident.category %> - <%= incident.address %></h3>
     <p><%= incident.description %></p>
-    <p><%= incident.date.strftime("%d/%m/%Y %H:%M") %></p>
+    <p>
+      <% if incident.date.present? %>
+        <%= incident.date.strftime("%d/%m/%Y %Hh%M") %>
+      <% else %>
+        <em>Date non renseignée</em>
+      <% end %>
+    </p>
 
     <% if incident.comments.any? %>
       <h4>Commentaires :</h4>
