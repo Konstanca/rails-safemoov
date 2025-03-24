@@ -2,7 +2,7 @@
   <div class="incident-card">
 
     <!-- Bouton retour -->
-    <a href="<% request.referer || root_path %>" class="back-button">
+    <a href="<%= incidents_path %>" class="back-button">
       <i class="fas fa-arrow-left"></i>
     </a>
 
@@ -58,9 +58,9 @@
 
     <!-- Stats locales -->
     <div class="incident-footer">
-      <a href="#" class="stats-button">
+      <%= link_to local_statistics_path(@incident.id), class: "stats-button" do %>
         <i class="fas fa-chart-bar"></i> Stats locales
-      </a>
+      <% end %>
     </div>
 
   </div>
