@@ -142,7 +142,7 @@ User.destroy_all
 
 # Désactiver les callbacks coûteux
 Incident.skip_callback(:validation, :after, :geocode)
-Incident.skip_callback(:create, :after, :trigger_notifications)
+Incident.skip_callback(:create, :after)
 
 ActiveRecord::Base.transaction do
   puts "Création de 50 utilisateurs..."
