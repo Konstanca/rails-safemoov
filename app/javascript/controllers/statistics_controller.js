@@ -94,7 +94,9 @@ export default class extends Controller {
       "Incendie": "\uf06d", // fa-fire
       "Accident de la route": "\uf5e1", // fa-car-crash
       "Fraude électorale": "\uf466", // fa-ballot-box
-      "Manifestation violente": "\uf0a1" // fa-bullhorn
+      "Manifestation violente": "\uf0a1", // fa-bullhorn
+      "Disparition": "\uf007", // fa-user
+      "Braquage de voiture": "\uf1b9", // fa-car-side
     };
 
     // Graphique des catégories
@@ -106,8 +108,8 @@ export default class extends Controller {
         datasets: [{
           label: "Nombre d’incidents par catégorie",
           data: Object.values(stats.by_category),
-          backgroundColor: "rgba(75, 192, 192, 0.2)",
-          borderColor: "rgba(75, 192, 192, 1)",
+          backgroundColor: "29647C", // Couleur de fond des barres
+          borderColor: "#29647C", // Couleur des bordures des barres",
           borderWidth: 1,
           barPercentage: 0.8 // Ajuster la largeur des barres pour un meilleur alignement
         }]
@@ -206,7 +208,7 @@ export default class extends Controller {
           label: category,
           data: monthsList.map(m => trendsData[category][m] || 0),
           fill: false,
-          borderColor: `hsl(${(index * 60) % 360}, 70%, 50%)`,
+          borderColor: "#29647C",
           tension: 0.1
         };
 

@@ -3,12 +3,17 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   resources :incidents, only: [:show, :index, :new, :create, :edit, :update, :destroy] do
+    resources :comments, only: [:create]
     collection do
       get :my_incidents
     end
+    member do
+      post :confirm
+      post :contest
+    end
   end
- # get 'incidents/my_incidents', to: 'incidents#my_incidents'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  resources :comments, only: [:index]
 
   resources :alerts, only: [:index]
 
