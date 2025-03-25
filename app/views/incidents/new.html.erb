@@ -1,5 +1,10 @@
 <div class="incident-form-container">
   <div class="form-card">
+    <!-- Bouton retour -->
+    <a href="<%= incidents_path %>" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+
     <h1>Signaler un incident</h1>
 
     <%= form_with(model: @incident, local: true) do |form| %>
