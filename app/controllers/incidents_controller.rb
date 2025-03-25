@@ -40,7 +40,9 @@ class IncidentsController < ApplicationController
         lat: incident.latitude,
         lng: incident.longitude,
         info_window_html: render_to_string(partial: "info_window", locals: {incident: incident}),
-        marker_html: render_to_string(partial: "marker")
+        marker_html: render_to_string(partial: "marker"),
+        category: incident.category
+
       }
     end
   end

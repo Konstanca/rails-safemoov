@@ -29,16 +29,35 @@ export default class extends Controller {
   }
 
   #addMarkersToMap() {
+    // Définir les icones FontAwesome
+    const categoryIconsClasses = {
+      "Attaque à main armée": "fas fa-people-robbery",
+      "Assassinat": "fas fa-skull",
+      "Enlèvement": "fa-solid fa-hands-bound",
+      "Prise d’otages": "fa-solid fa-hands-bound",
+      "Éboulement": "fa-solid fa-volcano",
+      "Inondation": "fa-solid fa-volcano",
+      "Tremblement de terre": "fa-solid fa-volcano",
+      "Vol à l’étalage": "fas fa-people-robbery",
+      "Agression": "fas fa-people-robbery",
+      "Trafic de drogue": "fas fa-cannabis",
+      "Émeute": "fas fa-users",
+      "Incendie": "fas fa-fire",
+      "Accident de la route": "fas fa-car-crash",
+      "Fraude électorale": "fas fa-ballot-box",
+      "Manifestation violente": "fas fa-bullhorn",
+      "Disparition": "fa-solid fa-person-circle-question",
+      "Braquage de voiture": "fas fa-people-robbery"
+    };
     this.markersValue.forEach((marker) => {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
-
-      // Create a HTML element for your custom marker
+      // marqueur  FontAwesome
       const customMarker = document.createElement("div")
-      customMarker.innerHTML = marker.marker_html
-
-      // Pass the element as an argument to the new marker
+      customMarker.className = "marker"
+      const iconClass = categoryIconsClasses[marker.category] || "fas fa-exclamation-circle"
+      customMarker.innerHTML = `<i class="${iconClass}" style="font-size: 24px; color:rgb(48, 48, 48);"></i>`
       new mapboxgl.Marker(customMarker)
-        .setLngLat([ marker.lng, marker.lat ])
+        .setLngLat([marker.lng, marker.lat])
         .setPopup(popup)
         .addTo(this.map)
     })
