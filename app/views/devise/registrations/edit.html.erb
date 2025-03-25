@@ -18,6 +18,9 @@
                       required: false %>
           <%= f.input :nickname, label: "Pseudo",
                       required: false %>
+          <%= f.input :address, label: "Adresse",
+                      as: :text,
+                      required: false %>
           <%= f.input :password, label: "Mot de passe",
                       required: false,
                       input_html: { autocomplete: "new-password" } %>
