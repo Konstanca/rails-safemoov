@@ -12,7 +12,7 @@ class IncidentsController < ApplicationController
     @categories = category_options
 
     if @incident.save
-      redirect_to incidents_my_incidents_path, notice: "Incident créé avec succès."
+      redirect_to my_incidents_incidents_path, notice: "Incident créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -70,7 +70,7 @@ class IncidentsController < ApplicationController
 
   def update
     if @incident.update(incident_params)
-      redirect_to incidents_my_incidents_path, notice: "Incident mis à jour avec succès."
+      redirect_to my_incidents_incidents_path, notice: "Incident mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
