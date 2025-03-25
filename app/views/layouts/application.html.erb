@@ -17,26 +17,5 @@
 <%= render "shared/flashes" %>
 
     <%= yield %>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-mE_EWkOHFCdCopcKUg62K74OxI1G80I&libraries=places&language=fr"></script>
-    <script>
-      document.addEventListener("turbo:load", function () {
-        const input = document.querySelector("#autocomplete");
-
-        if (!input) return;
-
-        const options = {
-          componentRestrictions: { country: "ec" }, // Limite à l’Équateur
-          fields: ["formatted_address", "geometry", "name"]
-        };
-
-        const autocomplete = new google.maps.places.Autocomplete(input, options);
-
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          console.log("Adresse sélectionnée :", place.formatted_address);
-        });
-      });
-    </script>
   </body>
 </html>
