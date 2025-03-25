@@ -49,7 +49,13 @@
         <% end %>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <%= link_to "Editer mon profil", edit_user_registration_path , class: "dropdown-item" %>
+          <%= link_to "Mes incidents créés (#{current_user.incidents.count})", my_incidents_incidents_path, class: "dropdown-item" %>
+          <%# Ajouter liens quand feature faite %>
+          <%= link_to "Mes commentaires (#{current_user.comments.count})", "#", class: "dropdown-item" %>
+          <hr>
+          <%= link_to "Mes zones surveillées (#{current_user.alerts.count})", "#", class: "dropdown-item"  %>
+          <hr>
+          <%= link_to "Editer mon profil", edit_user_registration_path, class: "dropdown-item" %>
           <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
         </div>
       </div>
