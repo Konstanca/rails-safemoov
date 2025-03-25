@@ -54,10 +54,17 @@
     border-top: 1px solid $gray-light;
     padding-top: 1rem;
 
-    h1, h2 {
+    h1{
       font-size: $font-size-xxl;
       font-weight: 700;
       color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $gray-dark;
       margin-bottom: 0.5rem;
     }
 

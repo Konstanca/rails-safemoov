@@ -2,7 +2,7 @@
   <div class="incident-card">
 
     <!-- Bouton retour -->
-    <a href="<%= incidents_path %>" class="back-button">
+    <a href="<%= incident_path(@incident) %>" class="back-button">
       <i class="fas fa-arrow-left"></i>
     </a>
 
@@ -12,7 +12,9 @@
         data-statistics-months="<%= @months %>"
         data-statistics-stats="<%= @stats.to_json %>"
         data-statistics-trends="<%= @trends.to_json %>">
-      <h1>Statistiques locales autour de "<%= @incident.title %>"</h1>
+      <div class="incident-details">
+        <h1>Statistiques locales autour de "<%= @incident.title %>"</h1>
+      </div>
 
       <div class="form-group mb-3">
         <label for="radius" class="form-label">Rayon (km) :</label>
@@ -39,9 +41,14 @@
         </select>
       </div>
 
-      <h2 data-statistics-target="categoryTitle">
-        Répartition par catégorie (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
-      </h2>
+      <br>
+
+      <div class="incident-details">
+        <h2 data-statistics-target="categoryTitle">
+          Répartition par catégorie (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
+        </h2>
+      </div>
+
       <p data-statistics-target="totalIncidents">
         Total des incidents : <%= @stats[:total] %>
       </p>
@@ -53,9 +60,11 @@
         </div>
       </div>
 
-      <h2 data-statistics-target="trendsTitle">
-        Tendances des 5 principales catégories (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
-      </h2>
+      <div class="incident-details">
+        <h2 data-statistics-target="trendsTitle">
+          Tendances des 5 principales catégories (dernier<%= @months > 1 ? "s" : "" %> <%= @months %> mois)
+        </h2>
+      </div>
       <div data-statistics-target="trendsContainer"></div>
     </div>
   </div>
