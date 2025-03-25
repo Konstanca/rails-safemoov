@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_25_075556) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_25_093712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,8 +44,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_25_075556) do
     t.string "photo_url"
     t.float "latitude"
     t.float "longitude"
-    t.integer "vote_count_plus"
-    t.integer "vote_count_minus"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "date"

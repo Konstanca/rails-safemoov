@@ -147,11 +147,12 @@ Incident.skip_callback(:create, :after)
 ActiveRecord::Base.transaction do
   puts "Création de 50 utilisateurs..."
   50.times do |i|
-    User.create!(
+    user = User.create!(
       email: Faker::Internet.unique.email,
       password: "password123",
       created_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
     )
+    puts "Utilisateur #{i + 1} créé : #{user.email}" # Ajout du puts pour chaque utilisateur
   end
 
   user_ids = User.pluck(:id)
@@ -187,16 +188,14 @@ ActiveRecord::Base.transaction do
       user_id: user_ids.sample,
       latitude: coords[:latitude],
       longitude: coords[:longitude],
-      vote_count_plus: Faker::Number.between(from: 0, to: 20),
-      vote_count_minus: Faker::Number.between(from: 0, to: 10),
       created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
       updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
     )
     puts "Incident #{i + 1} créé : #{incident.title}"
 
     available_users = user_ids.shuffle[0..29]
-    votes_plus = [incident.vote_count_plus, available_users.size].min
-    votes_minus = [incident.vote_count_minus, available_users.size - votes_plus].min
+    votes_plus = Faker::Number.between(from: 0, to: 20)
+    votes_minus = Faker::Number.between(from: 0, to: 10)
 
     votes_plus.times do
       Vote.create!(
@@ -248,16 +247,14 @@ ActiveRecord::Base.transaction do
       user_id: user_ids.sample,
       latitude: coords[:latitude],
       longitude: coords[:longitude],
-      vote_count_plus: Faker::Number.between(from: 0, to: 10),
-      vote_count_minus: Faker::Number.between(from: 0, to: 5),
       created_at: Faker::Time.between(from: 1.year.ago, to: Time.now),
       updated_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
     )
     puts "Incident rural #{i + 1} créé : #{incident.title}"
 
     available_users = user_ids.shuffle[0..19]
-    votes_plus = [incident.vote_count_plus, available_users.size].min
-    votes_minus = [incident.vote_count_minus, available_users.size - votes_plus].min
+    votes_plus = Faker::Number.between(from: 0, to: 10)
+    votes_minus = Faker::Number.between(from: 0, to: 5)
 
     votes_plus.times do
       Vote.create!(
