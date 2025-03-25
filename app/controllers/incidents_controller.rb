@@ -1,6 +1,6 @@
 class IncidentsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_incident, only: [:show, :destroy, :edit, :update]
+  before_action :set_incident, only: [:show, :destroy, :edit, :update, :confirm, :contest]
 
   def new
     @incident = Incident.new
@@ -12,7 +12,7 @@ class IncidentsController < ApplicationController
     @categories = category_options
 
     if @incident.save
-      redirect_to incidents_my_incidents_path, notice: "Incident créé avec succès."
+      redirect_to my_incidents_incidents_path, notice: "Incident créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -70,10 +70,18 @@ class IncidentsController < ApplicationController
 
   def update
     if @incident.update(incident_params)
-      redirect_to incidents_my_incidents_path, notice: "Incident mis à jour avec succès."
+      redirect_to my_incidents_incidents_path, notice: "Incident mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def confirm
+    create_or_update_vote(true)
+  end
+
+  def contest
+    create_or_update_vote(false)
   end
 
   private
@@ -106,6 +114,28 @@ class IncidentsController < ApplicationController
       "Disparition" => "Disparition",
       "Braquage de voiture" => "Braquage de voiture"
     }
+  end
+
+  def create_or_update_vote(vote_value)
+    return redirect_to new_user_session_path, alert: "Vous devez être connecté pour voter." unless user_signed_in?
+
+    existing_vote = @incident.votes.find_by(user: current_user)
+
+    if existing_vote
+      existing_vote.update(vote: vote_value)
+      flash[:notice] = "Votre vote a été mis à jour."
+    else
+      @incident.votes.create(user: current_user, vote: vote_value)
+      flash[:notice] = "Votre vote a été enregistré."
+    end
+
+    redirect_to @incident
+  rescue ActiveRecord::RecordNotUnique
+    flash[:alert] = "Vous avez déjà voté pour cet incident."
+    redirect_to @incident
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:alert] = e.message
+    redirect_to @incident
   end
 
 end

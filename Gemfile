@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "flatpickr"
 
 ruby "3.3.5"
 

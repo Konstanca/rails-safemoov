@@ -74,4 +74,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Autoriser les hôtes ngrok
+  # Copiez l'URL (par exemple, https://f44d-31-35-126-75.ngrok-free.app)
+  # dans le .env : export NGROK_HOST="f44d-31-35-126-75.ngrok-free.app"
+  config.hosts << ENV["NGROK_HOST"] if ENV["NGROK_HOST"]
 end
