@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     collection do
       get :my_incidents
     end
+    member do
+      post :confirm
+      post :contest
+    end
   end
  # get 'incidents/my_incidents', to: 'incidents#my_incidents'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
