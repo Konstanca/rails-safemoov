@@ -19,20 +19,20 @@
     <!-- Informations de l'incident -->
     <div class="incident-details">
       <h1><%= @incident.title %></h1>
-      <div class="section-separator"></div>
+    <div class="section-separator"></div>
 
-      <% if @distance.present? %>
-        <p class="incident-meta">
-          <strong>Distance :</strong> <%= @distance < 1 ? "#{(@distance * 1000).to_i} mètres" : "#{@distance} km" %>
-        </p>
-      <% end %>
+    <% if @distance.present? %>
+      <p class="incident-meta">
+        <strong>Distance :</strong> <%= @distance < 1 ? "#{(@distance * 1000).to_i} mètres" : "#{@distance} km" %>
+      </p>
+    <% end %>
 
-      <p class="incident-meta"><strong>Lieu :</strong> <%= @incident.address %></p>
+    <p class="incident-meta"><strong>Lieu :</strong> <%= @incident.address %></p>
 
-      <% if @incident.date.present? %>
-        <p class="incident-meta"><strong>Date :</strong> <%= @incident.date.strftime("%d/%m/%Y") %></p>
-        <p class="incident-meta"><strong>Heure :</strong> <%= @incident.date.strftime("%H:%M") %></p>
-      <% end %>
+    <% if @incident.date.present? %>
+      <p class="incident-meta"><strong>Date :</strong> <%= @incident.date.strftime("%d/%m/%Y") %></p>
+      <p class="incident-meta"><strong>Heure :</strong> <%= @incident.date.strftime("%H:%M") %></p>
+    <% end %>
 
       <p class="incident-description"><%= @incident.description %></p>
     </div>
@@ -71,8 +71,10 @@
 
     <!-- Formulaire de commentaire -->
     <div class="incident-comments">
-      <textarea placeholder="Laisser un commentaire..."></textarea>
-      <button class="send-button">Envoyer</button>
+      <%= simple_form_for [@incident, Comment.new], html: { class: "comment-form" } do |f| %>
+        <%= f.input :content, label: false, placeholder: "Laisser un commentaire..." %>
+        <%= f.button :submit, "Envoyer", class: "send-button" %>
+      <% end %>
     </div>
 
     <!-- Stats locales -->
@@ -82,5 +84,27 @@
       <% end %>
     </div>
 
+    <div class="section-separator"></div>
+
+    <!-- Commentaires -->
+    <div class="incident-details">
+      <h1>Commentaires</h1>
+    </div>
+    <div>
+      <% if @incident.comments.any? %>
+        <% @incident.comments.order(created_at: :desc).each do |comment| %>
+          <div class="card">
+            <div class="incident-meta">
+              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
+              <span><%= comment.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+            </div>
+            <p><%= comment.content %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="no-comments">Aucun commentaire pour le moment.</p>
+      <% end %>
+    </div>
   </div>
+
 </div>
