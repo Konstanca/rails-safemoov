@@ -7,3 +7,31 @@
   text-align: center;
   font-family: "Open Sans", sans-serif;
 }
+
+.report-button-container {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem 1.25rem;
+  border-radius: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
