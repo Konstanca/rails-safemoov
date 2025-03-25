@@ -126,6 +126,10 @@
       &.active {
         background-color: $primary-color;
         color: $white;
+        span {
+          color: $white;
+        }
+
 
         i {
           color: $white;
@@ -149,6 +153,9 @@
       &.active {
         background-color: $gray-dark;
         color: $white;
+        span {
+          color: $white;
+        }
 
         i {
           color: $white;
