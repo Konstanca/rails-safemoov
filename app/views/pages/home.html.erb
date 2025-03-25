@@ -1,3 +1,66 @@
-<h1>Pages#home</h1>
-<%= link_to "MAP", incidents_path  %>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="home-container">
+  <!-- Titre principal et introduction -->
+  <div class="home-header">
+    <h1>Bienvenue sur SafeMoov !</h1>
+    <p>Découvrez nos principales fonctionnaliés, pour plus de prévention et sécurité pour tous.</p>
+  </div>
+
+  <!-- Bouton d'appel à l'action -->
+  <div class="home-action">
+    <%= link_to "Voir la carte", incidents_path, class: "cta-link" %>
+  </div>
+
+  <!-- Carrousel Bootstrap -->
+  <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicateurs du carousel -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+
+    <!-- Slides du carrousel-->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= image_tag "onboarding-step-2.png", class: "d-block w-100", alt: "Découverte de SafeMoov" %>
+        <div class="carousel-caption">
+          <h5>Visualisez les incidents</h5>
+          <p>à proximité en temps réel.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "onboarding-step-1.png", class: "d-block w-100", alt: "Signalement d'un incident" %>
+        <div class="carousel-caption">
+          <h5>Signalez un incident</h5>
+          <p>et alertez la communauté.</p>
+        </div>
+        </div>
+      <div class="carousel-item">
+        <%= image_tag "onboarding-step-3.png", class: "d-block w-100", alt: "Votez, Confirmez ou Contestez !" %>
+        <div class="carousel-caption">
+          <h5>Confirmez, Contestez </h5>
+          <p>ou Commentez les incidents.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "onboarding-step-4.png", class: "d-block w-100", alt: "Statistiques locales" %>
+        <div class="carousel-caption">
+          <h5>Analysez les Stats locales</h5>
+          <p>et sécurisez vos trajets.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Contrôles du carrousel -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Précédent</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Suivant</span>
+    </button>
+  </div>
+</div>

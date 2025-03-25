@@ -1,1 +1,115 @@
-// Specific CSS for your home-page
+// Styles spécifiques pour la page d'accueil
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100vh; // Prend toute la hauteur de l'écran.
+  overflow: hidden; // Empêche le scroll.
+  padding: 1rem 0.5rem;
+  // justify-content: space-between;
+}
+
+.home-header {
+  margin-top: 1rem;
+
+  h1 {
+    font-size: 1.5rem; // Taille du titre
+    color: $primary-color
+  }
+
+  p {
+    font-size: 1rem;
+    color: $text-color;
+    margin-bottom: 1.5rem; // Ajout d'espacement en bas du texte.
+  }
+}
+
+.home-action {
+  margin: 1rem 0; // Ajout  d'espacement autour du bouton.
+
+  .cta-link {
+    font-size: 1rem;
+    font-weight: bold;
+    color: $btn-secondary-bg;
+    text-decoration: none;
+    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    background-color: $white;
+
+    &:hover {
+      background-color: $btn-hover-bg;
+      color: $white
+    }
+  }
+}
+
+// Styles pour le Carrousel //
+#homeCarousel {
+  width: 100%;
+  max-width: 400px;
+  height: 50vh; // Ajustement de la hauteur.
+ // display: flex;
+// justify-content: center;
+// align-items: center;
+}
+
+// Conteneur du carrousel
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+}
+
+// Chaque slide
+.carousel-item {
+  position: relative;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // text-align: center;
+  // transition: transform 0.5s ease-in-out;
+}
+
+.carousel-caption {
+  bottom: 1rem;
+  background-color: rgba($primary-color, 0.8);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  h5 {
+    font-size: 1rem;
+    color: $white;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: $white;
+  }
+}
+
+// Positionnement des flèches //
+.carousel-control-prev,
+.carousel-control-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: $primary-color;
+    border-radius: 50%;
+  }
+}
+
+// Style des indicateurs //
+.carousel-indicators {
+  bottom: 0.5rem;
+
+  button {
+    background-color: $primary-color;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+  }
+}
