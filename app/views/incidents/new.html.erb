@@ -1,33 +1,37 @@
-<h1>Signaler un incident</h1>
+<div class="incident-form-container">
+  <div class="form-card">
+    <h1>Signaler un incident</h1>
 
-<%= form_with(model: @incident, local: true) do |form| %>
+    <%= form_with(model: @incident, local: true) do |form| %>
 
-  <div>
-    <%= form.label :title, "Titre de l'incident" %>
-    <%= form.text_field :title, required: true %>
+    <div>
+      <%= form.label :title, "Titre de l'incident" %>
+      <%= form.text_field :title, required: true %>
+    </div>
+
+    <div>
+      <%= form.label :address, "Adresse (Équateur)" %>
+      <%= form.text_field :address, id: "autocomplete", required: true, value: @incident.address, autocomplete: "off" %>
+    </div>
+
+    <div>
+      <%= form.label :date, "Date et heure" %>
+      <%= form.text_field :date, id: "incident_date", class: "flatpickr", autocomplete: "off", value: @incident.date&.strftime("%Y-%m-%d %H:%M") %>
+    </div>
+
+    <div>
+      <%= form.label :category, "Catégorie" %>
+      <%= form.select :category, @categories, { prompt: "Sélectionner une catégorie" } %>
+    </div>
+
+    <div>
+      <%= form.label :description, "Description" %>
+      <%= form.text_area :description, required: true %>
+    </div>
+
+    <div>
+      <%= form.submit "Créer l'incident", class: "incident-actions" %>
+    </div>
+  <% end %>
   </div>
-
-  <div>
-    <%= form.label :address, "Addresse de l'incident" %>
-    <%= form.text_field :address, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :date, "Date et heure" %>
-    <%= form.datetime_select :date, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :category, "Catégorie" %>
-    <%= form.select :category, @categories, { prompt: "Sélectionner une catégorie" } %>
-  </div>
-
-  <div>
-    <%= form.label :description, "Description" %>
-    <%= form.text_area :description, required: true %>
-  </div>
-
-  <div>
-    <%= form.submit "Créer l'incident" %>
-  </div>
-<% end %>
+</div>

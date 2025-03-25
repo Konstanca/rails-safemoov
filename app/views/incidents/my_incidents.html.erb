@@ -1,4 +1,6 @@
-<h1>Mes incidents signalés</h1>
+<div class="incident-form-container">
+  <div class="form-card">
+<h1>Mes incidents signalés (<%= @incidents.count %>)</h1>
 
 <% @incidents.each do |incident| %>
   <div>
@@ -31,3 +33,5 @@
   </div>
   <hr>
 <% end %>
+</div>
+</div>
