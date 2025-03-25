@@ -105,7 +105,7 @@ def generate_incident_description(category)
   when "Attaque à main armée" then "Un groupe armé a attaqué #{Faker::Company.name} près de #{Faker::Address.street_name}. Les assaillants ont pris la fuite avec #{Faker::Number.between(from: 1000, to: 10000)} dollars."
   when "Assassinat" then "Un assassinat a eu lieu dans un quartier résidentiel. La victime, #{Faker::Name.name}, a été retrouvée près de #{Faker::Address.street_name}."
   when "Enlèvement" then "Un enlèvement a été signalé : #{Faker::Name.name} a été vu pour la dernière fois près de #{Faker::Address.street_name}."
-  when "Prise d’otages" then "Une prise d’otages est en cours dans un bâtiment de #{Faker::Company.name}. Les forces de l’ordre sont sur place."
+  when "Prise d’otages" then "Une prise d’otages est en cours dans un bâtiment de #{Faker::Company.name}. Les forces de l’ordre sont sur comptes."
   when "Éboulement" then "Un éboulement a bloqué la route principale près de #{Faker::Address.street_name}, causant des dégâts matériels."
   when "Inondation" then "Une inondation a submergé plusieurs maisons dans la région de #{Faker::Address.street_name}. Les secours sont en route."
   when "Tremblement de terre" then "Un tremblement de terre de magnitude #{Faker::Number.between(from: 3, to: 7)}.#{Faker::Number.between(from: 0, to: 9)} a frappé la région, causant des dégâts."
@@ -145,18 +145,19 @@ Incident.skip_callback(:validation, :after, :geocode)
 Incident.skip_callback(:create, :after)
 
 ActiveRecord::Base.transaction do
-  puts "Création de 50 utilisateurs..."
+  puts "Création de 50 utilisateurs avec nicknames..."
   50.times do |i|
     user = User.create!(
       email: Faker::Internet.unique.email,
       password: "password123",
+      nickname: Faker::Internet.unique.username(specifier: 5..10), # Génère un pseudo unique de 5 à 10 caractères
       created_at: Faker::Time.between(from: 1.year.ago, to: Time.now)
     )
-    puts "Utilisateur #{i + 1} créé : #{user.email}" # Ajout du puts pour chaque utilisateur
+    puts "Utilisateur #{i + 1} créé : #{user.email} (Nickname: #{user.nickname})"
   end
 
   user_ids = User.pluck(:id)
-  puts "Création de 600 incidents (500 en ville, 100 en campagne)..."
+  puts "Création de 1200 incidents (1000 en ville, 200 en campagne)..."
 
   cities = {
     "Quito" => { latitude: -0.1807, longitude: -78.4678 }, "Guayaquil" => { latitude: -2.1894, longitude: -79.8891 },
@@ -173,7 +174,8 @@ ActiveRecord::Base.transaction do
     "Disparition" => 2, "Braquage de voiture" => 3
   }
 
-  500.times do |i|
+  # Incidents urbains (1000)
+  1000.times do |i|
     puts "Début incident urbain #{i + 1}"
     city_name, city_coords = cities.to_a.sample
     coords = city_coordinates(city_coords)
@@ -233,7 +235,8 @@ ActiveRecord::Base.transaction do
     puts "#{i + 1} incidents urbains créés" if (i + 1) % 10 == 0
   end
 
-  100.times do |i|
+  # Incidents ruraux (200)
+  200.times do |i|
     puts "Début incident rural #{i + 1}"
     coords = rural_coordinates
     status = rand < 0.8 ? false : true
