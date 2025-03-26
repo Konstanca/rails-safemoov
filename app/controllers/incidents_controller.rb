@@ -24,10 +24,10 @@ class IncidentsController < ApplicationController
 
   def destroy
     if @incident.user == current_user
-      @incident.destroy
-      redirect_to incidents_my_incidents_path, notice: "Incident supprimé."
+      @incident.destroy!
+      redirect_to my_incidents_incidents_path, notice: "Incident supprimé."
     else
-      redirect_to incidents_my_incidents_path, alert: "Action non autorisée."
+      redirect_to my_incidents_incidents_path, alert: "Action non autorisée."
     end
   end
 
