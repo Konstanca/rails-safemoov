@@ -1,5 +1,7 @@
 // app/javascript/controllers/statistics_controller.js
 import { Controller } from "@hotwired/stimulus";
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 export default class extends Controller {
   static targets = ["radius", "months", "categoryChart", "categoryTitle", "trendsContainer", "trendChart", "trendsTitle", "totalIncidents"];
