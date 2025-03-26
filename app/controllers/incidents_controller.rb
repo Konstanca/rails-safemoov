@@ -32,7 +32,7 @@ class IncidentsController < ApplicationController
   end
 
   def index
-    @incidents = Incident.where(status: true || nil)
+    @incidents = Incident.where(status: [true, nil])
 
     # The `geocoded` scope filters only incidents with coordinates
     @markers = @incidents.geocoded.map do |incident|
