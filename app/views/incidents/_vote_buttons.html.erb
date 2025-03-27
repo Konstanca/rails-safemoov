@@ -1,0 +1,28 @@
+<div id="vote-buttons" class="incident-actions">
+  <% if user_signed_in? %>
+    <%= link_to confirm_incident_path(@incident),
+        data: { turbo_method: :post },
+        class: "confirm-button #{current_user && @incident.votes.exists?(user: current_user, vote: true) ? 'voted' : ''}" do %>
+      <%= current_user && @incident.votes.exists?(user: current_user, vote: true) ? "Confirmé" : "Confirmer" %>
+      <i class="fas fa-thumbs-up"></i>
+      <span><%= @incident.confirmed_votes_count %></span>
+    <% end %>
+
+    <%= link_to contest_incident_path(@incident),
+        data: { turbo_method: :post },
+        class: "contest-button #{current_user && @incident.votes.exists?(user: current_user, vote: false) ? 'voted' : ''}" do %>
+      <%= current_user && @incident.votes.exists?(user: current_user, vote: false) ? "Contesté" : "Contester" %>
+      <i class="fas fa-thumbs-down"></i>
+      <span><%= @incident.contested_votes_count %></span>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path, class: "confirm-button" do %>
+      Confirmer <i class="fas fa-thumbs-up"></i>
+      <span><%= @incident.confirmed_votes_count %></span>
+    <% end %>
+    <%= link_to new_user_session_path, class: "contest-button" do %>
+      Contester <i class="fas fa-thumbs-down"></i>
+      <span><%= @incident.contested_votes_count %></span>
+    <% end %>
+  <% end %>
+</div>

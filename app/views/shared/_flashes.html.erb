@@ -1,14 +1,17 @@
-<% if notice %>
-  <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
-    <%= notice %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-    </button>
-  </div>
-<% end %>
-<% if alert %>
-  <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-    <%= alert %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-    </button>
-  </div>
-<% end %>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.toast').forEach(toast => toast.remove());
+    toastr.clear();
+    <% flash.each do |type, message| %>
+      <% toastr_type = { notice: "success", alert: "error" }[type.to_sym] || type %>
+      toastr.<%= toastr_type %>("<%= j message %>");
+    <% end %>
+    setTimeout(() => {
+      fetch('/clear_flashes', {
+        method: 'POST',
+        headers: { 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content }
+      })
+      .catch(error => console.error("Erreur lors de la vidange des flashs :", error));
+    }, 100);
+  });
+</script>
