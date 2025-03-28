@@ -61,7 +61,7 @@
     <!-- Formulaire de commentaire -->
     <% if user_signed_in? %>
       <div class="incident-comments">
-        <%= render partial: "incidents/comment_form", locals: { incident: @incident, comment: nil } %>
+        <%= render partial: "incidents/comment_form", locals: { incident: @incident, comment: Comment.new } %>
       </div>
     <% end %>
 

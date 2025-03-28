@@ -59,11 +59,7 @@ class IncidentsController < ApplicationController
     # end
 
   def show
-    @incident = Incident.find(params[:id])
-
-  #  if current_user && current_user.latitude && current_user.longitude
-  #    @distance = @incident.distance_to([current_user.latitude, current_user.longitude], :km).roun(1)
-  #  end
+    distance
   end
 
   def edit
@@ -81,7 +77,7 @@ class IncidentsController < ApplicationController
   def confirm
     create_or_update_vote(true)
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident }) }
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident}) }
       format.html { redirect_to @incident, notice: "Vote enregistré." }
     end
   end
@@ -137,6 +133,14 @@ class IncidentsController < ApplicationController
     else
       @incident.votes.create(user: current_user, vote: vote_value)
       # flash[:notice] = "Votre vote a été enregistré."
+    end
+  end
+
+  def distance
+    if current_user && current_user.latitude && current_user.longitude
+      @distance = @incident.distance_to([current_user.latitude, current_user.longitude], :km).round(1)
+    else
+      @distance = nil
     end
   end
 end
