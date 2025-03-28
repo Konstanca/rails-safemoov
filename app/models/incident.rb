@@ -2,6 +2,7 @@ class Incident < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   belongs_to :user
+  has_one_attached :photo
 
 
   # source of geocoding
