@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        @incident = Incident.includes(comments: :user).find(@incident.id)
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace("comments_list", partial: "incidents/comments_list", locals: { incident: @incident }),
