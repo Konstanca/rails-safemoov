@@ -1,6 +1,0 @@
-<div id="comment-form" class="incident-comments">
-  <%= simple_form_for [incident, Comment.new], html: { data: { turbo: true } } do |f| %>
-    <%= f.input :content, label: false, placeholder: "Laisser un commentaire..." %>
-    <%= f.button :submit, "Envoyer", class: "send-button" %>
-  <% end %>
-</div>

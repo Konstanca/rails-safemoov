@@ -1,7 +1,0 @@
-<div class="card" id="comment-<%= comment.id %>">
-  <div class="incident-meta">
-    <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-    <span><%= comment.created_at.strftime("%d/%m/%Y %H:%M") %></span>
-  </div>
-  <p><%= comment.content %></p>
-</div>
