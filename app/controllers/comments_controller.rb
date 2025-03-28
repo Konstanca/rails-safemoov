@@ -8,7 +8,12 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("comments_list", partial: "incidents/comments_list", locals: { incident: @incident }) }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("comments_list", partial: "incidents/comments_list", locals: { incident: @incident }),
+            turbo_stream.replace("comment_form", partial: "incidents/comment_form", locals: { incident: @incident, comment: Comment.new })
+          ]
+        end
         format.html { redirect_to incident_path(@incident), notice: "Commentaire ajouté avec succès." }
       else
         format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "incidents/comment_form", locals: { incident: @incident, comment: @comment }) }
