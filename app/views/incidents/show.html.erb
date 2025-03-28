@@ -7,13 +7,12 @@
     </a>
 
     <!-- Image de l'incident -->
-    <div class="incident-image">
+    <% if @incident.photo.attached? %>
+      <%= image_tag(@incident.photo, alt: "Photo de l'incident", class: "incident-photo") %>
+    <% end %>
       <%# if @incident.photo_url.present? %>
         <%#= image_tag @incident.photo_url, alt: @incident.title, width: 390, height: 231, crop: :fill %>
       <%# else %>
-        <%= image_tag "visuel-accident-de-la-route.png", alt: "Image non disponible", width: 390, height: 231 %>
-      <%# end %>
-    </div>
 
 
     <!-- Informations de l'incident -->
