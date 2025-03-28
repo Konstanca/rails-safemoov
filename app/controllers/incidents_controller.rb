@@ -133,15 +133,10 @@ class IncidentsController < ApplicationController
 
     if existing_vote
       existing_vote.update(vote: vote_value)
-      flash[:notice] = "Votre vote a été mis à jour."
+      # flash[:notice] = "Votre vote a été mis à jour."
     else
       @incident.votes.create(user: current_user, vote: vote_value)
-      flash[:notice] = "Votre vote a été enregistré."
+      # flash[:notice] = "Votre vote a été enregistré."
     end
-    # Pas de redirect_to ici, on laisse l'appelant gérer la réponse
-  rescue ActiveRecord::RecordNotUnique
-    flash[:alert] = "Vous avez déjà voté pour cet incident."
-  rescue ActiveRecord::RecordInvalid => e
-    flash[:alert] = e.message
   end
 end
