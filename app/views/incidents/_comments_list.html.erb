@@ -1,0 +1,12 @@
+<turbo-frame id="comments_list">
+  <% if incident.comments.any? %>
+      <% incident.comments.order(created_at: :desc).each do |comment| %>
+        <div class="card">
+          <strong><%= comment.user.email %> :</strong> <%= comment.content %>
+          <small>(<%= l(comment.created_at, format: :full_with_month) %>)</small>
+        </div>
+      <% end %>
+  <% else %>
+    <p>Aucun commentaire pour le moment.</p>
+  <% end %>
+</turbo-frame>

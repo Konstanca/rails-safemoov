@@ -26,11 +26,11 @@ export default class extends Controller {
     // search in map
     this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl }))
-  }
 
-  #addMarkersToMap() {
-    // Définir les icones FontAwesome
-    const categoryIconsClasses = {
+
+    }  #addMarkersToMap() {
+      // Définir les icones FontAwesome
+      const categoryIconsClasses = {
       "Attaque à main armée": "fas fa-people-robbery",
       "Assassinat": "fas fa-skull",
       "Enlèvement": "fa-solid fa-hands-bound",

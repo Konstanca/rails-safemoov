@@ -80,10 +80,18 @@ class IncidentsController < ApplicationController
 
   def confirm
     create_or_update_vote(true)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident }) }
+      format.html { redirect_to @incident, notice: "Vote enregistré." }
+    end
   end
 
   def contest
     create_or_update_vote(false)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident }) }
+      format.html { redirect_to @incident, notice: "Vote enregistré." }
+    end
   end
 
   private
@@ -130,14 +138,10 @@ class IncidentsController < ApplicationController
       @incident.votes.create(user: current_user, vote: vote_value)
       flash[:notice] = "Votre vote a été enregistré."
     end
-
-    redirect_to @incident
+    # Pas de redirect_to ici, on laisse l'appelant gérer la réponse
   rescue ActiveRecord::RecordNotUnique
     flash[:alert] = "Vous avez déjà voté pour cet incident."
-    redirect_to @incident
   rescue ActiveRecord::RecordInvalid => e
     flash[:alert] = e.message
-    redirect_to @incident
   end
-
 end

@@ -1,0 +1,5 @@
+fr:
+  time:
+    formats:
+      short: "%d %b %H:%M" # Format actuel
+      full_with_month: "%d %B %Y %H:%M" # Nouveau format
