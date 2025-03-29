@@ -1,2 +1,6 @@
+ <!-- Cas où on veut associer un logo/image au lieu d'un picto à l'incient -->
+<!-- <%= image_tag "logo.png", height: 30, width: 30, alt: "Logo" %> -->
 
-<%= image_tag "logo.png", height: 30, width: 30, alt: "Logo" %>
+<div id="bulle">
+  <%= link_to "Signaler un incident", new_incident_path, class: "report-button" %>
+</div>
