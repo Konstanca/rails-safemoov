@@ -1,7 +1,11 @@
 <div class="bulle">
-<%= link_to incident_path(incident) do  %>
-  <h2><%= incident.title %></h2>
-  <p><%= incident.description %></p>
-  <p><%= incident.address %></p>
-<% end %>
+<div>
+  <%= image_tag "visuel-accident-de-la-route.png", height: 60, width: 60, alt: "Logo" %>
+</div>
+<div>
+  <%= link_to incident_path(incident) do  %>
+    <h6><%= incident.title %></h2>
+    <p><%= incident.address %></p>
+  <% end %>
+</div>
 </div>

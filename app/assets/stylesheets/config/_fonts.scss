@@ -20,6 +20,7 @@ $headers-font: "Montserrat", "Helvetica", "Arial", "sans-serif";
 // $my-font: "Font Name";
 
 // Définition des tailles de police
+$font-size-bulle: 0.5rem;
 $font-size-base: 1rem; // 16 px
 $font-size-small: 0.875rem; // 14 px
 $font-size-large: 1.125rem; // 18 px
@@ -43,9 +44,9 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-h2, h3, h4, h5, h6 {
+h2, h3, h4, h5 {
   font-family: $headers-font;
-  font-weight: 700;
+  font-weight: 500;
   font-size: $font-size-xl;  // 24px
   color: $primary-color;
 }
@@ -53,6 +54,12 @@ h2, h3, h4, h5, h6 {
 p, span, li {
   font-family: $body-font;
   font-weight: 400;
-  font-size: $font-size-base;
+  font-size: $font-size-bulle;
+  color: $text-color;
+}
+
+h6 {
+  font-family: $body-font;
+  font-size: $font-size-bulle;
   color: $text-color;
 }
