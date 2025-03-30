@@ -3,7 +3,7 @@
       <% incident.comments.order(created_at: :desc).each do |comment| %>
         <div class="card">
           <strong><%= comment.user.display_name %> :</strong> <%= comment.content %>
-          <small>(<%= l(comment.created_at, format: "%d/%m/%Y à %Hh%M") %>)</small>
+          <small><%=comment.created_at.strftime( "%d/%m/%Y à %Hh%M") %></small>
         </div>
       <% end %>
   <% else %>
