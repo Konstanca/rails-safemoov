@@ -1,11 +1,35 @@
-<div class="bulle">
-<div>
-  <%= image_tag "visuel-accident-de-la-route.png", height: 60, width: 60, alt: "Logo" %>
-</div>
-<div>
-  <%= link_to incident_path(incident) do  %>
-    <h6><%= incident.title %></h2>
-    <p><%= incident.address %></p>
-  <% end %>
-</div>
+   <!-- <div class="bulle" style="width: 1000%; height: 400%;">
+
+  <div class="img-style">
+    <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
+  </div>
+
+  <div class="incident-info">
+    <%= link_to incident_path(incident) do  %>
+      <h6><%= incident.title %></h6>
+      <p><%= incident.address %></p>
+    <% end %>
+
+    <div class="info-button-container">
+      <%= link_to "Plus d'info", new_incident_path, class: "report-button" %>
+    </div>
+
+  </div>
+
+</div> LOGO à gauche -->
+
+<div class="card-product">
+  <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
+  <div class="card-product-infos">
+    <%= link_to incident_path(incident) do  %>
+      <h6><%= incident.category %></h6>
+      <p><%= incident.created_at %>.</p>
+    <% end %>
+      <div class="card-product-infos">
+        <p><%= incident.date%></p>
+        <div class="button-container">
+          <%= link_to "Plus d'info", incident_path(incident), class: "report-button" %>
+        </div>
+      </div>
+  </div>
 </div>
