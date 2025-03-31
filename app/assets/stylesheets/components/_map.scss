@@ -1,5 +1,6 @@
 .mapboxgl-popup {
   display: flex;
+  justify-content: space-between;
   max-width: 250px;
   border-radius: 80px;
 }
@@ -149,7 +150,7 @@
   display: flex;
   background-color: $primary-color;  // Bleu foncé
   color: white;
-  padding: 2.5px;
+  padding: 4px;
   border-radius: 25px;
   font-weight: bold;
   text-align: center;
