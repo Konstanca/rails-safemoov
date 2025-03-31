@@ -21,15 +21,13 @@
 <div class="card-product">
   <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
   <div class="card-product-infos">
-    <%= link_to incident_path(incident) do  %>
+    <%= link_to incident_path(incident), class:"text-decoration-none" do  %>
       <h6><%= incident.category %></h6>
-      <p><%= incident.created_at %>.</p>
+      <p class="truncate"><%= incident.address %>.</p>
     <% end %>
-      <div class="card-product-infos">
-        <p><%= incident.date%></p>
-        <div class="button-container">
-          <%= link_to "Plus d'info", incident_path(incident), class: "report-button" %>
-        </div>
+      <div class="card-product-bottom">
+        <p><%= incident.created_at%></p>
+        <%= link_to "Plus d'info", incident_path(incident), class:"info-button"%>
       </div>
   </div>
 </div>
