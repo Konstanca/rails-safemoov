@@ -29,3 +29,6 @@ pin "flatpickr", to: "https://ga.jspm.io/npm:flatpickr@4.6.13/dist/esm/index.js"
 pin "flatpickr/dist/l10n/fr", to: "https://ga.jspm.io/npm:flatpickr@4.6.13/dist/l10n/fr.js"
 pin "chart.js", to: "https://ga.jspm.io/npm:chart.js@4.4.8/dist/chart.js"
 pin "@kurkle/color", to: "https://ga.jspm.io/npm:@kurkle/color@0.3.4/dist/color.esm.js"
+pin "application", preload: true
+pin "actioncable", to: "actioncable.esm.js" # Local
+pin "ActionCable", to: "https://cdn.jsdelivr.net/npm/@rails/actioncable@7.1.3/app/assets/javascripts/actioncable.esm.js" # CDN

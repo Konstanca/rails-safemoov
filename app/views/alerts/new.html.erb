@@ -1,0 +1,9 @@
+# app/views/alerts/new.html.erb
+<div class="container">
+  <h1>Nouvelle Alerte</h1>
+  <%= simple_form_for @alert do |f| %>
+    <%= f.input :address, label: "Adresse" %>
+    <%= f.input :radius, label: "Rayon (km)", input_html: { min: 1, value: 10 } %>
+    <%= f.submit "Créer l'alerte", class: "btn btn-primary" %>
+  <% end %>
+</div>

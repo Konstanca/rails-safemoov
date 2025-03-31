@@ -13,20 +13,11 @@
   <div class="navbar-right d-flex align-items-center gap-3">
 
     <!-- CLOCHE NOTIFICATIONS (toujours visible) -->
-    <div class="notifications">
+    <%= render "shared/notifications", user: current_user %>
+    <!-- LIEN NOUVELLE ALERTE -->
       <% if user_signed_in? %>
-        <%= link_to alerts_path do %>
-          <i class="fas fa-bell"></i>
-          <% if current_user.alerts.any? %>
-            <span class="badge"><%= current_user.alerts.count %></span>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%= link_to new_user_session_path do %>
-          <i class="fas fa-bell"></i>
-        <% end %>
+        <%= link_to "+", new_alert_path, class: "nav-link fw-bold fs-4 text-primary" %>
       <% end %>
-    </div>
 
     <!-- PROFIL SI CONNECTE / CONNEXION SINON -->
     <% if user_signed_in? %>

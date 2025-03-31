@@ -1,0 +1,25 @@
+<%= turbo_stream_from "notifications_#{user.id}" %>
+<div class="notifications" data-controller="notifications">
+  <%= link_to "#", data: { action: "click->notifications#toggleOffcanvas" } do %>
+    <i class="fas fa-bell"></i>
+    <% if user.notifications.unread.any? %>
+      <span class="badge"><%= user.notifications.unread.count %></span>
+    <% end %>
+  <% end %>
+  <div id="notificationsOffcanvas" class="offcanvas offcanvas-bottom" data-notifications-target="offcanvas">
+    <% if user.notifications.unread.any? %>
+      <% user.notifications.unread.each do |notification| %>
+        <div class="card">
+          <%= link_to incident_path(notification.incident),
+                      data: { action: "click->notifications#markAsRead", notification_id: notification.id } do %>
+            <div class="card-body">
+              <%= notification.incident.title %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>Aucune notification</p>
+    <% end %>
+  </div>
+</div>
