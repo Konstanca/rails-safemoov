@@ -26,7 +26,7 @@
       <p class="truncate"><%= incident.address %>.</p>
     <% end %>
       <div class="card-product-bottom">
-        <p><%= incident.created_at%></p>
+        <p class="truncate"><%= incident.created_at%></p>
         <%= link_to "Plus d'info", incident_path(incident), class:"info-button"%>
       </div>
   </div>

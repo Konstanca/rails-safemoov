@@ -1,9 +1,10 @@
 .mapboxgl-popup {
-  max-width: 200px;
-  border-radius: 100px;
+  max-width: 250px;
+  border-radius: 80px;
 }
 
-.mapboxgl-popup-content {
+.-content {
+  max-width: 350px;
   text-align: center;
   font-family: "Open Sans", sans-serif;
 
@@ -79,9 +80,9 @@
 .card-product {
   overflow: hidden;
   height: auto;
-  width: auto;
+  width: 250px;
   background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  // box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -120,6 +121,7 @@
 .card-product-infos {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 8px;
 
   a{
@@ -129,10 +131,11 @@
 
 .card-product-bottom {
   display: flex;
+  align-items: flex-end;
 }
 
 .truncate {
-  width: 50px;
+  width: 70px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -144,19 +147,12 @@
 
   display: flex;
   background-color: $primary-color;  // Bleu foncé
-  // color: #ffffff;
-  padding: 0.1rem 0.1rem;
+  color: white;
+  padding: 2.5px;
   border-radius: 25px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-weight: bold;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   cursor: pointer;
   text-decoration: none !important;
-
-
-
-  // bottom: 20px;
-  // left: 100%;
-  // transform: translateX(50%);
 }
