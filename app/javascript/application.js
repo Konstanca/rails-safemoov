@@ -4,8 +4,6 @@ import "controllers"
 import "@popperjs/core"
 import "bootstrap"
 
-console.log("Début de application.js");
-
 import "./channels/consumer"; // Charge le consumer
 import "./channels/notifications_channel"; // Charge le channel spécifique
 
@@ -14,6 +12,12 @@ import { French } from "flatpickr/dist/l10n/fr"
 
 document.addEventListener("turbo:load", () => {
   console.log("Turbo chargé");
+
+  const offcanvasElement = document.querySelector("#notificationsOffcanvas");
+  if (offcanvasElement) {
+    new bootstrap.Offcanvas(offcanvasElement);
+  }
+
   const dateInput = document.querySelector("#incident_date");
   if (dateInput) {
     flatpickr(dateInput, {
