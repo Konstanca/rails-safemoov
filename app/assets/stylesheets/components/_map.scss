@@ -39,3 +39,38 @@
     padding: 0.6rem 1rem;
   }
 }
+
+.notification-bell {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 2000;
+  width: 50px; /* Taille du cercle */
+  height: 50px; /* Même taille pour un cercle parfait */
+  background-color: #fff; /* Fond blanc, ajustable */
+  border-radius: 50%; /* Rend le tout circulaire */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre légère pour le style */
+}
+
+.notification-bell a {
+  color: $gray-dark;;
+  font-size: 36px;
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notification-bell .badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
