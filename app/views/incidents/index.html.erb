@@ -12,7 +12,6 @@
 
   <div id="notificationsOffcanvas" class="offcanvas offcanvas-end" tabindex="-1" data-controller="notifications">
     <div class="offcanvas-header">
-      <h2 class="offcanvas-title">Notifications</h2>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -22,19 +21,18 @@
         </div>
       <% end %>
       <hr>
+      <h2>Notifications</h2>
       <% if current_user.notifications.unread.any? %>
         <% current_user.notifications.unread.each do |notification| %>
           <div class="card" data-notification-id="<%= notification.id %>">
             <%= link_to incident_path(notification.incident), data: { action: "click->notifications#markAsRead", notification_id: notification.id, turbo: "false" } do %>
               <div class="card-body">
                 <%= notification.incident.title %>
-                <small>le <%= notification.created_at.strftime("%d/%m/%Y à %Hh%M") %> par <%= notification.incident.user.nickname %></small>
+                <small>le <%= notification.created_at.strftime("%d/%m/%Y à %Hh%M") %></small>
               </div>
             <% end %>
           </div>
         <% end %>
-      <% else %>
-        <p>Aucune notification</p>
       <% end %>
     </div>
   </div>
