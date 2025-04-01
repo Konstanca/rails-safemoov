@@ -11,7 +11,7 @@ module ApplicationCable
     private
 
     def find_verified_user
-      if current_user = env['warden'].user # Devise stocke l'utilisateur dans warden
+      if (current_user = env['warden'].user) # Devise stocke l'utilisateur dans warden
         current_user
       else
         reject_unauthorized_connection

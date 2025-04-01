@@ -1,0 +1,31 @@
+<div class="incident-form-container">
+  <div class="form-card">
+  <!-- Bouton retour -->
+    <a href="<%= incidents_path %>" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <div class="container">
+
+      <h1>Mes zones surveillées</h1>
+
+      <% @alerts.each do |alert| %>
+        <div class="card">
+          <h5><%= alert.radius %> km autour de <%= alert.address %></h5>
+
+          <div class="d-flex justify-content-between">
+            <%= link_to edit_alert_path(alert) do %>
+              <i class="fas fa-pen"></i>
+            <% end %>
+            
+            <%= link_to alert_path(alert), method: :delete, data: { turbo_method: :delete } do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= link_to new_alert_path do %>
+        <h1><i class="fa-solid fa-plus"></i></h1>
+      <% end %>
+    </div>
+  </div>
+</div>

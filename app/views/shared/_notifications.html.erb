@@ -9,10 +9,17 @@
   <% end %>
   <div id="notificationsOffcanvas" class="offcanvas offcanvas-end" tabindex="-1">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Notifications</h5>
+      <h2 class="offcanvas-title">Notifications</h2>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+
+      <%= link_to alerts_path  do %>
+        <div class="d-flex">
+          <h2><i class="fas fa-binoculars"></i> Zones surveillées </h2>
+        </div>
+      <% end %>
+      <hr>
       <% if user.notifications.unread.any? %>
         <% user.notifications.unread.each do |notification| %>
           <div class="card" data-notification-id="<%= notification.id %>">

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :comments, only: [:index]
 
-  resources :alerts, only: [:new, :create]
+  resources :alerts, only: [:index, :new, :create, :destroy, :edit, :update]
 
   get "statistics/local/:incident_id", to: "statistics#local", as: :local_statistics
 
