@@ -1,9 +1,9 @@
 <div class="incident-form-container">
   <div class="form-card">
   <!-- Bouton retour -->
-    <a href="<%= incidents_path %>" class="back-button">
+    <%= link_to :back do %>
       <i class="fas fa-arrow-left"></i>
-    </a>
+    <% end %>
     <div class="container">
 
       <h1>Mes zones surveillées</h1>
@@ -16,7 +16,7 @@
             <%= link_to edit_alert_path(alert) do %>
               <i class="fas fa-pen"></i>
             <% end %>
-            
+
             <%= link_to alert_path(alert), method: :delete, data: { turbo_method: :delete } do %>
               <i class="fas fa-trash"></i>
             <% end %>

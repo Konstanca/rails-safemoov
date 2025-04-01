@@ -23,12 +23,10 @@
       <% if user.notifications.unread.any? %>
         <% user.notifications.unread.each do |notification| %>
           <div class="card" data-notification-id="<%= notification.id %>">
-            <%= link_to incident_path(notification.incident),
-                        data: { action: "click->notifications#markAsRead", notification_id: notification.id, turbo: "false" },
-                        onclick: "console.log('Clic capturé sur la notification !')" do %>
+            <%= link_to incident_path(notification.incident), data: { action: "click->notifications#markAsRead", notification_id: notification.id, turbo: "false" } do %>
               <div class="card-body">
                 <%= notification.incident.title %>
-                <small>il y a <%= time_ago_in_words(notification.created_at) %> par <%= notification.incident.user.nickname %></small>
+                <small>le <%= notification.created_at.strftime("%d/%m/%Y à %Hh%M") %> par <%= notification.incident.user.nickname %></small>
               </div>
             <% end %>
           </div>
