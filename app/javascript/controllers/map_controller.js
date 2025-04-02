@@ -56,12 +56,8 @@ export default class extends Controller {
     customMarker.classList.add("marker", "marker-user")
     customMarker.innerHTML = `<i class="fas fa-user" style="font-size: 18px; color: white;"></i>`
 
-    // Ajouter un popup avec un message
-    const popup = new mapboxgl.Popup().setHTML("<b>Vous êtes ici</b>")
-
     new mapboxgl.Marker(customMarker)
       .setLngLat([lng, lat])
-      .setPopup(popup) // Ajoute le popup
       .addTo(this.map)
   }
 
