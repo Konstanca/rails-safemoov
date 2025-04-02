@@ -38,12 +38,25 @@
   </div>
 <% end %>
 
+<!-- Bouton nouvel incident fixe -->
+  <div class="new-incident-button">
+    <%= link_to new_incident_path do %>
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span class="badge"><i class="fa-regular fa-plus"></i></span>
+    <% end %>
+  </div>
+
+<!-- Bouton de recentrage sur l'utilisateur -->
+<button id="center-user-btn">
+  <i class="fa-solid fa-crosshairs"></i>
+</button>
+
 <!-- Carte -->
 <div style="width: 100%; height: 1000px;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-  <div class="report-button-container">
-    <%= link_to "Signaler un incident", new_incident_path, class: "report-button" %>
-  </div>
-  </div>
+  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+  <% if current_user && current_user.latitude.present? && current_user.longitude.present? %>
+    data-map-current-user-value="<%= { lat: current_user.latitude, lng: current_user.longitude }.to_json %>"
+  <% end %>>
+</div>
