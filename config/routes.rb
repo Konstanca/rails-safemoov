@@ -15,11 +15,18 @@ Rails.application.routes.draw do
 
   resources :comments, only: [:index]
 
-  resources :alerts, only: [:index]
+  resources :alerts, only: [:index, :new, :create, :destroy, :edit, :update]
 
   get "statistics/local/:incident_id", to: "statistics#local", as: :local_statistics
 
+
   post '/clear_flashes', to: 'application#clear_flashes'
+
+  resources :notifications, only: [] do
+    member do
+      post :mark_as_read
+    end
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
   # Defines the root path route ("/")

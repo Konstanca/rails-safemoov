@@ -1,4 +1,4 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+// app/javascript/application.js
 import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
@@ -25,12 +25,22 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
+import "./channels/consumer"; // Charge le consumer
+import "./channels/notifications_channel"; // Charge le channel spécifique
+
+
 import flatpickr from "flatpickr"
 import { French } from "flatpickr/dist/l10n/fr"
 
 document.addEventListener("turbo:load", () => {
-  const dateInput = document.querySelector("#incident_date");
+  console.log("Turbo chargé");
 
+  const offcanvasElement = document.querySelector("#notificationsOffcanvas");
+  if (offcanvasElement) {
+    new bootstrap.Offcanvas(offcanvasElement);
+  }
+
+  const dateInput = document.querySelector("#incident_date");
   if (dateInput) {
     flatpickr(dateInput, {
       enableTime: true,

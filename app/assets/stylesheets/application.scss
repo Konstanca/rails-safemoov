@@ -13,6 +13,8 @@
 @import "components/index";
 @import "pages/index";
 @import "components/incident-form";
+@import "components/bottom_sheet";
+@import "components/floating_header";
 
 
 @import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
@@ -21,4 +23,8 @@
 
 html {
   font-size: 100%; // Utilise la taille par défaut du navigateur (souvent 16px)
+}
+
+a {
+  text-decoration: none;
 }
