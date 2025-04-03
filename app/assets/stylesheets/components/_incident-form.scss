@@ -32,9 +32,14 @@
     margin-bottom: 0.25rem;
   }
 
+
+
   input[type="text"],
   input[type="datetime-local"],
   input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
   textarea,
   select {
     border: 1px solid $gray-light;
