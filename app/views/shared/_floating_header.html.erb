@@ -1,0 +1,60 @@
+<!-- Header flottant -->
+<div class="floating-header d-flex justify-content-between align-items-center" data-controller="floating-header">
+  <!-- Logo à gauche -->
+  <div class="logo">
+    <%= link_to root_path, class: "header-logo" do %>
+      <%= image_tag "logo-safemoov.png", alt: "SafeMoov", class: "floating-logo" %>
+    <% end %>
+  </div>
+
+  <!-- Icônes à droite -->
+  <div class="right-icons d-flex align-items-center gap-3">
+    <!-- Cloche notifications -->
+    <%= link_to (user_signed_in? ? alerts_path : new_user_session_path), class: "notification-icon" do %>
+      <i class="fas fa-bell"></i>
+      <% if user_signed_in? && current_user.alerts.any? %>
+          <span class="badge"><%= current_user.alerts.count %></span>
+        <% end %>
+      <% end %>
+
+    <!-- Profil ou Connexion -->
+    <% if user_signed_in? %>
+      <div class="dropdown profile-menu">
+        <a href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <% if current_user.photo.attached? %>
+            <%= cl_image_tag current_user.photo.key || "default-avatar-safemoov.png",
+              alt: "Avatar",
+              width: 40,
+              height: 40,
+              crop: :thumb,
+              gravity: :face,
+              radius: :max,
+              zoom: 1.3,
+              class: "avatar" %>
+          <% else %>
+            <div class="avatar-initial">
+              <i class="fas fa-user-circle fa-2x"></i>
+              <span class="avatar-letter"><%= current_user.nickname.first.upcase %></span>
+            </div>
+            <!--<%= image_tag "default-avatar-safemoov.png", class: "avatar", alt: "Mon profil", size: "40x40" %> -->
+          <% end %>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <%= link_to "Mes incidents créés (#{current_user.incidents.count})", my_incidents_incidents_path, class: "dropdown-item" %>
+          <%= link_to "Mes commentaires (#{current_user.comments.count})", "#", class: "dropdown-item" %>
+          <hr>
+          <%= link_to "Mes zones surveillées (#{current_user.alerts.count})", "#", class: "dropdown-item" %>
+          <hr>
+          <%= link_to "Editer mon profil", edit_user_registration_path, class: "dropdown-item" %>
+          <%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+        </div>
+      </div>
+    <% else %>
+      <div class="connexion-link">
+        <%= link_to new_user_session_path, class: "nav-link" do %>
+          <i class="fas fa-user-circle fa-2x"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

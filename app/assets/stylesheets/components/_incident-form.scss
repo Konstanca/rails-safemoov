@@ -79,4 +79,26 @@
       color: white;
     }
   }
+
+  .image {
+    padding: 0.5rem;
+    padding-left: 0px;
+
+
+    &::file-selector-button {
+      background-color: #014B66;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    &::file-selector-button:hover {
+      background-color: #016c90;
+    }
+  }
 }

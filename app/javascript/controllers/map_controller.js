@@ -19,13 +19,15 @@ export default class extends Controller {
       style: "mapbox://styles/mapbox/streets-v10"
     })
 
+    window.mapboxMap = this.map
+
     // private methods in javascript are prepend with #
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
 
     // search in map
-    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl }))
+    // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+    //  mapboxgl: mapboxgl }))
   }
 
   #addMarkersToMap() {
@@ -53,9 +55,9 @@ export default class extends Controller {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html)
       // marqueur  FontAwesome
       const customMarker = document.createElement("div")
-      customMarker.className = "marker"
+      //customMarker.className = "marker"
       const iconClass = categoryIconsClasses[marker.category] || "fas fa-exclamation-circle"
-      customMarker.innerHTML = `<i class="${iconClass}" style="font-size: 24px; color:rgb(48, 48, 48);"></i>`
+      customMarker.innerHTML = `<i id="bulle" class="${iconClass}" style="font-size: 24px; color:rgb(48, 48, 48)"></i>`
       new mapboxgl.Marker(customMarker)
         .setLngLat([marker.lng, marker.lat])
         .setPopup(popup)

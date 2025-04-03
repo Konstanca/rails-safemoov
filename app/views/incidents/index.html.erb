@@ -37,13 +37,34 @@
     </div>
   </div>
 <% end %>
+<%= render "shared/floating_header" %>
 
 <!-- Carte -->
 <div style="width: 100%; height: 1000px;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-  <div class="report-button-container">
-    <%= link_to "Signaler un incident", new_incident_path, class: "report-button" %>
+
+  <!-- Boutons flottants -->
+  <div class="floating-buttons">
+    <button class="btn btn-secondary position-button">
+      <i class="fas fa-crosshairs"></i>
+    </button>
+    <%= link_to new_incident_path, class: "btn btn-danger report-button" do %>
+    <i class="fas fa-plus"></i>
+    <% end %>
   </div>
-  </div>
+
+
+  <!-- Bottom Sheet -->
+  <div data-controller="bottom-sheet" class="bottom-sheet collapsed" data-bottom-sheet-target="container">
+    <div class="handle" data-action="click->bottom-sheet#toggle"></div>
+
+    <div class="search-bar"
+      data-controller="address-autocomplete"
+      data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    </div>
+
+    <div class="bottom-sheet-content"></div>
+   <!--</div> -->
+</div>
