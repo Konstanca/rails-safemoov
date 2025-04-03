@@ -1,0 +1,9 @@
+/* Ajuster la position des notifications Toastr */
+#toast-container.toast-top-right {
+  top: 100px !important; /* Descendre la notification de 100px depuis le haut */
+}
+
+/* Optionnel : ajuster la marge à droite si nécessaire */
+#toast-container.toast-top-right .toast {
+  margin-right: 20px; /* Ajuster la marge à droite si besoin */
+}

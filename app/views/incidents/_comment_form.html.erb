@@ -1,0 +1,18 @@
+<turbo-frame id="comment_form">
+  <%= simple_form_for [incident, comment || Comment.new], data: { turbo_frame: "comments_list" }, html: { class: "comment-form" } do |form| %>
+    <% if comment && comment.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% comment.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="incident-comments">
+      <%= form.input :content, label: false, placeholder: "Laisser un commentaire...", input_html: { rows: 3 } %>
+      <%= form.button :submit, "Envoyer", class: "send-button" %>
+    </div>
+  <% end %>
+</turbo-frame>

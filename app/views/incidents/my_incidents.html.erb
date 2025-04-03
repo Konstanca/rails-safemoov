@@ -22,13 +22,11 @@
 
         <% if incident.comments.any? %>
           <h4>Commentaires :</h4>
-          <ul>
             <% incident.comments.each do |comment| %>
-              <li>
+              <div class="card">
                 <strong><%= comment.user.email %> :</strong> <%= comment.content %>
-              </li>
+              </div>
             <% end %>
-          </ul>
         <% else %>
           <p>Aucun commentaire pour cet incident.</p>
         <% end %>

@@ -6,10 +6,20 @@ class CommentsController < ApplicationController
     @comment = @incident.comments.build(comment_params)
     @comment.user = current_user
 
-    if @comment.save
-      redirect_to incident_path(@incident), notice: "Commentaire ajouté avec succès."
-    else
-      redirect_to incident_path(@incident), alert: "Erreur lors de l'ajout du commentaire."
+    respond_to do |format|
+      if @comment.save
+        @incident = Incident.includes(comments: :user).find(@incident.id)
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("comments_list", partial: "incidents/comments_list", locals: { incident: @incident }),
+            turbo_stream.replace("comment_form", partial: "incidents/comment_form", locals: { incident: @incident, comment: Comment.new })
+          ]
+        end
+        format.html { redirect_to incident_path(@incident), notice: "Commentaire ajouté avec succès." }
+      else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "incidents/comment_form", locals: { incident: @incident, comment: @comment }) }
+        format.html { redirect_to incident_path(@incident), alert: "Erreur lors de l'ajout du commentaire." }
+      end
     end
   end
 

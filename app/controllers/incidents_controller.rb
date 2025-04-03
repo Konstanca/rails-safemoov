@@ -59,11 +59,7 @@ class IncidentsController < ApplicationController
     # end
 
   def show
-    @incident = Incident.find(params[:id])
-
-  #  if current_user && current_user.latitude && current_user.longitude
-  #    @distance = @incident.distance_to([current_user.latitude, current_user.longitude], :km).roun(1)
-  #  end
+    distance
   end
 
   def edit
@@ -80,10 +76,18 @@ class IncidentsController < ApplicationController
 
   def confirm
     create_or_update_vote(true)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident}) }
+      format.html { redirect_to @incident, notice: "Vote enregistré." }
+    end
   end
 
   def contest
     create_or_update_vote(false)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("vote_buttons", partial: "incidents/vote_buttons", locals: { incident: @incident }) }
+      format.html { redirect_to @incident, notice: "Vote enregistré." }
+    end
   end
 
   private
@@ -125,19 +129,18 @@ class IncidentsController < ApplicationController
 
     if existing_vote
       existing_vote.update(vote: vote_value)
-      flash[:notice] = "Votre vote a été mis à jour."
+      # flash[:notice] = "Votre vote a été mis à jour."
     else
       @incident.votes.create(user: current_user, vote: vote_value)
-      flash[:notice] = "Votre vote a été enregistré."
+      # flash[:notice] = "Votre vote a été enregistré."
     end
-
-    redirect_to @incident
-  rescue ActiveRecord::RecordNotUnique
-    flash[:alert] = "Vous avez déjà voté pour cet incident."
-    redirect_to @incident
-  rescue ActiveRecord::RecordInvalid => e
-    flash[:alert] = e.message
-    redirect_to @incident
   end
 
+  def distance
+    if current_user && current_user.latitude && current_user.longitude
+      @distance = @incident.distance_to([current_user.latitude, current_user.longitude], :km).round(1)
+    else
+      @distance = nil
+    end
+  end
 end

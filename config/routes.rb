@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   get "statistics/local/:incident_id", to: "statistics#local", as: :local_statistics
 
+
+  post '/clear_flashes', to: 'application#clear_flashes'
+
   resources :notifications, only: [] do
     member do
       post :mark_as_read
