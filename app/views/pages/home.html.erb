@@ -1,19 +1,25 @@
 <div class="home-container">
   <!-- Titre principal et introduction -->
   <div class="home-header">
-    <h1>Bienvenue sur SafeMoov !</h1>
-    <p>Découvrez nos principales fonctionnaliés, pour plus de prévention et sécurité pour tous.</p>
+    <div class="home-logo">
+      <%= link_to incidents_path do %>
+        <%= image_tag "logo-safemoov.png", alt: "SafeMoov", class: "safemoov-logo" %>
+      <% end %>
+    </div>
+    <h1>Bienvenue sur <span>SafeMoov</span> !</h1>
+    <p>La web app pour bouger en toute <span>confiance.</span><br><br>Parce que la<span>sécurité, </span>c'est l'affaire de TOUS, <br>et <span>prévenir</span> ENSEMBLE, c'est agir<BR> PLUS FORT ! 🤝</p>
   </div>
 
   <!-- Bouton d'appel à l'action -->
   <div class="home-action">
-    <%= link_to "Voir la carte", incidents_path, class: "cta-link" %>
+    <%= link_to "🔎 Incidents à proximité", incidents_path, class: "cta-button" %>
   </div>
+</div>
 
   <!-- Carrousel Bootstrap -->
-  <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+   <!--<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
     <!-- Indicateurs du carousel -->
-    <div class="carousel-indicators">
+     <!--<div class="carousel-indicators">
       <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -21,7 +27,7 @@
     </div>
 
     <!-- Slides du carrousel-->
-    <div class="carousel-inner">
+     <!--<div class="carousel-inner">
       <div class="carousel-item active">
         <%= image_tag "onboarding-step-2.png", class: "d-block w-100", alt: "Découverte de SafeMoov" %>
         <div class="carousel-caption">
@@ -54,7 +60,7 @@
 
 
     <!-- Contrôles du carrousel -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+    <!--<button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Précédent</span>
     </button>
@@ -62,5 +68,4 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Suivant</span>
     </button>
-  </div>
-</div>
+  <!--</div>-->

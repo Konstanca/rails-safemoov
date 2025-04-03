@@ -1,8 +1,8 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<!-- <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
 
     <!-- LOGO à gauche -->
-    <div class="navbar-left">
+    <!--<div class="navbar-left">
       <%= link_to root_path, class: "navbar-brand" do %>
         <%= image_tag "logo-safemoov.png", class: "navbar-logo", alt: "SafeMoov" %>
       <% end %>
@@ -10,10 +10,10 @@
 
 
   <!-- NAVBAR RIGHT -->
-  <div class="navbar-right d-flex align-items-center gap-3">
+  <!--<div class="navbar-right d-flex align-items-center gap-3">
 
     <!-- CLOCHE NOTIFICATIONS (toujours visible) -->
-    <div class="notifications">
+    <!--<div class="notifications">
       <% if user_signed_in? %>
         <%= link_to alerts_path do %>
           <i class="fas fa-bell"></i>
@@ -29,9 +29,9 @@
     </div>
 
     <!-- PROFIL SI CONNECTE / CONNEXION SINON -->
-    <% if user_signed_in? %>
+    <!--<% if user_signed_in? %>
       <!-- Menu utilisateur (photo/avatar) -->
-      <div class="dropdown profile-menu">
+      <!--<div class="dropdown profile-menu">
         <a href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <% if current_user.photo.attached? %>
                 <%= cl_image_tag current_user.photo.key,
@@ -57,14 +57,14 @@
           <hr>
           <%= link_to "Editer mon profil", edit_user_registration_path, class: "dropdown-item" %>
           <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-        </div>
-      </div>
-    <% else %>
+        <!--</div>
+      <!--</div>
+    <!--<% else %>
       <!-- Lien Connexion -->
-      <div class="connexion-link">
-        <%= link_to "Connexion", new_user_session_path, class: "nav-link" %>
-      </div>
-    <% end %>
-    </div>
-  </div>
-</div>
+      <!--<div class="connexion-link">
+        <!--<%= link_to "Connexion", new_user_session_path, class: "nav-link" %>
+      <!--</div>
+    <!--<% end %>
+    <!--</div>
+  <!--</div>
+<!--</div> -->

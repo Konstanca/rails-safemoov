@@ -2,44 +2,75 @@
 .home-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
+  background-color: $primary-color;
+  color: $white;
   height: 100vh; // Prend toute la hauteur de l'écran.
   overflow: hidden; // Empêche le scroll.
-  padding: 1rem 0.5rem;
-  // justify-content: space-between;
+  padding: 2rem 1.5rem;
 }
 
 .home-header {
-  margin-top: 1rem;
+  margin-top:auto;
 
   h1 {
-    font-size: 1.5rem; // Taille du titre
-    color: $primary-color
+    font-size: 1.8rem; // Taille du titre
+    color: $danger-color;
+    margin-bottom: 2.5rem;
+
+    span {
+      color: $white;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
   }
 
   p {
     font-size: 1rem;
-    color: $text-color;
-    margin-bottom: 1.5rem; // Ajout d'espacement en bas du texte.
+    color: $secondary-color;
+    margin-bottom: 1rem; // Ajout d'espacement en bas du texte.
+    line-height: 1.4;
+
+    span {
+      color: $secondary-color;
+      font-weight: bold;
+    }
+  }
+}
+
+.home-logo {
+  .safemoov-logo {
+    width: 95px;
+    //height: 55px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease-in-out;
+    margin-top: 5px;
+    margin-bottom: 45px;
+
+    &.hover {
+      transform: scale(1.05);
+    }
   }
 }
 
 .home-action {
-  margin: 1rem 0; // Ajout  d'espacement autour du bouton.
+  margin: 2rem 1rem 10rem 1rem; // Ajout  d'espacement autour du bouton.
 
-  .cta-link {
+  .cta-button {
     font-size: 1rem;
     font-weight: bold;
-    color: $btn-secondary-bg;
+    color: $white;
     text-decoration: none;
     border-radius: 25px;
     padding: 0.75rem 1rem;
-    background-color: $white;
+    background-color: $btn-primary-bg;
 
     &:hover {
       background-color: $btn-hover-bg;
-      color: $white
+      color: $btn-primary-bg
     }
   }
 }

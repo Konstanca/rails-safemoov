@@ -1,7 +1,34 @@
 .mapboxgl-ctrl-geocoder {
-  width: 100%;
-  border: 1px solid lightgrey;
+  // width: 100%;
+  // border: 1px solid lightgrey;
   box-shadow: none;
-  background-color: transparent;
-  border-radius: 100%;
+  // background-color: transparent;
+  // border-radius: 100%;
+
+  width: 100%;
+  border: none;
+  background-color: #F7F7F7;
+  border-radius: 20px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  color: $text-color
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  color: $text-color;
+  font-size: 1rem;
+  padding-left: 2.2rem;
+}
+
+.mapboxgl-ctrl-geocoder--icon-search {
+  left: 1rem;
+  color: $gray-dark
+}
+
+.bottom-sheet .mapboxgl-ctrl-geocoder {
+  width: 100%;
+  border-radius: 15px;
+  background: $white;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
 }

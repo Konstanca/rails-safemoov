@@ -19,13 +19,15 @@ export default class extends Controller {
       style: "mapbox://styles/mapbox/streets-v10"
     })
 
+    window.mapboxMap = this.map
+
     // private methods in javascript are prepend with #
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
 
     // search in map
-    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl }))
+    // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+    //  mapboxgl: mapboxgl }))
   }
 
   #addMarkersToMap() {
