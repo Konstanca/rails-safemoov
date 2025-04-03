@@ -1,5 +1,15 @@
-<!-- Cloche fixe -->
 <% if user_signed_in? %>
+  <!-- Menu utilisateur fixe -->
+  <div class="float-menu">
+    <%= render "shared/float_menu" %>
+  </div>
+
+  <!-- Bouton de recentrage sur l'utilisateur -->
+  <button id="center-user-btn">
+    <i class="fa-solid fa-crosshairs"></i>
+  </button>
+
+  <!-- Cloche fixe -->
   <%= turbo_stream_from "notifications_#{current_user.id}" %>
   <div class="notification-bell">
     <%= link_to "#", data: { bs_toggle: "offcanvas", bs_target: "#notificationsOffcanvas", turbo: "false" } do %>
@@ -46,11 +56,6 @@
       <span class="badge"><i class="fa-regular fa-plus"></i></span>
     <% end %>
   </div>
-
-<!-- Bouton de recentrage sur l'utilisateur -->
-<button id="center-user-btn">
-  <i class="fa-solid fa-crosshairs"></i>
-</button>
 
 <!-- Carte -->
 <div style="width: 100%; height: 1000px;"

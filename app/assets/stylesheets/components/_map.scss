@@ -106,8 +106,8 @@
 
 .notification-bell {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 110px;
+  left: 40px;
   z-index: 2000;
   width: 50px; /* Taille du cercle */
   height: 50px; /* Même taille pour un cercle parfait */
@@ -143,7 +143,7 @@
 
 .new-incident-button {
   position: fixed;
-  bottom: 100px;
+  bottom: 40px;
   right: 40px;
   z-index: 2000;
   width: 50px; /* Taille du cercle */

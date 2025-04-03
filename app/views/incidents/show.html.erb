@@ -96,7 +96,7 @@
           <div class="card">
             <div class="incident-meta">
               <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-              <span><%= comment.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+              <small><%= comment.created_at.strftime("le %d/%m/%Y à %H:%M") %></small>
             </div>
             <p><%= comment.content %></p>
           </div>

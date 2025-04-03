@@ -21,20 +21,28 @@
         </p>
 
         <% if incident.comments.any? %>
-          <h4>Commentaires :</h4>
-          <ul>
-            <% incident.comments.each do |comment| %>
-              <li>
-                <strong><%= comment.user.email %> :</strong> <%= comment.content %>
-              </li>
-            <% end %>
-          </ul>
+          <% incident.comments.order(created_at: :desc).each do |comment| %>
+          <div class="card">
+            <div class="incident-meta">
+              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
+              <small><%= comment.created_at.strftime("le %d/%m/%Y à %H:%M") %></small>
+            </div>
+            <p><%= comment.content %></p>
+          </div>
+          <% end %>
         <% else %>
           <p>Aucun commentaire pour cet incident.</p>
         <% end %>
 
-        <%= link_to "Modifier", edit_incident_path(incident) %> |
-        <%= link_to "Supprimer", incident_path(incident), method: :delete, data: { turbo_method: :delete, confirm: "Es-tu sûr de vouloir supprimer cet incident ?" } %>
+        <div class="d-flex justify-content-between">
+          <%= link_to edit_incident_path(incident) do %>
+            <i class="fas fa-pen"></i>
+          <% end %>
+
+          <%= link_to incident_path(incident), method: :delete, data: { turbo_method: :delete } do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </div>
       </div>
       <hr>
     <% end %>

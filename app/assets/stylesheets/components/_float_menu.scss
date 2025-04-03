@@ -1,0 +1,190 @@
+.fab {
+  z-index: 1000;
+  position: fixed;
+  top: 100px;
+  right: 40px;
+  display: flex;
+  flex-direction: column; // Orientation verticale
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+  transition: all 0.25s;
+
+  &.fabVertical {
+    flex-direction: column; // Assure la verticalité
+  }
+
+  &.active {
+    .fabTrigger {
+      transform: scale(1.2);
+
+      .icon {
+        background: transparent;
+        transition: background 0.3s ease;
+
+        &,
+        &:before,
+        &:after {
+          height: 3px;
+        }
+
+        &:before,
+        &:after {
+          width: 20px;
+          transform-origin: 50% 50%;
+          transition: all 100ms ease, width 100ms 100ms ease, transform 300ms 200ms cubic-bezier(0.28, 0.55, 0.385, 1.65);
+        }
+
+        &:before {
+          left: 50%;
+          transform: translateX(-50%) rotate(45deg);
+        }
+
+        &:after {
+          right: 50%;
+          transform: translateX(50%) rotate(-45deg);
+        }
+      }
+    }
+
+    .fabNav.fabNav--down {
+      a {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0); // Les icônes reviennent à leur place
+        transition: all 0.35s cubic-bezier(0.4, 2.08, 0.55, 1);
+      }
+    }
+  }
+
+  .fabTrigger {
+    position: relative;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 100px;
+    background: $primary-color;
+    transform: scale(1);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 0 rgba(108, 46, 185, 0.2);
+    transition: all 0.35s cubic-bezier(0.4, 2.08, 0.55, 1);
+
+    .icon {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: background 0.3s ease;
+
+      &,
+      &:before,
+      &:after {
+        position: absolute;
+        display: block;
+        background: white;
+        width: 6px;
+        height: 6px;
+        border-radius: 10px;
+      }
+
+      &:before,
+      &:after {
+        content: "";
+        transition: all 100ms ease, right 100ms 100ms ease, left 100ms 100ms ease;
+      }
+
+      &:before {
+        left: -11px;
+        transform: translateX(-50%);
+      }
+
+      &:after {
+        right: -11px;
+        transform: translateX(50%);
+      }
+    }
+  }
+
+  .fabNav {
+    &.fabNav--down {
+      display: flex;
+      flex-direction: column; // Les icônes s’empilent vers le bas
+      align-items: center;
+
+      a {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 8px 0; // Espacement vertical
+        width: 40px;
+        height: 40px;
+        font-family: "Noto Sans", sans-serif;
+        outline: none;
+        border: 0;
+        text-decoration: none;
+        border-radius: 100px;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 0 rgba(108, 46, 185, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px); // Cachées vers le haut quand fermé
+        will-change: transform;
+        transition: all 0.35s cubic-bezier(0.4, 2.08, 0.55, 1);
+
+        &:before {
+          content: "";
+          position: absolute;
+          z-index: -1;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 100%;
+          background-color: #fff;
+          transition: all 0.25s;
+        }
+
+        i {
+          color: $primary-color;
+          transition: all 0.25s;
+        }
+
+        &:hover {
+          &:before {
+            background-color: $primary-color;
+          }
+
+          i {
+            color: #fff;
+          }
+
+          .fabTooltip {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+
+  .fabTooltip {
+    position: absolute;
+    z-index: -2;
+    padding: 5px;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 1;
+    visibility: visible;
+    cursor: default;
+    pointer-events: none;
+    transition: all 0.5s;
+    top: 50%;
+    right: 50px; // Tooltip à gauche de l’icône
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+}

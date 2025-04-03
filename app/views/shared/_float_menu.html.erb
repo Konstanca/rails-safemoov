@@ -1,0 +1,25 @@
+<div class="fab fabVertical" data-controller="float-menu"> <!-- Sans "active" -->
+  <div class="fabTrigger" data-float-menu-target="trigger" data-action="click->float-menu#toggle">
+    <a href="#">
+      <span class="icon"></span>
+    </a>
+  </div>
+  <div class="fabNav fabNav--down">
+
+    <%= link_to my_incidents_incidents_path, class: "fabItem" do %>
+      <span class="fabTooltip">Mes incidents (<%= current_user.incidents.count %>)</span>
+      <i class="fa-solid fa-rectangle-list"></i>
+    <% end %>
+
+    <%= link_to edit_user_registration_path, class: "fabItem" do %>
+      <span class="fabTooltip">Editer mon profil</span>
+      <i class="fa-solid fa-user-pen"></i>
+    <% end %>
+
+    <%= link_to destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" do %>
+      <span class="fabTooltip">Se déconnecter</span>
+      <i class="fa-solid fa-lock"></i>
+    <% end %>
+
+  </div>
+</div>
