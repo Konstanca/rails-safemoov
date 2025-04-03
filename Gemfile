@@ -56,6 +56,7 @@ gem "faker"
 gem "geocoder"
 gem "groupdate"
 gem "cloudinary"
+gem 'dotenv-rails'
 
 group :development, :test do
   gem "dotenv-rails"
