@@ -32,7 +32,11 @@ consumer.subscriptions.create("NotificationsChannel", {
         const notificationHtml = `
           <div class="card" data-notification-id="${data.notification_id}">
             <a href="/incidents/${data.incident_id}" data-action="click->notifications#markAsRead" data-notification-id="${data.notification_id}">
-              <div class="card-body"><strong>Nouveau - </strong>${data.incident_title}</div>
+              <div class="card-body">
+                <strong><i class="fa-solid fa-circle-exclamation"></i> Nouveau</strong>
+                <h5>${data.incident_title}</h5>
+                <h6>à ${data.incident_address}</h6>
+                <small>${data.incident_created_at}</small>
             </a>
           </div>
         `;
