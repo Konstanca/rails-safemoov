@@ -19,7 +19,10 @@ class NotificationJob < ApplicationJob
         NotificationsChannel.broadcast_to(alert.user, {
           notification_id: notification.id,
           incident_id: notification.incident.id,
-          incident_title: notification.incident.title
+          incident_title: notification.incident.title,
+          incident_address: notification.incident.address,
+          incident_distance: distance,
+          incident_created_at: notification.incident.created_at.strftime("le %d/%m/%Y à %H:%M")
         })
       end
     end

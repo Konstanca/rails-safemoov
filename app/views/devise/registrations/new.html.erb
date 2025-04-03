@@ -1,4 +1,4 @@
-<div class="container">
+<div class="incident-form-container">
   <div class="row">
     <div class="col">
       <h2 class="text-center">Créer un compte</h2>
@@ -6,7 +6,7 @@
       <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }, data: {turbo: false}) do |f| %>
         <%= f.error_notification %>
 
-        <div class="form-inputs">
+        <div class="form-inputs" data-controller="address-autocomplete" data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
           <%= f.input :first_name, label: "Prénom",
                       required: false,
                       autofocus: true %>
@@ -16,10 +16,15 @@
           <%= f.input :nickname, label: "Pseudo",
                       required: true,
                       autofocus: true %>
-          <%= f.input :address, label: "Adresse",
-                      as: :text,
-                      required: true,
-                      autofocus: true %>
+          <div id="mapbox-geocoder-container"></div>
+            <%= f.input :address,
+                        required: true,
+                        label: "Adresse",
+                        input_html: {
+                        class: "address-autocomplete",
+                        autocomplete: "off",
+                        data: { address_autocomplete_target: "address" }
+                      } %>
           <%= f.input :email,
                       required: true,
                       autofocus: true,

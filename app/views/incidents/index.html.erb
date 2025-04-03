@@ -1,5 +1,15 @@
-<!-- Cloche fixe -->
 <% if user_signed_in? %>
+  <!-- Menu utilisateur fixe -->
+  <div class="float-menu">
+    <%= render "shared/float_menu" %>
+  </div>
+
+  <!-- Bouton de recentrage sur l'utilisateur -->
+  <button id="center-user-btn">
+    <i class="fa-solid fa-crosshairs"></i>
+  </button>
+
+  <!-- Cloche fixe -->
   <%= turbo_stream_from "notifications_#{current_user.id}" %>
   <div class="notification-bell">
     <%= link_to "#", data: { bs_toggle: "offcanvas", bs_target: "#notificationsOffcanvas", turbo: "false" } do %>
@@ -27,7 +37,8 @@
           <div class="card" data-notification-id="<%= notification.id %>">
             <%= link_to incident_path(notification.incident), data: { action: "click->notifications#markAsRead", notification_id: notification.id, turbo: "false" } do %>
               <div class="card-body">
-                <%= notification.incident.title %>
+                <h5><%= notification.incident.title %></h5>
+                <h6>à <%= notification.incident.address %></h6>
                 <small>le <%= notification.created_at.strftime("%d/%m/%Y à %Hh%M") %></small>
               </div>
             <% end %>
@@ -39,10 +50,19 @@
 <% end %>
 <%= render "shared/floating_header" %>
 
+<!-- Bouton nouvel incident fixe -->
+  <div class="new-incident-button">
+    <%= link_to new_incident_path do %>
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span class="badge"><i class="fa-regular fa-plus"></i></span>
+    <% end %>
+  </div>
+
 <!-- Carte -->
 <div style="width: 100%; height: 1000px;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
+<<<<<<< HEAD
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 
   <!-- Boutons flottants -->
@@ -67,4 +87,10 @@
 
     <div class="bottom-sheet-content"></div>
    <!--</div> -->
+=======
+  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+  <% if current_user && current_user.latitude.present? && current_user.longitude.present? %>
+    data-map-current-user-value="<%= { lat: current_user.latitude, lng: current_user.longitude }.to_json %>"
+  <% end %>>
+>>>>>>> buttons-map
 </div>
