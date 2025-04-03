@@ -37,44 +37,33 @@
     </div>
 
     <!-- Boutons d'interaction -->
-    <div class="incident-actions">
       <% if user_signed_in? %>
-        <%= link_to confirm_incident_path(@incident),
-            method: :post, data: { turbo_method: :post },
-            class: "confirm-button #{current_user && @incident.votes.exists?(user: current_user, vote: true) ? 'voted' : ''}" do %>
-            <%= current_user && @incident.votes.exists?(user: current_user, vote: true) ? "Confirmé" : "Confirmer" %>
+          <%= render partial: "incidents/vote_buttons", locals: { incident: @incident } %>
+
+        <% else %>
+        <div class="incident-actions">
+          <div class="confirm-button">
             <i class="fas fa-thumbs-up"></i>
             <span><%= @incident.confirmed_votes_count %></span>
-        <% end %>
-
-        <%= link_to contest_incident_path(@incident),
-          method: :post, data: { turbo_method: :post },
-          class: "contest-button #{current_user && @incident.votes.exists?(user: current_user, vote: false) ? 'voted' : ''}" do %>
-          <%= current_user && @incident.votes.exists?(user: current_user, vote: false) ? "Contesté" : "Contester" %>
-          <i class="fas fa-thumbs-down"></i>
-          <span><%= @incident.contested_votes_count %></span>
-        <% end %>
-
-      <% else %>
-        <%= link_to new_user_session_path, class: "confirm-button" do %>
-          Confirmer <i class="fas fa-thumbs-up"></i>
-          <span><%= @incident.confirmed_votes_count %></span>
-        <% end %>
-
-        <%= link_to new_user_session_path, class: "contest-button" do %>
-          Contester <i class="fas fa-thumbs-down"></i>
-          <span><%= @incident.contested_votes_count %></span>
-        <% end %>
+          </div>
+          <div class="contest-button">
+            <i class="fas fa-thumbs-down"></i>
+            <span><%= @incident.contested_votes_count %></span>
+          </div>
+        </div>
+        <div>
+          <p class="login-prompt">Connectez-vous pour voter ou commenter.</p>
+          <%= link_to "Se connecter", new_user_session_path, class: "login-button" %>
+        </div>
       <% end %>
-    </div>
 
     <!-- Formulaire de commentaire -->
-    <div class="incident-comments">
-      <%= simple_form_for [@incident, Comment.new], html: { class: "comment-form" } do |f| %>
-        <%= f.input :content, label: false, placeholder: "Laisser un commentaire..." %>
-        <%= f.button :submit, "Envoyer", class: "send-button" %>
-      <% end %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="incident-comments">
+        <%= render partial: "incidents/comment_form", locals: { incident: @incident, comment: Comment.new } %>
+      </div>
+    <% end %>
+
 
     <!-- Stats locales -->
     <div class="incident-footer">
@@ -90,19 +79,7 @@
       <h1>Commentaires</h1>
     </div>
     <div>
-      <% if @incident.comments.any? %>
-        <% @incident.comments.order(created_at: :desc).each do |comment| %>
-          <div class="card">
-            <div class="incident-meta">
-              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-              <span><%= comment.created_at.strftime("%d/%m/%Y %H:%M") %></span>
-            </div>
-            <p><%= comment.content %></p>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="no-comments">Aucun commentaire pour le moment.</p>
-      <% end %>
+      <%= render partial: "incidents/comments_list", locals: { incident: @incident } %>
     </div>
   </div>
 
