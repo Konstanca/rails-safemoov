@@ -7,7 +7,7 @@
 
     <h1>Modifier l'incident</h1>
 
-    <%= form_with(model: @incident, local: true) do |form| %>
+    <%= form_with(model: @incident, local: true, html: { multipart: true }) do |form| %>
       <div>
         <%= form.label :title, "Titre" %>
         <%= form.text_field :title, required: true %>
@@ -31,6 +31,11 @@
       <div>
         <%= form.label :description, "Description" %>
         <%= form.text_area :description, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :photo, "Photo de l'incident" %>
+        <%= form.file_field :photo, direct_upload: true, class: "image" %>
       </div>
 
       <div>
