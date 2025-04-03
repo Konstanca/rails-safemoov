@@ -43,7 +43,6 @@ consumer.subscriptions.create("NotificationsChannel", {
         offcanvasBody.insertAdjacentHTML("beforeend", notificationHtml);
       } else {
         console.log("Offcanvas fermé, mise à jour en attente.");
-        // Stocker la notif si tu veux la gérer plus tard (optionnel)
       }
 
       const currentCount = badge ? parseInt(badge.textContent) || 0 : 0;
