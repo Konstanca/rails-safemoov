@@ -27,16 +27,14 @@ export default class extends Controller {
 
     // search in map
 
-    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl }))
+    // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+    //   mapboxgl: mapboxgl }))
 
     // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
     //  mapboxgl: mapboxgl }))
-  }
+    }
 
-
-
-    }  #addMarkersToMap() {
+    #addMarkersToMap() {
       // Définir les icones FontAwesome
       const categoryIconsClasses = {
       "Attaque à main armée": "fas fa-people-robbery",
