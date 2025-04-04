@@ -1,5 +1,4 @@
-// app/javascript/channels/notifications_channel.js
-import consumer from "./consumer";
+import consumer from "channels/consumer";
 console.log("NotificationsChannel chargé");
 
 consumer.subscriptions.create("NotificationsChannel", {
