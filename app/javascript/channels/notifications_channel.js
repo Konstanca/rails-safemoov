@@ -1,4 +1,4 @@
-import consumer from "./consumer";
+import consumer from "channels/consumer";
 console.log("NotificationsChannel chargé");
 
 consumer.subscriptions.create("NotificationsChannel", {
