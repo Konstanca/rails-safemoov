@@ -34,6 +34,10 @@
 
   input[type="text"],
   input[type="datetime-local"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
   textarea,
   select {
     border: 1px solid $gray-light;
@@ -100,5 +104,62 @@
     &::file-selector-button:hover {
       background-color: #016c90;
     }
+  }
+
+  .mapboxgl-ctrl-geocoder {
+    width: 100%;
+    max-width: 100%;
+    height: 50px;
+    box-shadow: none;
+    border: 1px solid $gray-light;
+    border-radius: 0.5rem;
+    background-color: $gray-light;
+  }
+
+  // Input dans le geocoder
+  .mapboxgl-ctrl-geocoder--input {
+    height: 100%;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    padding-left: 2.5rem !important; // Décale le texte sans modifier la largeur
+    width: 100%;
+    background: none;
+    outline: none;
+    box-sizing: border-box; // S'assure que padding ne change pas la taille réelle
+
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+      border: none;
+    }
+  }
+
+  // Ajuster l'icône de recherche
+  .mapboxgl-ctrl-geocoder--icon-search {
+    position: absolute;
+    left: 0.75rem; // Place l'icône à gauche
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  // Ajuster l'icône de fermeture (x)
+  .mapboxgl-ctrl-geocoder--button {
+    background: transparent;
+    position: absolute;
+    right: 0.75rem; // Place l'icône à droite
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  // Styles pour les suggestions
+  .mapboxgl-ctrl-geocoder--suggestion-title {
+    font-weight: bold;
+    color: $text-color;
+  }
+
+  .mapboxgl-ctrl-geocoder--suggestion-address {
+    color: $text-color;
   }
 }

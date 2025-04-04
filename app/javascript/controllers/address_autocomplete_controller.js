@@ -1,13 +1,21 @@
-import { Controller } from "@hotwired/stimulus"
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
+import { Controller } from "@hotwired/stimulus";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+// Supprimez l'import CSS ici
 
 // Connects to data-controller="address-autocomplete"
 export default class extends Controller {
-  static values = { apiKey: String }
-
-  static targets = ["address"]
+  static values = { apiKey: String };
+  static targets = ["address"];
 
   connect() {
+    console.log("🔍 Initialisation address-autocomplete");
+
+
+    if (!this.apiKeyValue) {
+      console.error("Mapbox API key is missing");
+      return;
+    }
+
     this.geocoder = new MapboxGeocoder({
       accessToken: this.apiKeyValue,
       placeholder: "Recherche d'incidents par localité...",
@@ -50,6 +58,8 @@ export default class extends Controller {
   }
 
   disconnect() {
-    this.geocoder.onRemove()
+    if (this.geocoder) {
+      this.geocoder.onRemove();
+    }
   }
 }

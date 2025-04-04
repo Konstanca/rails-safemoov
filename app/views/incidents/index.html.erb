@@ -1,5 +1,16 @@
-<!-- Cloche fixe -->
+<!-- Menu utilisateur fixe -->
+<div class="float-menu">
+  <%= render "shared/float_menu" %>
+</div>
+
 <% if user_signed_in? %>
+
+  <!-- Bouton de recentrage sur l'utilisateur -->
+  <button id="center-user-btn">
+    <i class="fa-solid fa-crosshairs"></i>
+  </button>
+
+  <!-- Cloche fixe -->
   <%= turbo_stream_from "notifications_#{current_user.id}" %>
   <div class="notification-bell">
     <%= link_to "#", data: { bs_toggle: "offcanvas", bs_target: "#notificationsOffcanvas", turbo: "false" } do %>
@@ -21,13 +32,13 @@
         </div>
       <% end %>
       <hr>
-      <h2>Notifications</h2>
       <% if current_user.notifications.unread.any? %>
         <% current_user.notifications.unread.each do |notification| %>
           <div class="card" data-notification-id="<%= notification.id %>">
             <%= link_to incident_path(notification.incident), data: { action: "click->notifications#markAsRead", notification_id: notification.id, turbo: "false" } do %>
               <div class="card-body">
-                <%= notification.incident.title %>
+                <h5><%= notification.incident.title %></h5>
+                <h6>à <%= notification.incident.address %></h6>
                 <small>le <%= notification.created_at.strftime("%d/%m/%Y à %Hh%M") %></small>
               </div>
             <% end %>
@@ -39,32 +50,31 @@
 <% end %>
 <%= render "shared/floating_header" %>
 
+<!-- Bouton nouvel incident fixe -->
+  <div class="new-incident-button">
+    <%= link_to new_incident_path do %>
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span class="badge"><i class="fa-regular fa-plus"></i></span>
+    <% end %>
+  </div>
+
 <!-- Carte -->
 <div style="width: 100%; height: 1000px;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-
-  <!-- Boutons flottants -->
-  <div class="floating-buttons">
-    <button class="btn btn-secondary position-button">
-      <i class="fas fa-crosshairs"></i>
-    </button>
-    <%= link_to new_incident_path, class: "btn btn-danger report-button" do %>
-    <i class="fas fa-plus"></i>
-    <% end %>
-  </div>
-
-
+  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+  <% if current_user && current_user.latitude.present? && current_user.longitude.present? %>
+    data-map-current-user-value="<%= { lat: current_user.latitude, lng: current_user.longitude }.to_json %>"
+  <% end %>>
   <!-- Bottom Sheet -->
   <div data-controller="bottom-sheet" class="bottom-sheet collapsed" data-bottom-sheet-target="container">
     <div class="handle" data-action="click->bottom-sheet#toggle"></div>
 
-    <div class="search-bar"
-      data-controller="address-autocomplete"
-      data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-    </div>
+      <div class="search-bar"
+        data-controller="address-autocomplete"
+        data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
 
     <div class="bottom-sheet-content"></div>
-   <!--</div> -->
+  </div>
 </div>
