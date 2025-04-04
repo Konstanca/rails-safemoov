@@ -25,8 +25,8 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
-import "./channels/consumer"; // Charge le consumer
-import "./channels/notifications_channel"; // Charge le channel spécifique
+import "./controllers/consumer"; // Charge le consumer
+import "./controllers/notifications_channel"; // Charge le channel spécifique
 
 
 import flatpickr from "flatpickr"
