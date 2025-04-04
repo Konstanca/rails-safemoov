@@ -123,8 +123,13 @@
   background: white;
   // box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
-  align-items: center;
+  // align-items: center;
+  justify-content: space-evenly;
   text-decoration: none;
+
+  a{
+    outline: none;
+  }
 }
 
 .card-product img {
@@ -170,12 +175,12 @@
 
 .card-product-bottom {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
 }
 
 .truncate {
-  width: 70px;
-  white-space: nowrap;
+  // width: 70px;
+  white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
