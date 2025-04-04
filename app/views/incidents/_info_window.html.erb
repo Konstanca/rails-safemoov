@@ -1,33 +1,19 @@
-   <!-- <div class="bulle" style="width: 1000%; height: 400%;">
-
-  <div class="img-style">
-    <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
-  </div>
-
-  <div class="incident-info">
-    <%= link_to incident_path(incident) do  %>
-      <h6><%= incident.title %></h6>
-      <p><%= incident.address %></p>
-    <% end %>
-
-    <div class="info-button-container">
-      <%= link_to "Plus d'info", new_incident_path, class: "report-button" %>
+<div class="card-product">
+  <%= link_to incident_path(incident), class:"text-decoration-none" do  %>
+  <div class="card-product">
+    <div class="card-product-infos">
+      <% if incident.photo.attached? %>
+        <%= cl_image_tag incident.photo.key, class: "incident-image", alt: "Photo de #{incident.title}" %>
+      <% else %>
+        <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
+      <% end %>
     </div>
 
-  </div>
-
-</div> LOGO à gauche -->
-
-<div class="card-product">
-  <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
-  <div class="card-product-infos">
-    <%= link_to incident_path(incident), class:"text-decoration-none" do  %>
+    <div class="card-product-bottom">
       <h6><%= incident.category %></h6>
       <p class="truncate"><%= incident.address %>.</p>
-    <% end %>
-      <div class="card-product-bottom">
-        <p class="truncate"><%= incident.created_at%></p>
-        <%= link_to "Plus d'info", incident_path(incident), class:"info-button"%>
-      </div>
+      <p><%= incident.created_at %></p>
+    </div>
   </div>
+  <% end %>
 </div>
