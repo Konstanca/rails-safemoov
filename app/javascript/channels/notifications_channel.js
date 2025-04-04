@@ -1,4 +1,3 @@
-// app/javascript/channels/notifications_channel.js
 import consumer from "./consumer";
 console.log("NotificationsChannel chargé");
 
