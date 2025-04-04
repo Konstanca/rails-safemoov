@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 import mapboxgl from 'mapbox-gl' // Don't forget this!
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder" // search in map
+// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder" // search in map
 
 // Connects to data-controller="map"
 export default class extends Controller {
@@ -38,20 +38,20 @@ export default class extends Controller {
       this.#addCurrentUserMarker(this.currentUserValue.lat, this.currentUserValue.lng)
       this.map.setCenter([this.currentUserValue.lng, this.currentUserValue.lat])
       this.map.setZoom(12) // Ajuster le niveau de zoom
+      // Ajouter le bouton "Localiser current_user"
+      document.getElementById('center-user-btn').addEventListener('click', () => {
+        if (this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
+          this.map.easeTo({
+            center: [this.currentUserValue.lng, this.currentUserValue.lat],
+            zoom: 12
+          });
+        } else {
+          console.warn("❌ Aucune position utilisateur pour recentrer la carte");
+        }
+      });
     } else {
       console.warn("❌ Aucune position utilisateur trouvée")
     }
-    // Ajouter le bouton "Localiser current_user"
-    document.getElementById('center-user-btn').addEventListener('click', () => {
-      if (this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
-        this.map.easeTo({
-          center: [this.currentUserValue.lng, this.currentUserValue.lat],
-          zoom: 12
-        });
-      } else {
-        console.warn("❌ Aucune position utilisateur pour recentrer la carte");
-      }
-    });
   }
 
   #addCurrentUserMarker(lat, lng) {

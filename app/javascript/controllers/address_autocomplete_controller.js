@@ -8,6 +8,9 @@ export default class extends Controller {
   static targets = ["address"];
 
   connect() {
+    console.log("🔍 Initialisation address-autocomplete");
+
+
     if (!this.apiKeyValue) {
       console.error("Mapbox API key is missing");
       return;
@@ -15,7 +18,6 @@ export default class extends Controller {
 
     this.geocoder = new MapboxGeocoder({
       accessToken: this.apiKeyValue,
-<<<<<<< HEAD
       placeholder: "Recherche d'incidents par localité...",
       mapboxgl: window.mapboxgl,
       types: "country,region,place,postcode,locality,neighborhood,address",
@@ -53,36 +55,6 @@ export default class extends Controller {
         })
       }
     }, 500);
-=======
-      types: "country,region,place,postcode,locality,neighborhood,address",
-      countries: "EC", // Restriction aux adresses en Équateur
-      placeholder: "Saisissez une adresse en Équateur",
-      limit: 5
-    });
-
-    // Créer un conteneur pour le geocoder juste avant l'input
-    const container = document.createElement("div");
-    container.id = "mapbox-geocoder-container";
-    this.addressTarget.parentNode.insertBefore(container, this.addressTarget);
-
-    // Ajouter le geocoder au conteneur
-    this.geocoder.addTo(container);
-
-    // Cacher l'input original mais conserver sa valeur pour le formulaire
-    this.addressTarget.style.display = "none";
-
-    this.geocoder.on("result", (event) => {
-      this.addressTarget.value = event.result.place_name;
-    });
-
-    this.geocoder.on("clear", () => {
-      this.addressTarget.value = "";
-    });
-
-    this.geocoder.on("error", (error) => {
-      console.error("Geocoder error:", error);
-    });
->>>>>>> buttons-map
   }
 
   disconnect() {

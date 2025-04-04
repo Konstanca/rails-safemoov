@@ -32,8 +32,6 @@
     margin-bottom: 0.25rem;
   }
 
-
-
   input[type="text"],
   input[type="datetime-local"],
   input[type="number"],
@@ -86,7 +84,6 @@
     }
   }
 
-<<<<<<< HEAD
   .image {
     padding: 0.5rem;
     padding-left: 0px;
@@ -108,7 +105,7 @@
       background-color: #016c90;
     }
   }
-=======
+
   .mapboxgl-ctrl-geocoder {
     width: 100%;
     max-width: 100%;
@@ -165,5 +162,4 @@
   .mapboxgl-ctrl-geocoder--suggestion-address {
     color: $text-color;
   }
->>>>>>> buttons-map
 }

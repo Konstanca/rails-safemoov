@@ -21,14 +21,7 @@
         </p>
 
         <% if incident.comments.any? %>
-<<<<<<< HEAD
-          <h4>Commentaires :</h4>
-            <% incident.comments.each do |comment| %>
-              <div class="card">
-                <strong><%= comment.user.email %> :</strong> <%= comment.content %>
-              </div>
-            <% end %>
-=======
+
           <% incident.comments.order(created_at: :desc).each do |comment| %>
           <div class="card">
             <div class="incident-meta">
@@ -38,7 +31,6 @@
             <p><%= comment.content %></p>
           </div>
           <% end %>
->>>>>>> buttons-map
         <% else %>
           <p>Aucun commentaire pour cet incident.</p>
         <% end %>

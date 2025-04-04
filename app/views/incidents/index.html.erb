@@ -1,8 +1,9 @@
+<!-- Menu utilisateur fixe -->
+<div class="float-menu">
+  <%= render "shared/float_menu" %>
+</div>
+
 <% if user_signed_in? %>
-  <!-- Menu utilisateur fixe -->
-  <div class="float-menu">
-    <%= render "shared/float_menu" %>
-  </div>
 
   <!-- Bouton de recentrage sur l'utilisateur -->
   <button id="center-user-btn">
@@ -31,7 +32,6 @@
         </div>
       <% end %>
       <hr>
-      <h2>Notifications</h2>
       <% if current_user.notifications.unread.any? %>
         <% current_user.notifications.unread.each do |notification| %>
           <div class="card" data-notification-id="<%= notification.id %>">
@@ -62,35 +62,19 @@
 <div style="width: 100%; height: 1000px;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
-<<<<<<< HEAD
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-
-  <!-- Boutons flottants -->
-  <div class="floating-buttons">
-    <button class="btn btn-secondary position-button">
-      <i class="fas fa-crosshairs"></i>
-    </button>
-    <%= link_to new_incident_path, class: "btn btn-danger report-button" do %>
-    <i class="fas fa-plus"></i>
-    <% end %>
-  </div>
-
-
-  <!-- Bottom Sheet -->
-  <div data-controller="bottom-sheet" class="bottom-sheet collapsed" data-bottom-sheet-target="container">
-    <div class="handle" data-action="click->bottom-sheet#toggle"></div>
-
-    <div class="search-bar"
-      data-controller="address-autocomplete"
-      data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-    </div>
-
-    <div class="bottom-sheet-content"></div>
-   <!--</div> -->
-=======
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
   <% if current_user && current_user.latitude.present? && current_user.longitude.present? %>
     data-map-current-user-value="<%= { lat: current_user.latitude, lng: current_user.longitude }.to_json %>"
   <% end %>>
->>>>>>> buttons-map
+  <!-- Bottom Sheet -->
+  <div data-controller="bottom-sheet" class="bottom-sheet collapsed" data-bottom-sheet-target="container">
+    <div class="handle" data-action="click->bottom-sheet#toggle"></div>
+
+      <div class="search-bar"
+        data-controller="address-autocomplete"
+        data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+
+    <div class="bottom-sheet-content"></div>
+  </div>
 </div>
