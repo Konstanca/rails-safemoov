@@ -29,7 +29,7 @@ export default class extends Controller {
         response.text().then(html => {
           document.body.insertAdjacentHTML("beforeend", html); // Applique la mise à jour Turbo Stream
           card.remove();
-          const badge = document.querySelector(".notifications .badge");
+          const badge = document.querySelector(".notification-bell .badge");
           const currentCount = badge ? parseInt(badge.textContent) : 0;
           console.log("Badge avant :", currentCount);
           if (currentCount > 1) {
@@ -41,7 +41,7 @@ export default class extends Controller {
         });
       } else if (response.status === 302) {
         card.remove();
-        const badge = document.querySelector(".notifications .badge");
+        const badge = document.querySelector(".notification-bell .badge");
         const currentCount = badge ? parseInt(badge.textContent) : 0;
         console.log("Badge avant :", currentCount);
         if (currentCount > 1) {

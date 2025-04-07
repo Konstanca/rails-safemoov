@@ -15,39 +15,116 @@
   }
 }
 
-.report-button-container{
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
+.marker-user {
+  background-color: #007bff; /* Bleu */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+  border: 3px solid white; /* Bordure pour le contraste */
+  position: relative;
 
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 0.75rem 1.25rem;
-  border-radius: 25px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  font-weight: bold;
-  text-align: center;
-  font-size: 1rem;
-  text-decoration: none !important;
-
-  &:hover {
-    background-color: $primary-color;
-    color: white;
-    transition: all 0.3s ease;
+  .i {
+    font-size: 20px;
   }
 
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-    padding: 0.6rem 0.6rem;
+  &::after {
+    content: '';
+    width: 30px; height: 30px;
+    border-radius: 100%;
+    border: 3px solid #007bff;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ring 2s infinite;
+  }
+
+  @keyframes ring {
+    0% {
+      width: 30px;
+      height: 30px;
+      opacity: 1;
+    }
+    100% {
+      width: 100px;
+      height: 100px;
+      opacity: 0;
+    }
+  }
+
+  // @media (max-width: 768px) {
+  //   font-size: 0.9rem;
+  //   padding: 0.6rem 0.6rem;
+  // }
+}
+
+#center-user-btn {
+  position: fixed;
+  bottom: 110px;
+  left: 20px;
+  z-index: 1000;
+  background-color:  rgba(0, 0, 0, 0.1); /* Fond blanc, ajustable */
+  border-radius: 50%; /* Rend le tout circulaire */
+  border: none; /* Pas de bordure */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Taille du cercle */
+  height: 50px; /* Même taille pour un cercle parfait */
+
+  i {
+    color: $primary-color;
+    font-size: 60px;
   }
 }
 
 
 .notification-bell {
   position: fixed;
-  bottom: 150px;
-  right: 40px;
+  top: 70px;
+  right: 20px;
+  z-index: 1000;
+  width: 50px; /* Taille du cercle */
+  height: 50px; /* Même taille pour un cercle parfait */
+  background-color: $primary-color; /* Fond blanc, ajustable */
+  border-radius: 50%; /* Rend le tout circulaire */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre légère pour le style */
+
+  a {
+    color: white;
+    font-size: 36px;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  span {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    // padding: 2px 6px;
+    font-size: 12px;
+  }
+}
+
+.new-incident-button {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
   z-index: 2000;
   width: 50px; /* Taille du cercle */
   height: 50px; /* Même taille pour un cercle parfait */
@@ -57,26 +134,31 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre légère pour le style */
-}
 
-.notification-bell a {
-  color: $gray-dark;;
-  font-size: 36px;
-  text-decoration: none;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+  &:hover {
+    background-color: $primary-color;
+    transition: all 0.3s ease;
+  }
 
-.notification-bell .badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 12px;
+  a {
+    color: $moderate-gravity;
+    font-size: 36px;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 4px;
+    font-size: 12px;
+  }
 }
 
 // .bulle{

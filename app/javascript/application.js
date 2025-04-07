@@ -3,6 +3,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+import "channels/consumer";
+import "channels/notifications_channel";
 
 import toastr from "toastr";
 
@@ -25,8 +27,6 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
-import "./channels/consumer"; // Charge le consumer
-import "./channels/notifications_channel"; // Charge le channel spécifique
 
 
 import flatpickr from "flatpickr"

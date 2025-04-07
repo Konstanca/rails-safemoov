@@ -1,4 +1,4 @@
-<div class="incident-form-container">
+<div class="incident-form-container" data-controller="form-address-autocomplete" data-form-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   <div class="form-card">
     <%= link_to :back do %>
       <i class="fas fa-arrow-left"></i>
@@ -6,7 +6,13 @@
     <div class="container">
       <h1><%= @alert.new_record? ? "Nouvelle Alerte" : "Modifier l'Alerte" %></h1>
       <%= simple_form_for @alert do |f| %>
-        <%= f.input :address, label: "Adresse", input_html: { class: "address-autocomplete", autocomplete: "off" } %>
+        <%= f.input :address,
+                    label: "Adresse",
+                    input_html: {
+                      class: "address-autocomplete",
+                      autocomplete: "off",
+                      data: { form_address_autocomplete_target: "address" }
+                    } %>
         <%= f.input :radius, label: "Rayon (km)", input_html: { min: 1, value: 10 } %>
         <%= f.submit @alert.new_record? ? "Créer l'alerte" : "Mettre à jour", class: "btn btn-primary" %>
       <% end %>
