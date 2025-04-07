@@ -1,46 +1,49 @@
-<div class="incident-form-container">
-  <div class="form-card">
+<div class="incident-form-container" >
+  <div class="form-card" data-controller="form-address-autocomplete" data-form-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     <!-- Bouton retour -->
     <a href="<%= incidents_path %>" class="back-button">
       <i class="fas fa-arrow-left"></i>
     </a>
 
+    <%= render "incident_form" %>
+
     <h1>Signaler un incident</h1>
 
-    <%= form_with(model: @incident, local: true, html: { multipart: true }) do |form| %>
+    <%= simple_form_for(@incident, local: true, html: { multipart: true }) do |form| %>
 
     <div>
-      <%= form.label :title, "Titre de l'incident" %>
-      <%= form.text_field :title, required: true %>
+      <%= form.input :title, label:"Titre de l'incident",
+                      required: true %>
     </div>
 
     <div>
-      <%= form.label :address, "Adresse (Équateur)" %>
-      <%= form.text_field :address, placeholder: "Tape l’adresse ici", required: true %>
+      <%= form.input :address, label:"Adresse (Équateur)",
+                      required: true,
+                      input_html: {
+                                class: "address-autocomplete",
+                                autocomplete: "off",
+                                data: { form_address_autocomplete_target: "address" }
+                              } %>
     </div>
 
     <div>
-      <%= form.label :date, "Date et heure" %>
-      <%= form.text_field :date, id: "incident_date", class: "flatpickr", autocomplete: "off", value: @incident.date&.strftime("%Y-%m-%d %H:%M") %>
+      <%= form.input :date, as: :string, label:"Date et heure",  input_html: { class: "datepicker", autocomplete: "off" }  %>
     </div>
 
     <div>
-      <%= form.label :category, "Catégorie" %>
-      <%= form.select :category, @categories, { prompt: "Sélectionner une catégorie" } %>
+      <%= form.input :category, collection: @categories, prompt: "Sélectionner une catégorie", label:"Catégorie" %>
     </div>
 
     <div>
-      <%= form.label :description, "Description" %>
-      <%= form.text_area :description, required: true %>
+      <%= form.input :description, label:"Description", required: true %>
     </div>
 
     <div>
-      <%= form.label :photo, "Photo de l'incident" %>
-      <%= form.file_field :photo, direct_upload: true %>
+      <%= form.input :photo, as: :file, label: "Sélectionnez une photo" %>
     </div>
 
     <div>
-      <%= form.submit "Créer l'incident", class: "btn-submit-temp" %>
+      <%= form.button :submit, "Créer l'incident", class: "btn-submit-temp" %>
     </div>
   <% end %>
   </div>
