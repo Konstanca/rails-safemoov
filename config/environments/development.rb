@@ -80,4 +80,6 @@ Rails.application.configure do
   # Copiez l'URL (par exemple, https://f44d-31-35-126-75.ngrok-free.app)
   # dans le .env : export NGROK_HOST="f44d-31-35-126-75.ngrok-free.app"
   config.hosts << ENV["NGROK_HOST"] if ENV["NGROK_HOST"]
+
+  config.hosts.clear
 end
