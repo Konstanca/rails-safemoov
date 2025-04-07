@@ -12,7 +12,7 @@
     <div class="card-product-bottom">
       <h6><%= incident.category %></h6>
       <p class="truncate"><%= incident.address %>.</p>
-      <p><%= incident.created_at %></p>
+      <p><%= incident.created_at.strftime( "%d/%m/%Y à %Hh%M") %></p>
     </div>
   </div>
   <% end %>
