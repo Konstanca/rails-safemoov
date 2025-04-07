@@ -26,10 +26,22 @@
     text-align: center;
   }
 
+  h2 {
+    font-size: $font-size-xl;
+    font-weight:500;
+    color: $primary-color;
+    margin-bottom: 1rem;
+
+  }
+
   label {
     font-weight: bold;
     color: $text-color;
     margin-bottom: 0.25rem;
+  }
+
+  input, select {
+    margin-bottom: 0.5rem;
   }
 
   input[type="text"],
@@ -46,6 +58,16 @@
     width: 100%;
     background-color: $gray-light;
     font-size: $font-size-base;
+
+    &::file-selector-button {
+      background-color: $primary-color;
+      border-radius: 20px;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
   }
 
   textarea {
@@ -70,6 +92,9 @@
   }
 
   .btn-submit-temp {
+    margin-top: 1rem;
+    display: block;
+    margin-left: auto;
     background-color: white;
     color: $primary-color;
     border: 1px solid $primary-color;
@@ -162,4 +187,5 @@
   .mapboxgl-ctrl-geocoder--suggestion-address {
     color: $text-color;
   }
+
 }

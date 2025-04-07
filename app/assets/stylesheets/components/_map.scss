@@ -68,7 +68,7 @@
   bottom: 110px;
   left: 20px;
   z-index: 1000;
-  background-color:  rgba(0, 0, 0, 0.1); /* Fond blanc, ajustable */
+  background-color: transparent;
   border-radius: 50%; /* Rend le tout circulaire */
   border: none; /* Pas de bordure */
   display: flex;
@@ -78,19 +78,19 @@
   height: 50px; /* Même taille pour un cercle parfait */
 
   i {
-    color: $primary-color;
-    font-size: 60px;
+    color: $gray-dark;
+    font-size: 30px;
   }
 }
 
 
 .notification-bell {
   position: fixed;
-  top: 70px;
+  top: 20px;
   right: 20px;
   z-index: 1000;
-  width: 50px; /* Taille du cercle */
-  height: 50px; /* Même taille pour un cercle parfait */
+  width: 40px; /* Taille du cercle */
+  height: 40px; /* Même taille pour un cercle parfait */
   background-color: $primary-color; /* Fond blanc, ajustable */
   border-radius: 50%; /* Rend le tout circulaire */
   display: flex;
@@ -100,7 +100,7 @@
 
   a {
     color: white;
-    font-size: 36px;
+    font-size: 28px;
     text-decoration: none;
     position: relative;
     display: flex;
@@ -125,7 +125,7 @@
   position: fixed;
   bottom: 110px;
   right: 20px;
-  z-index: 2000;
+  z-index: 999;
   width: 50px; /* Taille du cercle */
   height: 50px; /* Même taille pour un cercle parfait */
   background-color: #fff; /* Fond blanc, ajustable */
