@@ -14,7 +14,7 @@
                       data: { form_address_autocomplete_target: "address" }
                     } %>
         <%= f.input :radius, label: "Rayon (km)", input_html: { min: 1, value: 10 } %>
-        <%= f.submit @alert.new_record? ? "Créer l'alerte" : "Mettre à jour", class: "btn btn-primary" %>
+        <%= f.submit @alert.new_record? ? "Créer l'alerte" : "Mettre à jour", class: "btn-submit-temp" %>
       <% end %>
     </div>
   </div>

@@ -8,34 +8,33 @@
     <h1>Mes incidents signalés (<%= @incidents.count %>)</h1>
 
     <% @incidents.each do |incident| %>
-      <div>
-        <p><strong>Titre :</strong> <%= incident.title %></p>
-        <h3><%= incident.category %> - <%= incident.address %></h3>
-        <p><%= incident.description %></p>
-        <p>
-          <% if incident.date.present? %>
-            <%= incident.date.strftime("%d/%m/%Y %Hh%M") %>
-          <% else %>
-            <em>Date non renseignée</em>
-          <% end %>
-        </p>
+      <div class="incident-meta-block">
+        <h2><i class="fa-solid fa-circle-exclamation"></i> <%= incident.title %></h2>
+        <div class="incident-meta-line">
+          <i class="fa-solid fa-layer-group"></i>
+          <span><%= incident.category %></span>
+        </div>
+        <div class="incident-meta-line">
+          <i class="fa-solid fa-location-arrow"></i>
+          <span> <%= incident.address %></span>
+        </div>
+        <div class="incident-meta-line">
+          <i class="fa-solid fa-scroll"></i>
+          <span><%= incident.description %></span>
+        </div>
+        <div class="incident-meta-line">
+          <i class="fa-solid fa-clock"></i>
+          <span>
+            <% if incident.date.present? %>
 
-        <% if incident.comments.any? %>
+                      <%= incident.date.strftime("Le %d/%m/%Y à %Hh%M") %>
+            <% else %>
+              <em>Date non renseignée</em>
+            <% end %>
+          </span>
+        </div>
 
-          <% incident.comments.order(created_at: :desc).each do |comment| %>
-          <div class="card">
-            <div class="incident-meta">
-              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-              <small><%= comment.created_at.strftime("le %d/%m/%Y à %H:%M") %></small>
-            </div>
-            <p><%= comment.content %></p>
-          </div>
-          <% end %>
-        <% else %>
-          <p>Aucun commentaire pour cet incident.</p>
-        <% end %>
-
-        <div class="d-flex justify-content-between">
+        <div class="btn-edit-trash">
           <%= link_to edit_incident_path(incident) do %>
             <i class="fas fa-pen"></i>
           <% end %>
@@ -44,6 +43,22 @@
             <i class="fas fa-trash"></i>
           <% end %>
         </div>
+
+        <% if incident.comments.any? %>
+
+          <% incident.comments.order(created_at: :desc).each do |comment| %>
+          <div class="card">
+            <div class="incident-meta">
+              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
+              <small><%= comment.created_at.strftime("Le %d/%m/%Y à %H:%M") %></small>
+            </div>
+            <p><%= comment.content %></p>
+          </div>
+          <% end %>
+        <% else %>
+          <p>Aucun commentaire pour cet incident.</p>
+        <% end %>
+
       </div>
       <hr>
     <% end %>

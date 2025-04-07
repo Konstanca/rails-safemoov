@@ -33,7 +33,6 @@ import flatpickr from "flatpickr"
 import { French } from "flatpickr/dist/l10n/fr"
 
 document.addEventListener("turbo:load", () => {
-  console.log("Turbo chargé");
 
   const offcanvasElement = document.querySelector("#notificationsOffcanvas");
   if (offcanvasElement) {

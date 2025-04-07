@@ -8,7 +8,7 @@
 
     <!-- Image de l'incident -->
     <% if @incident.photo.attached? %>
-      <%= image_tag(@incident.photo, alt: "Photo de l'incident", class: "incident-photo") %>
+      <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-photo") %>
     <% end %>
       <%# if @incident.photo_url.present? %>
         <%#= image_tag @incident.photo_url, alt: @incident.title, width: 390, height: 231, crop: :fill %>
@@ -20,20 +20,45 @@
       <h1><%= @incident.title %></h1>
     <div class="section-separator"></div>
 
-    <% if @distance.present? %>
-      <p class="incident-meta">
-        <strong>Distance :</strong> <%= @distance < 1 ? "#{(@distance * 1000).to_i} mètres" : "#{@distance} km" %>
-      </p>
-    <% end %>
+    <div class="incident-meta-block">
+      <% if @distance.present? %>
+        <div class="incident-meta-line">
+          <i class="fa-solid fa-location-arrow"></i>
+          <span><%= @distance < 1 ? "#{(@distance * 1000).to_i} mètres" : "#{@distance} km" %></span>
+        </div>
+      <% end %>
 
-    <p class="incident-meta"><strong>Lieu :</strong> <%= @incident.address %></p>
+    <div class="incident-meta-line">
+      <i class="fa-solid fa-location-dot"></i>
+      <span><%= @incident.address %></span>
+    </div>
 
     <% if @incident.date.present? %>
-      <p class="incident-meta"><strong>Date :</strong> <%= @incident.date.strftime("%d/%m/%Y") %></p>
-      <p class="incident-meta"><strong>Heure :</strong> <%= @incident.date.strftime("%H:%M") %></p>
+      <div class="incident-meta-line">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span><%= @incident.date.strftime("%d/%m/%Y") %></span>
+      </div>
+      <div class="incident-meta-line">
+        <i class="fa-solid fa-clock"></i>
+        <span><%= @incident.date.strftime("%H:%M") %></span>
+      </div>
+    <% elsif @incident.created_at.present? %>
+      <div class="incident-meta-line">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span><%= @incident.created_at.strftime("%d/%m/%Y") %></span>
+      </div>
+      <div class="incident-meta-line">
+        <i class="fa-solid fa-clock"></i>
+        <span><%= @incident.created_at.strftime("%H:%M") %></span>
+      </div>
     <% end %>
+  </div>
+  <hr>
 
-      <p class="incident-description"><%= @incident.description %></p>
+      <p class="incident-meta-line">
+        <i class="fa-solid fa-scroll"></i>
+        <span><%= @incident.description %></span>
+      </p>
     </div>
 
     <!-- Boutons d'interaction -->
@@ -78,10 +103,11 @@
     <div class="incident-details">
       <h1>Commentaires</h1>
     </div>
+
     <div>
-<<<<<<< HEAD
-      <%= render partial: "incidents/comments_list", locals: { incident: @incident } %>
-=======
+
+    <%= render partial: "incidents/comments_list", locals: { incident: @incident } %>
+
       <% if @incident.comments.any? %>
         <% @incident.comments.order(created_at: :desc).each do |comment| %>
           <div class="card">
@@ -95,7 +121,6 @@
       <% else %>
         <p class="no-comments">Aucun commentaire pour le moment.</p>
       <% end %>
->>>>>>> buttons-map
     </div>
   </div>
 
