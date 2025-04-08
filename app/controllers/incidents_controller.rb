@@ -1,5 +1,5 @@
 class IncidentsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!, except: [:show, :index, :info_window]
   before_action :set_incident, only: [:show, :destroy, :edit, :update, :confirm, :contest]
 
   def new
