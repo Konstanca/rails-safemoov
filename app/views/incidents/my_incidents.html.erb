@@ -7,7 +7,7 @@
 
     <h1>Mes incidents signalés (<%= @incidents.count %>)</h1>
 
-    <% @incidents.each do |incident| %>
+    <% @incidents.order(created_at: :desc).each do |incident| %>
       <div class="incident-meta-block">
         <h2><i class="fa-solid fa-circle-exclamation"></i> <%= incident.title %></h2>
         <div class="incident-meta-line">
@@ -61,7 +61,10 @@
             </div>
           <% end %>
         <% else %>
-          <p>Aucun commentaire pour le moment.</p>
+          <div class="incident-meta-line">
+            <i class="fa-solid fa-comment"></i>
+            <span>Aucun commentaire pour le moment.</span>
+          </div>
         <% end %>
 
       </div>
