@@ -32,19 +32,26 @@ class IncidentsController < ApplicationController
   end
 
   def index
-    @incidents = Incident.where(status: [true, nil])
+    @incidents = Incident.where(status: [true, nil]).includes(:photo_attachment)
 
     # The `geocoded` scope filters only incidents with coordinates
     @markers = @incidents.geocoded.map do |incident|
       {
         lat: incident.latitude,
         lng: incident.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: {incident: incident}),
+        # pas de préchargement des infos de la fenêtre mais id de l'incident pour la trouver
+        id: incident.id,
+        # info_window_html: render_to_string(partial: "info_window", locals: {incident: incident}),
         marker_html: render_to_string(partial: "marker"),
         category: incident.category
 
       }
     end
+  end
+
+  def info_window
+    @incident = Incident.find(params[:id])
+    render partial: 'info_window', locals: { incident: @incident }
   end
 
   # POST /incidents or /incidents.json

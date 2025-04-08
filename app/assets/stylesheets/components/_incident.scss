@@ -8,6 +8,7 @@
 
 
   .incident-card {
+    position: relative;
     background-color: white;
     border-radius: 1.5625rem; // 25px
     box-shadow: $box-shadow;
@@ -221,25 +222,7 @@
     max-height: 300px;
     object-fit: cover;
     border-radius: 0.5rem;
-  }
-}
-
-.back-button {
-  background-color: white;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  box-shadow: $box-shadow-sm;
-  margin-bottom: 0.5rem;
-  gap: 0.25rem;
-  text-decoration: none;
-
-  i {
-    color: $gray-dark;
+    margin-bottom: 0;
   }
 }
 

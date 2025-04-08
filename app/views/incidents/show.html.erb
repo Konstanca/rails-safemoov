@@ -2,20 +2,21 @@
   <div class="incident-card">
 
     <!-- Bouton retour -->
-    <a href="<%= incidents_path %>" class="back-button">
+    <a href="<%= incidents_path %>" class="back-button-show">
       <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Bouton lien vers index en centrant sur incident -->
+    <a href="<%= incidents_path(lng: @incident.longitude, lat: @incident.latitude) %>" class="map-link-button">
+      <i class="fas fa-map-marked-alt"></i>
     </a>
 
     <!-- Image de l'incident -->
     <% if @incident.photo.attached? %>
-      <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-photo") %>
+      <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-image") %>
     <% else %>
-      <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
+      <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident", class: "incident-image" %>
     <% end %>
-      <%# if @incident.photo_url.present? %>
-        <%#= image_tag @incident.photo_url, alt: @incident.title, width: 390, height: 231, crop: :fill %>
-      <%# else %>
-
 
     <!-- Informations de l'incident -->
     <div class="incident-details">
