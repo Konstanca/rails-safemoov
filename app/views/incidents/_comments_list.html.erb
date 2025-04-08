@@ -2,8 +2,11 @@
   <% if incident.comments.any? %>
       <% incident.comments.order(created_at: :desc).each do |comment| %>
         <div class="card">
-          <strong><%= comment.user.display_name %> :</strong> <%= comment.content %>
-          <small><%=comment.created_at.strftime( "%d/%m/%Y à %Hh%M") %></small>
+          <div class="incident-meta">
+            <strong><%= comment.user.display_name %></strong>
+            <small><%=comment.created_at.strftime( "le %d/%m/%Y à %Hh%M") %></small>
+          </div>
+          <p><%= comment.content %></p>
         </div>
       <% end %>
   <% else %>
