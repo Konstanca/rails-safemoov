@@ -232,6 +232,25 @@
   gap: 0.5rem;
 }
 
+.incident-meta-title {
+  display: flex;
+  // align-items: center;
+  gap: 0.75rem;
+  font-size: $font-size-xl;
+  color: $primary-color;
+
+  i {
+    padding-top: 0.3rem;
+    color: $primary-color;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
 .incident-meta-line {
   display: flex;
   align-items: center;

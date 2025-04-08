@@ -9,7 +9,10 @@
 
     <% @incidents.order(created_at: :desc).each do |incident| %>
       <div class="incident-meta-block">
-        <h2><i class="fa-solid fa-circle-exclamation"></i> <%= incident.title %></h2>
+        <div class="incident-meta-title">
+          <i class="fa-solid fa-circle-exclamation">
+          </i> <%= incident.title %>
+        </div>
         <div class="incident-meta-line">
           <i class="fa-solid fa-layer-group"></i>
           <span><%= incident.category %></span>
