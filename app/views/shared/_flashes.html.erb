@@ -6,12 +6,12 @@
       <% toastr_type = { notice: "success", alert: "error" }[type.to_sym] || type %>
       toastr.<%= toastr_type %>("<%= j message %>");
     <% end %>
-    setTimeout(() => {
-      fetch('/clear_flashes', {
-        method: 'POST',
-        headers: { 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content }
-      })
-      .catch(error => console.error("Erreur lors de la vidange des flashs :", error));
-    }, 100);
+    // setTimeout(() => {
+    //   fetch('/clear_flashes', {
+    //     method: 'POST',
+    //     headers: { 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content }
+    //   })
+    //   .catch(error => console.error("Erreur lors de la vidange des flashs :", error));
+    // }, 100);
   });
 </script>

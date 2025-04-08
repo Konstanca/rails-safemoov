@@ -7,9 +7,12 @@
 
     <h1>Mes incidents signalés (<%= @incidents.count %>)</h1>
 
-    <% @incidents.each do |incident| %>
+    <% @incidents.order(created_at: :desc).each do |incident| %>
       <div class="incident-meta-block">
-        <h2><i class="fa-solid fa-circle-exclamation"></i> <%= incident.title %></h2>
+        <div class="incident-meta-title">
+          <i class="fa-solid fa-circle-exclamation">
+          </i> <%= incident.title %>
+        </div>
         <div class="incident-meta-line">
           <i class="fa-solid fa-layer-group"></i>
           <span><%= incident.category %></span>
@@ -34,7 +37,13 @@
           </span>
         </div>
 
+
         <div class="btn-edit-trash">
+          <!--Icône pour zoomer sur l'incident -->
+          <%= link_to incidents_path(lng: incident.longitude, lat: incident.latitude), class: "zoom-incident-btn" do %>
+            <i class="fas fa-search-location"></i>
+          <% end %>
+
           <%= link_to edit_incident_path(incident) do %>
             <i class="fas fa-pen"></i>
           <% end %>
@@ -45,18 +54,20 @@
         </div>
 
         <% if incident.comments.any? %>
-
           <% incident.comments.order(created_at: :desc).each do |comment| %>
-          <div class="card">
-            <div class="incident-meta">
-              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-              <small><%= comment.created_at.strftime("Le %d/%m/%Y à %H:%M") %></small>
+            <div class="card">
+              <div class="incident-meta">
+                <strong><%= comment.user.display_name %></strong>
+                <small><%=comment.created_at.strftime( "le %d/%m/%Y à %Hh%M") %></small>
+              </div>
+              <p><%= comment.content %></p>
             </div>
-            <p><%= comment.content %></p>
-          </div>
           <% end %>
         <% else %>
-          <p>Aucun commentaire pour cet incident.</p>
+          <div class="incident-meta-line">
+            <i class="fa-solid fa-comment"></i>
+            <span>Aucun commentaire pour le moment.</span>
+          </div>
         <% end %>
 
       </div>

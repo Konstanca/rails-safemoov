@@ -1,3 +1,64 @@
+.back-button {
+  background-color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: $box-shadow-sm;
+  margin-bottom: 0.5rem;
+  gap: 0.25rem;
+  text-decoration: none;
+
+  i {
+    color: $gray-dark;
+  }
+}
+
+.back-button-show {
+  position: absolute;
+  top: 30px; /* Distance du haut */
+  left: 30px; /* Distance de la gauche */
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: $box-shadow-sm;
+  text-decoration: none;
+
+  i {
+    color: $gray-dark;
+  }
+}
+
+.map-link-button {
+  position: absolute;
+  top: 30px; /* Même hauteur que le bouton retour */
+  right: 30px; /* Distance de la droite */
+  background-color: $white; /* Bleu par défaut, comme avant */
+  color: $primary-color;
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $box-shadow-sm;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
 .btn-edit-trash {
   display: block;
   margin-left: auto;

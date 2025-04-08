@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  def clear_flashes
-    flash.clear
-    head :ok
-  end
+  # def clear_flashes
+  #   flash.clear
+  #   head :ok
+  # end
 
   private
 

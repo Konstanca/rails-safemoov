@@ -2,18 +2,21 @@
   <div class="incident-card">
 
     <!-- Bouton retour -->
-    <a href="<%= incidents_path %>" class="back-button">
+    <a href="<%= incidents_path %>" class="back-button-show">
       <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Bouton lien vers index en centrant sur incident -->
+    <a href="<%= incidents_path(lng: @incident.longitude, lat: @incident.latitude) %>" class="map-link-button">
+      <i class="fas fa-map-marked-alt"></i>
     </a>
 
     <!-- Image de l'incident -->
     <% if @incident.photo.attached? %>
-      <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-photo") %>
+      <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-image") %>
+    <% else %>
+      <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident", class: "incident-image" %>
     <% end %>
-      <%# if @incident.photo_url.present? %>
-        <%#= image_tag @incident.photo_url, alt: @incident.title, width: 390, height: 231, crop: :fill %>
-      <%# else %>
-
 
     <!-- Informations de l'incident -->
     <div class="incident-details">
@@ -108,19 +111,6 @@
 
     <%= render partial: "incidents/comments_list", locals: { incident: @incident } %>
 
-      <% if @incident.comments.any? %>
-        <% @incident.comments.order(created_at: :desc).each do |comment| %>
-          <div class="card">
-            <div class="incident-meta">
-              <strong><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.email %></strong>
-              <small><%= comment.created_at.strftime("le %d/%m/%Y à %H:%M") %></small>
-            </div>
-            <p><%= comment.content %></p>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="no-comments">Aucun commentaire pour le moment.</p>
-      <% end %>
     </div>
   </div>
 

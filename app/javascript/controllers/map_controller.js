@@ -1,11 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
+import mapboxgl from 'mapbox-gl';
 
-import mapboxgl from 'mapbox-gl' // Don't forget this!
-// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder" // search in map
-
-// Connects to data-controller="map"
 export default class extends Controller {
-
   static values = {
     apiKey: String,
     markers: Array,
@@ -13,64 +9,115 @@ export default class extends Controller {
   }
 
   connect() {
-    mapboxgl.accessToken = this.apiKeyValue
+    // Vérifier si déjà initialisé via l'élément DOM
+    if (this.element.dataset.mapInitialized === 'true') return;
+    this.element.dataset.mapInitialized = 'true';
+
+    mapboxgl.accessToken = this.apiKeyValue;
 
     this.map = new mapboxgl.Map({
       container: this.element,
       style: "mapbox://styles/mapbox/streets-v10"
-    })
+    });
 
-    window.mapboxMap = this.map
+    window.mapboxMap = this.map;
 
-    // private methods in javascript are prepend with #
-    // this.#addClustersToMap()
-    this.#addMarkersToMap()
-    this.#fitMapToMarkers()
+    this.#addMarkersToMap();
 
-    // search in map
-
-    // this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl }))
-
-    console.log("🔍 currentUserValue récupéré :", this.currentUserValue) // Ajout de log
-
-    // Vérifier si currentUser et lat/lng sont définis et zoomer sur la position
     if (this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
-      this.#addCurrentUserMarker(this.currentUserValue.lat, this.currentUserValue.lng)
-      this.map.setCenter([this.currentUserValue.lng, this.currentUserValue.lat])
-      this.map.setZoom(12) // Ajuster le niveau de zoom
-      // Ajouter le bouton "Localiser current_user"
-      document.getElementById('center-user-btn').addEventListener('click', () => {
+      this.#addCurrentUserMarker(this.currentUserValue.lat, this.currentUserValue.lng);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const incidentLng = urlParams.get('lng');
+    const incidentLat = urlParams.get('lat');
+
+    // Restaurer la position précédente sans animation comme point de départ
+    const savedPosition = JSON.parse(localStorage.getItem('mapPosition'));
+    if (savedPosition) {
+      console.log("🔄 Restauration position précédente:", savedPosition);
+      this.map.jumpTo({
+        center: [savedPosition.lng, savedPosition.lat],
+        zoom: savedPosition.zoom
+      });
+    } else if (this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
+      // Si pas de position sauvegardée, démarrer sur l'utilisateur
+      console.log("👤 Position initiale sur utilisateur:", this.currentUserValue.lng, this.currentUserValue.lat);
+      this.map.jumpTo({
+        center: [this.currentUserValue.lng, this.currentUserValue.lat],
+        zoom: 12
+      });
+    } else {
+      console.log("📍 Position initiale sur tous les marqueurs");
+      this.#fitMapToMarkers();
+    }
+
+    // Si paramètres d'incident, animer depuis la position actuelle vers l'incident
+    if (incidentLng && incidentLat) {
+      console.log("🎯 Animation vers incident:", incidentLng, incidentLat);
+      this.map.flyTo({
+        center: [parseFloat(incidentLng), parseFloat(incidentLat)],
+        zoom: 15,
+        speed: 1.2,
+        curve: 1.4
+      });
+    } else if (!savedPosition && this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
+      // Si pas d'incident ni de position sauvegardée, animer vers l'utilisateur
+      console.log("👤 Animation vers utilisateur:", this.currentUserValue.lng, this.currentUserValue.lat);
+      this.map.flyTo({
+        center: [this.currentUserValue.lng, this.currentUserValue.lat],
+        zoom: 12,
+        speed: 1.2,
+        curve: 1.4
+      });
+    }
+
+    // Sauvegarder la position quand la carte bouge
+    this.map.on('moveend', () => {
+      const center = this.map.getCenter();
+      const zoom = this.map.getZoom();
+      localStorage.setItem('mapPosition', JSON.stringify({
+        lng: center.lng,
+        lat: center.lat,
+        zoom: zoom
+      }));
+      console.log("💾 Position sauvegardée:", { lng: center.lng, lat: center.lat, zoom });
+    });
+
+    const centerUserBtn = document.getElementById('center-user-btn');
+    if (centerUserBtn) {
+      centerUserBtn.addEventListener('click', () => {
         if (this.currentUserValue && this.currentUserValue.lat && this.currentUserValue.lng) {
-          this.map.easeTo({
+          console.log("👤 Recentrer sur utilisateur via bouton");
+          this.map.flyTo({
             center: [this.currentUserValue.lng, this.currentUserValue.lat],
-            zoom: 12
+            zoom: 12,
+            speed: 1.2,
+            curve: 1.4
           });
+          window.history.pushState({}, document.title, '/incidents');
         } else {
           console.warn("❌ Aucune position utilisateur pour recentrer la carte");
         }
       });
-    } else {
-      console.warn("❌ Aucune position utilisateur trouvée")
     }
   }
 
   #addCurrentUserMarker(lat, lng) {
-    const customMarker = document.createElement("div")
-    customMarker.classList.add("marker", "marker-user")
-    customMarker.innerHTML = `<i class="fas fa-user" style="font-size: 18px; color: white;"></i>`
+    const customMarker = document.createElement("div");
+    customMarker.classList.add("marker", "marker-user");
+    customMarker.innerHTML = `<i class="fas fa-user" style="font-size: 18px; color: white;"></i>`;
 
-    // Ajouter un popup avec un message
-    const popup = new mapboxgl.Popup().setHTML("<b>Vous êtes ici</b>")
+    const popup = new mapboxgl.Popup().setHTML("<b>Vous êtes ici</b>");
 
     new mapboxgl.Marker(customMarker)
       .setLngLat([lng, lat])
-      .setPopup(popup) // Ajoute le popup
-      .addTo(this.map)
+      .setPopup(popup)
+      .addTo(this.map);
   }
 
-    #addMarkersToMap() {
-      // Définir les icones FontAwesome
-      const categoryIconsClasses = {
+  #addMarkersToMap() {
+    const categoryIconsClasses = {
       "Attaque à main armée": "fas fa-people-robbery",
       "Assassinat": "fas fa-skull",
       "Enlèvement": "fa-solid fa-hands-bound",
@@ -94,7 +141,7 @@ export default class extends Controller {
       "very-high-gravity": ["Enlèvement", "Attaque à main armée", "Assassinat", "Prise d’otages", "Émeute"],
       "high-gravity": ["Tremblement de terre", "Disparition", "Manifestation violente"],
       "moderate-gravity": ["Inondation", "Fraude électorale", "Trafic de drogue", "Agression"],
-      "low-gravity": ["Vol à l’étalage", "Éboulement",  "Incendie", "Accident de la route", "Braquage de voiture"]
+      "low-gravity": ["Vol à l’étalage", "Éboulement", "Incendie", "Accident de la route", "Braquage de voiture"]
     };
 
     const colorMapping = {
@@ -104,17 +151,12 @@ export default class extends Controller {
       "low-gravity": "#F4D03F"
     };
 
-
     this.markersValue.forEach((marker) => {
-      const popup = new mapboxgl.Popup().setHTML(marker.info_window_html);
-
       const customMarker = document.createElement("div");
       customMarker.className = "marker";
-
       const iconClass = categoryIconsClasses[marker.category] || "fas fa-exclamation-circle";
 
-      // Trouver la couleur associée
-      let backgroundColor = "#808080"; // Par défaut gris
+      let backgroundColor = "#808080";
       for (const [color, categories] of Object.entries(categoryGroups)) {
         if (categories.includes(marker.category)) {
           backgroundColor = colorMapping[color];
@@ -123,8 +165,6 @@ export default class extends Controller {
       }
 
       customMarker.innerHTML = `<i class="${iconClass}" style="font-size: 16px; color: white;"></i>`;
-
-      // Appliquer le style au marqueur
       customMarker.style.backgroundColor = backgroundColor;
       customMarker.style.borderRadius = "50%";
       customMarker.style.width = "30px";
@@ -133,22 +173,33 @@ export default class extends Controller {
       customMarker.style.justifyContent = "center";
       customMarker.style.alignItems = "center";
 
-      new mapboxgl.Marker(customMarker)
+      const mapboxMarker = new mapboxgl.Marker(customMarker)
         .setLngLat([marker.lng, marker.lat])
-        .setPopup(popup)
         .addTo(this.map);
-    });
 
+      customMarker.addEventListener("click", () => {
+        fetch(`/incidents/${marker.id}/info_window`)
+          .then(response => response.text())
+          .then(html => {
+            const popup = new mapboxgl.Popup({ offset: 25 })
+              .setLngLat([marker.lng, marker.lat])
+              .setHTML(html)
+              .addTo(this.map);
+          })
+          .catch(error => {
+            console.error("❌ Erreur lors du chargement de la popup :", error);
+          });
+      });
+    });
   }
 
   #fitMapToMarkers() {
-    const bounds = new mapboxgl.LngLatBounds()
-    this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 12, duration: 0 })
+    const bounds = new mapboxgl.LngLatBounds();
+    this.markersValue.forEach(marker => bounds.extend([marker.lng, marker.lat]));
+    this.map.fitBounds(bounds, { padding: 70, maxZoom: 12, duration: 0 });
   }
 
   #addClustersToMap() {
     // todo
-
   }
 }
