@@ -9,6 +9,8 @@
     <!-- Image de l'incident -->
     <% if @incident.photo.attached? %>
       <%= cl_image_tag(@incident.photo.key, alt: "Photo de l'incident", class: "incident-photo") %>
+    <% else %>
+      <%= image_tag "visuel-accident-de-la-route.png", alt: "Incident" %>
     <% end %>
       <%# if @incident.photo_url.present? %>
         <%#= image_tag @incident.photo_url, alt: @incident.title, width: 390, height: 231, crop: :fill %>
