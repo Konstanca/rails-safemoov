@@ -20,8 +20,8 @@ export default class extends Controller {
       accessToken: this.apiKeyValue,
 
       types: "country,region,place,postcode,locality,neighborhood,address",
-      countries: "EC", // Restriction aux adresses en Équateur
-      placeholder: "Saisissez une adresse en Équateur",
+      // countries: "EC", // Restriction aux adresses en Équateur
+      placeholder: "Saisissez une adresse",
       limit: 5
     });
 
