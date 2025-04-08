@@ -1,0 +1,48 @@
+<div class="incident-form-container" >
+  <div class="form-card" data-controller="form-address-autocomplete" data-form-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <!-- Bouton retour -->
+    <a href="<%= incidents_path %>" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <h1><%= @incident.new_record? ? "Signaler un incident" : "Modifier l'incident" %></h1>
+
+    <%= simple_form_for(@incident, local: true, html: { multipart: true }) do |form| %>
+
+    <div>
+      <%= form.input :title, label:"Titre de l'incident",
+                      required: true %>
+    </div>
+
+    <div>
+      <%= form.input :address, label:"Adresse (Équateur)",
+                      required: true,
+                      input_html: {
+                                class: "address-autocomplete",
+                                autocomplete: "off",
+                                data: { form_address_autocomplete_target: "address" }
+                              } %>
+    </div>
+
+    <div>
+      <%= form.input :date, as: :string, label:"Date et heure",  input_html: { class: "datepicker", autocomplete: "off" }  %>
+    </div>
+
+    <div>
+      <%= form.input :category, collection: @categories, prompt: "Sélectionner une catégorie", label:"Catégorie" %>
+    </div>
+
+    <div>
+      <%= form.input :description, label:"Description", required: true %>
+    </div>
+
+    <div>
+      <%= form.input :photo, as: :file, label: "Sélectionnez une photo" %>
+    </div>
+
+    <div>
+      <%= form.submit @incident.new_record? ? "Créer l'incident'" : "Mofifier l'incident", class: "btn-submit-temp" %>
+    </div>
+  <% end %>
+  </div>
+</div>
